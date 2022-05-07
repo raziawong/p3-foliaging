@@ -3,7 +3,7 @@ import siteColors from "./colors";
 
 let siteTheme = createTheme({
   palette: {
-    type: "dark",
+    type: "light",
     primary: {
       main: siteColors.primary,
     },
@@ -39,7 +39,7 @@ let siteTheme = createTheme({
     subtitle2: {
       fontFamily: "Montserrat, sans-serif",
     },
-    htmlFontSize: 16,
+    htmlFontSize: 12,
   },
   shape: {
     borderRadius: 0,

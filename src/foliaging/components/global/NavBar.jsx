@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import logo from "../../../assets/images/brand.png";
+import logo from "../../../assets/images/brand.svg";
 import {
   AppBar,
   Box,

@@ -15,6 +15,11 @@ const ViewContainer = styled(Box)(({ theme }) => ({
   width: "100%",
 }));
 
+const ContentContainer = styled(Box)(({ theme }) => ({
+  position: "relative",
+  width: "100%",
+}));
+
 const LoaderBackdrop = styled(Backdrop, {
   shouldForwardProp: (prop) => prop !== "width" || prop !== "height",
 })(({ width, height, theme }) => ({
@@ -124,6 +129,7 @@ const HeroOverlay = styled(Box)(({ theme }) => ({
 export {
   SiteContainer,
   ViewContainer,
+  ContentContainer,
   LoaderBackdrop,
   NavBarDrawer,
   NavBarLogo,

@@ -1,15 +1,20 @@
+// colors generated and selected from https://coolors.co/
+
 const siteColors = {
-  // medium-champagne
-  primary: "#EBD494",
-  // lavendar-web
-  secondary: "#DADFF7",
-  tertiary: "#125E8A",
-  background: "#283044",
-  backgoundContrast: "#F3EFF5",
-  // lavendar-blush
-  primaryText: "#FFEAEC",
-  // beau-blue
-  secondaryText: "#C5D6D8",
+  // orange yellow crayola
+  primary: "#FFD275",
+  // polished pine
+  secondary: "#6BAB90",
+  // lavendar web
+  tertiary: "#DBDAEA",
+  // honeydew
+  background: "#E2FCEF",
+  // magnolia
+  backgoundContrast: "2B4162#ECE5F0",
+  // gunmetal
+  primaryText: "#30343F",
+  // independence
+  secondaryText: "#4C4B63",
 };
 
 export default siteColors;
