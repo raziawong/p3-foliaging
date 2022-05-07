@@ -6,18 +6,21 @@ const SiteContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   height: "100vh",
   width: "100vw",
+  boxSizing: "border-box",
 }));
 
 const ViewContainer = styled(Box)(({ theme }) => ({
   top: 0,
   left: 0,
   position: "absolute",
-  width: "100%",
+  width: "100vw",
+  boxSizing: "border-box",
 }));
 
 const ContentContainer = styled(Box)(({ theme }) => ({
   position: "relative",
-  width: "100%",
+  margin: theme.spacing(2),
+  boxSizing: "border-box",
 }));
 
 const LoaderBackdrop = styled(Backdrop, {
