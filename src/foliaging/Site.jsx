@@ -5,10 +5,8 @@ import {
   ViewContainer,
   ContentContainer,
 } from "./styles/components";
-import HeaderWave from "./components/global/HeaderWave";
-import NavBar from "./components/global/NavBar";
-import Home from "./views/Home";
-import Products from "./views/Products";
+import { HeaderWave, NavBar } from "./components";
+import { Home, Products, Login, Register } from "./views";
 
 export default function Site() {
   return (
@@ -23,6 +21,12 @@ export default function Site() {
             </Routes>
             <Routes>
               <Route index path="/products" element={<Products />} />
+            </Routes>
+            <Routes>
+              <Route index path="/register" element={<Login />} />
+            </Routes>
+            <Routes>
+              <Route index path="/login" element={<Register />} />
             </Routes>
           </ContentContainer>
         </ViewContainer>

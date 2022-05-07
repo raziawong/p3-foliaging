@@ -3,7 +3,7 @@ import siteColors from "./colors";
 
 let siteTheme = createTheme({
   palette: {
-    type: "light",
+    mode: "light",
     primary: {
       main: siteColors.primary,
     },
@@ -21,6 +21,12 @@ let siteTheme = createTheme({
   },
   typography: {
     fontFamily: "Montserrat Alternates, sans-serif",
+    h1: { fontSize: "6rem" },
+    h2: { fontSize: "3.75rem" },
+    h3: { fontSize: "3rem" },
+    h4: { fontSize: "2.125rem" },
+    h5: { fontSize: "1.5rem" },
+    h6: { fontSize: "1.25rem" },
     body1: {
       fontFamily: "Montserrat, sans-serif",
     },
@@ -39,7 +45,8 @@ let siteTheme = createTheme({
     subtitle2: {
       fontFamily: "Montserrat, sans-serif",
     },
-    htmlFontSize: 12,
+    htmlFontSize: 10,
+    fontSize: 12,
   },
   shape: {
     borderRadius: 0,
