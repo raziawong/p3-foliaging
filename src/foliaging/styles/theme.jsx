@@ -1,58 +1,59 @@
 import { createTheme, responsiveFontSizes, alpha } from "@mui/material/styles";
+import siteColors from "./colors";
 
 let siteTheme = createTheme({
   palette: {
-    type: 'dark',
+    type: "dark",
     primary: {
-      main: '#BFF0D4',
+      main: siteColors.primary,
     },
     secondary: {
-      main: '#FFEAEC',
+      main: siteColors.secondary,
     },
     text: {
-      primary: '#C5D6D8',
-      secondary: '#FFEAEC',
+      primary: siteColors.primaryText,
+      secondary: siteColors.secondaryText,
     },
     background: {
-      default: '#54494B',
-      paper: '#34403A',
+      default: siteColors.background,
+      paper: siteColors.backgoundContrast,
     },
   },
   typography: {
-    fontFamily: 'Montserrat Alternates, sans-serif',
+    fontFamily: "Montserrat Alternates, sans-serif",
     body1: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: "Montserrat, sans-serif",
     },
     body2: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: "Montserrat, sans-serif",
     },
     button: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: "Montserrat, sans-serif",
     },
     caption: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: "Montserrat, sans-serif",
     },
     subtitle1: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: "Montserrat, sans-serif",
     },
     subtitle2: {
-      fontFamily: 'Montserrat, sans-serif',
+      fontFamily: "Montserrat, sans-serif",
     },
     htmlFontSize: 16,
   },
-  props: {
-    MuiAppBar: {
-      color: 'transparent',
-    },
-  },
   shape: {
     borderRadius: 0,
-    boxShadow: 'none',
+    boxShadow: "none",
   },
-  overrides: {
+  components: {
     MuiAppBar: {
-      root: {
-        boxShadow: 'none',
+      defaultProps: {
+        color: "transparent",
+      },
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+        },
       },
     },
   },
