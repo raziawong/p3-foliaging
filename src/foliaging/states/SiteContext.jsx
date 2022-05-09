@@ -1,5 +1,9 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
-import siteReducer, { getProducts, initialState } from "./siteReducer";
+import siteReducer, {
+  fetchProducts,
+  initialState,
+  setLoading,
+} from "./siteReducer";
 
 const SiteContext = createContext();
 SiteContext.displayName = "SiteContext";
@@ -11,7 +15,8 @@ export const SiteContextProvider = ({ children }) => {
 
   // component did mount
   useEffect(() => {
-    const loadProducts = async () => getProducts({ dispatch });
+    dispatch(setLoading(true));
+    const loadProducts = async () => fetchProducts({ dispatch });
     loadProducts();
   }, []);
 

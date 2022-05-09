@@ -2,19 +2,25 @@ import { fetchData } from "../utils/data";
 import stateConst from "./const";
 
 export const initialState = {
-  loading: true,
+  isAuthenticated: false,
+  isLoading: false,
   products: [],
   user: {},
 };
 
-const siteReducer = (state = initialState, action) => {
-  const { type, payload } = action;
-
+const siteReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case stateConst.GET_PRODUCTS: {
+    case stateConst.SET_PRODUCTS: {
       return {
         ...state,
         products: payload,
+      };
+    }
+
+    case stateConst.SET_LOADING: {
+      return {
+        ...state,
+        isLoading: payload,
       };
     }
 
@@ -23,7 +29,7 @@ const siteReducer = (state = initialState, action) => {
   }
 };
 
-export const getProducts = async ({ dispatch }) => {
+export const fetchProducts = async ({ dispatch }) => {
   try {
     const products = await fetchData.products({});
     if (products) {
@@ -31,11 +37,17 @@ export const getProducts = async ({ dispatch }) => {
     }
   } catch (err) {
     console.log(err);
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 
 export const setProducts = (payload) => {
-  return { type: stateConst.GET_PRODUCTS, payload };
+  return { type: stateConst.SET_PRODUCTS, payload };
+};
+
+export const setLoading = (payload) => {
+  return { type: stateConst.SET_LOADING, payload };
 };
 
 export default siteReducer;
