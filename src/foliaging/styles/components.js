@@ -1,6 +1,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Link, NavLink } from "react-router-dom";
 import { Backdrop, Box, Drawer } from "@mui/material";
+import siteColors from "./colors";
 
 const SiteContainer = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -39,6 +40,9 @@ const LoaderBackdrop = styled(Backdrop, {
 
 const NavBarLogo = styled(Link)(({ theme }) => ({
   ...theme.typography.button,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
   cursor: "pointer",
   padding: "0.2rem",
   "& img": {
@@ -57,7 +61,7 @@ const NavBarLogo = styled(Link)(({ theme }) => ({
 }));
 
 const NavBarLink = styled(NavLink)(({ theme }) => ({
-  // color: colors.primary,
+  color: siteColors.primary,
   textDecoration: "none",
   fontFamily: theme.typography.fontFamily,
   fontSize: theme.typography.h6.fontSize,
@@ -67,12 +71,12 @@ const NavBarLink = styled(NavLink)(({ theme }) => ({
   justifyContent: "center",
   marginLeft: theme.spacing(1),
   "&:hover": {
-    // color: colors.tertiary,
-    // borderBottom: `1px solid ${colors.tertiary}`,
+    color: siteColors.tertiary,
+    borderBottom: `1px solid ${siteColors.tertiary}`,
   },
   "&.active": {
-    // color: colors.tertiary,
-    // backgroundColor: alpha(colors.primary, 0.1),
+    color: siteColors.tertiary,
+    backgroundColor: alpha(siteColors.primary, 0.1),
     padding: "4px",
     borderRadius: "4px",
   },
