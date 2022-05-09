@@ -16,29 +16,23 @@ export default function NavBar() {
     <Fragment>
       <AppBar position="sticky">
         <Toolbar component="nav">
-          <Box sx={{ position: "relative", flexGrow: 1 }}>
-            <NavBarLogo
-              to="/"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}>
+          <Box sx={{ position: "relative" }}>
+            <NavBarLogo to="/">
               <img src={logo} alt="foliaging" />
             </NavBarLogo>
           </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}></Box>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <ListItem>
+              <ListItemText>
+                <NavBarLink to="/products">Products</NavBarLink>
+              </ListItemText>
+            </ListItem>
+          </Box>
           <Box sx={{ display: "flex", ml: "1rem" }}>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <NavDrawer />
             </Box>
-            <List sx={{ display: { xs: "none", md: "inline-flex" } }}>
-              <ListItem>
-                <ListItemText>
-                  <NavBarLink to="/products">Products</NavBarLink>
-                </ListItemText>
-              </ListItem>
-            </List>
+            <List sx={{ display: { xs: "none", md: "inline-flex" } }}></List>
           </Box>
         </Toolbar>
       </AppBar>

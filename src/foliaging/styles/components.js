@@ -1,44 +1,38 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Link, NavLink } from "react-router-dom";
-import { Backdrop, Box, Drawer } from "@mui/material";
+import { Box, Drawer } from "@mui/material";
 import siteColors from "./colors";
 
-const SiteContainer = styled(Box)(({ theme }) => ({
+export const SiteContainer = styled(Box)(({ theme }) => ({
   position: "relative",
-  height: "100vh",
-  width: "100vw",
   boxSizing: "border-box",
 }));
 
-const ViewContainer = styled(Box)(({ theme }) => ({
+export const ViewContainer = styled(Box)(({ theme }) => ({
   top: 0,
   left: 0,
   position: "absolute",
   width: "100vw",
+  maxWidth: "100%",
   boxSizing: "border-box",
 }));
 
-const ContentContainer = styled(Box)(({ theme }) => ({
+export const ContentContainer = styled(Box)(({ theme }) => ({
   position: "relative",
-  margin: theme.spacing(2),
+  padding: theme.spacing(2),
   boxSizing: "border-box",
+  width: "100%",
+  maxWidth: "100%",
 }));
 
-const LoaderBackdrop = styled(Backdrop, {
-  shouldForwardProp: (prop) => prop !== "width" || prop !== "height",
-})(({ width, height, theme }) => ({
-  top: 0,
-  left: 0,
-  width: width || "100vw",
-  height: height || "100vh",
-  overflow: "hidden",
-  position: "absolute",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+export const ContentBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  boxSizing: "border-box",
+  width: "100%",
+  maxWidth: "100%",
 }));
 
-const NavBarLogo = styled(Link)(({ theme }) => ({
+export const NavBarLogo = styled(Link)(({ theme }) => ({
   ...theme.typography.button,
   display: "inline-flex",
   alignItems: "center",
@@ -60,7 +54,7 @@ const NavBarLogo = styled(Link)(({ theme }) => ({
   },
 }));
 
-const NavBarLink = styled(NavLink)(({ theme }) => ({
+export const NavBarLink = styled(NavLink)(({ theme }) => ({
   color: siteColors.primary,
   textDecoration: "none",
   fontFamily: theme.typography.fontFamily,
@@ -87,7 +81,7 @@ const NavBarLink = styled(NavLink)(({ theme }) => ({
   },
 }));
 
-const NavBarDrawer = styled(Drawer)(({ theme }) => ({
+export const NavBarDrawer = styled(Drawer)(({ theme }) => ({
   flexGrow: 1,
   display: "none",
   [theme.breakpoints.down("md")]: {
@@ -97,50 +91,3 @@ const NavBarDrawer = styled(Drawer)(({ theme }) => ({
     // backgroundColor: colors.secBg,
   },
 }));
-
-const HeroBanner = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "bgImg",
-})(({ theme, bgImg }) => ({
-  minHeight: 600,
-  // background: `${alpha(
-  //   colors.priBg,
-  //   0.4
-  // )} url(${bgImg}) no-repeat space right`,
-  backgroundAttachment: "fixed",
-  backgroundSize: "cover",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  position: "relative",
-  margin: "0 0",
-  borderRadius: "4px",
-  boxShadow:
-    "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
-  [theme.breakpoints.down("md")]: {
-    minHeight: 450,
-    backgroundPosition: "center",
-  },
-}));
-
-const HeroOverlay = styled(Box)(({ theme }) => ({
-  width: "100%",
-  height: "100%",
-  // backgroundColor: alpha(colors.priBg, 0.5),
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  position: "absolute",
-  flexDirection: "column",
-}));
-
-export {
-  SiteContainer,
-  ViewContainer,
-  ContentContainer,
-  LoaderBackdrop,
-  NavBarDrawer,
-  NavBarLogo,
-  NavBarLink,
-  HeroBanner,
-  HeroOverlay,
-};

@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes, alpha } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import siteColors from "./colors";
 
 let siteTheme = createTheme({
@@ -20,6 +20,8 @@ let siteTheme = createTheme({
     },
   },
   typography: {
+    htmlFontSize: 12,
+    fontSize: 10,
     fontFamily: "Montserrat Alternates, sans-serif",
     h1: { fontSize: "6rem" },
     h2: { fontSize: "3.75rem" },
@@ -45,12 +47,9 @@ let siteTheme = createTheme({
     subtitle2: {
       fontFamily: "Montserrat, sans-serif",
     },
-    htmlFontSize: 10,
-    fontSize: 12,
   },
   shape: {
     borderRadius: 0,
-    boxShadow: "none",
   },
   components: {
     MuiAppBar: {
