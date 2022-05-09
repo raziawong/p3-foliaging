@@ -14,8 +14,8 @@ export default function Site() {
           <Routes>
             <Route index path="/" element={<Home />} />
             <Route index path="/products" element={<Products />} />
-            <Route index path="/register" element={<Login />} />
-            <Route index path="/login" element={<Register />} />
+            <Route index path="/login" element={<Login />} />
+            <Route index path="/register" element={<Register />} />
           </Routes>
         </ContentContainer>
       </ViewContainer>

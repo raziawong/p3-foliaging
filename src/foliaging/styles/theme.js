@@ -10,6 +10,9 @@ let siteTheme = createTheme({
     secondary: {
       main: siteColors.secondary,
     },
+    tertiary: {
+      main: siteColors.tertiary,
+    },
     text: {
       primary: siteColors.primaryText,
       secondary: siteColors.secondaryText,
@@ -23,7 +26,7 @@ let siteTheme = createTheme({
     htmlFontSize: 12,
     fontSize: 10,
     fontFamily: "Montserrat Alternates, sans-serif",
-    h1: { fontSize: "6rem" },
+    h1: { fontSize: "4.5rem" },
     h2: { fontSize: "3.75rem" },
     h3: { fontSize: "3rem" },
     h4: { fontSize: "2.125rem" },
@@ -59,6 +62,15 @@ let siteTheme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: "none",
+        },
+      },
+    },
+    MuiIcon: {
+      styleOverrides: {
+        root: {
+          height: "auto",
+          boxSizing: "content-box",
+          padding: 3,
         },
       },
     },

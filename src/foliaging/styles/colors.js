@@ -10,11 +10,13 @@ const siteColors = {
   // honeydew
   background: "#E2FCEF",
   // magnolia
-  backgoundContrast: "2B4162#ECE5F0",
+  backgoundContrast: "#ECE5F0",
   // gunmetal
   primaryText: "#30343F",
   // independence
   secondaryText: "#4C4B63",
+  // feldgrau
+  backgroundHeader: "#3b5249",
 };
 
 export default siteColors;

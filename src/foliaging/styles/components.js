@@ -55,24 +55,25 @@ export const NavBarLogo = styled(Link)(({ theme }) => ({
 }));
 
 export const NavBarLink = styled(NavLink)(({ theme }) => ({
-  color: siteColors.primary,
+  color: siteColors.tertiary,
   textDecoration: "none",
   fontFamily: theme.typography.fontFamily,
   fontSize: theme.typography.h6.fontSize,
-  fontWeight: "bold",
+  fontWeight: "semibold",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   marginLeft: theme.spacing(1),
   "&:hover": {
-    color: siteColors.tertiary,
     borderBottom: `1px solid ${siteColors.tertiary}`,
   },
   "&.active": {
-    color: siteColors.tertiary,
-    backgroundColor: alpha(siteColors.primary, 0.1),
+    color: siteColors.primary,
     padding: "4px",
     borderRadius: "4px",
+    "&:hover": {
+      borderBottom: "none",
+    },
   },
   [theme.breakpoints.down("md")]: {
     margin: "0 0 0 0",
@@ -88,6 +89,6 @@ export const NavBarDrawer = styled(Drawer)(({ theme }) => ({
     display: "flex",
   },
   "& .MuiDrawer-paper": {
-    // backgroundColor: colors.secBg,
+    backgroundColor: alpha(siteColors.backgroundHeader, 0.9),
   },
 }));

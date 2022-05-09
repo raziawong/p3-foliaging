@@ -23,7 +23,6 @@ export default function Listing() {
           <Grid container sx={{ px: 6, py: 2 }} spacing={2}>
             {state.products.map((item) => (
               <Grid item key={item.id} xs={12} md={6} lg={4}>
-                {console.log(item)}
                 <Card>
                   <CardMedia
                     component="img"

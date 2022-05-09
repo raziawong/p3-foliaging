@@ -7,45 +7,45 @@ export default function HeaderWave() {
         id="svg"
         viewBox="0 0 1440 400"
         xmlns="http://www.w3.org/2000/svg"
-        class="transition duration-300 ease-in-out delay-150">
+        className="transition duration-300 ease-in-out delay-150">
         <defs>
           <linearGradient id="gradient" x1="0%" y1="50%" x2="100%" y2="50%">
-            <stop offset="5%" stop-color="#3b524966"></stop>
-            <stop offset="95%" stop-color="#51987266"></stop>
+            <stop offset="5%" stopColor="#3b524966"></stop>
+            <stop offset="95%" stopColor="#51987266"></stop>
           </linearGradient>
         </defs>
         <path
           d="M 0,400 C 0,400 0,100 0,100 C 101.28717948717949,93.98205128205129 202.57435897435897,87.96410256410256 272,90 C 341.425641025641,92.03589743589744 378.9897435897435,102.12564102564102 462,111 C 545.0102564102565,119.87435897435898 673.4666666666667,127.53333333333333 748,128 C 822.5333333333333,128.46666666666667 843.1435897435898,121.74102564102563 923,124 C 1002.8564102564102,126.25897435897437 1141.9589743589743,137.50256410256412 1238,135 C 1334.0410256410257,132.49743589743588 1387.020512820513,116.24871794871794 1440,100 C 1440,100 1440,400 1440,400 Z"
           stroke="none"
-          stroke-width="0"
+          strokeWidth="0"
           fill="url(#gradient)"
-          class="transition-all duration-300 ease-in-out delay-150 path-0"
+          className="transition-all duration-300 ease-in-out delay-150 path-0"
           transform="rotate(-180 720 200)"></path>
         <defs>
           <linearGradient id="gradient" x1="0%" y1="50%" x2="100%" y2="50%">
-            <stop offset="5%" stop-color="#3b524988"></stop>
-            <stop offset="95%" stop-color="#51987288"></stop>
+            <stop offset="5%" stopColor="#3b524988"></stop>
+            <stop offset="95%" stopColor="#51987288"></stop>
           </linearGradient>
         </defs>
         <path
           d="M 0,400 C 0,400 0,200 0,200 C 106.05384615384614,194.55897435897435 212.10769230769228,189.11794871794874 280,183 C 347.8923076923077,176.88205128205126 377.62307692307684,170.0871794871795 436,172 C 494.37692307692316,173.9128205128205 581.4000000000001,184.5333333333333 675,181 C 768.5999999999999,177.4666666666667 868.7769230769229,159.77948717948718 960,165 C 1051.223076923077,170.22051282051282 1133.4923076923078,198.34871794871796 1212,208 C 1290.5076923076922,217.65128205128204 1365.253846153846,208.825641025641 1440,200 C 1440,200 1440,400 1440,400 Z"
           stroke="none"
-          stroke-width="0"
+          strokeWidth="0"
           fill="url(#gradient)"
-          class="transition-all duration-300 ease-in-out delay-150 path-1"
+          className="transition-all duration-300 ease-in-out delay-150 path-1"
           transform="rotate(-180 720 200)"></path>
         <defs>
           <linearGradient id="gradient" x1="0%" y1="50%" x2="100%" y2="50%">
-            <stop offset="5%" stop-color="#3b5249ff"></stop>
-            <stop offset="95%" stop-color="#519872ff"></stop>
+            <stop offset="5%" stopColor="#3b5249ff"></stop>
+            <stop offset="95%" stopColor="#519872ff"></stop>
           </linearGradient>
         </defs>
         <path
           d="M 0,400 C 0,400 0,300 0,300 C 59.62051282051283,300.2717948717949 119.24102564102566,300.54358974358973 214,311 C 308.75897435897434,321.45641025641027 438.65641025641037,342.0974358974359 518,328 C 597.3435897435896,313.9025641025641 626.1333333333333,265.0666666666666 688,262 C 749.8666666666667,258.9333333333334 844.8102564102564,301.63589743589745 939,306 C 1033.1897435897436,310.36410256410255 1126.625641025641,276.38974358974355 1210,269 C 1293.374358974359,261.61025641025645 1366.6871794871795,280.8051282051282 1440,300 C 1440,300 1440,400 1440,400 Z"
           stroke="none"
-          stroke-width="0"
+          strokeWidth="0"
           fill="url(#gradient)"
-          class="transition-all duration-300 ease-in-out delay-150 path-2"
+          className="transition-all duration-300 ease-in-out delay-150 path-2"
           transform="rotate(-180 720 200)"></path>
       </svg>
     </div>
