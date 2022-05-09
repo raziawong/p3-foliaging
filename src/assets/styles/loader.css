@@ -1,0 +1,19 @@
+@keyframes rotate {
+    from {
+        fill: rgb(255, 210, 117, 0.2);
+        transform: rotate3d(-2, -2, 2, 180deg);
+    }
+    to {
+        fill: rgb(255, 210, 117);
+        transform: rotate(0);
+    }
+}
+
+svg .leaf {
+    stroke: none;
+    stroke-width: 1;
+    stroke-linecap: butt;
+    fill-rule: evenodd;
+    fill: rgb(255, 210, 117, 0.2);
+    animation: rotate 4s ease-in-out infinite 0.5s;
+}
