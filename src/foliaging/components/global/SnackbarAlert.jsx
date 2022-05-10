@@ -22,7 +22,12 @@ export default function SnackbarAlert() {
   return (
     <Snackbar open={isOpen} onClose={handleClose}>
       <Alert
-        sx={{ alignItems: "center", bgcolor: siteColors.charcoal }}
+        sx={{
+          alignItems: "center",
+          bgcolor: siteColors.charcoal,
+          textTransform: "uppercase",
+          maxWidth: "70%",
+        }}
         onClose={handleClose}
         icon={
           <Icon
