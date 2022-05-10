@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import "../../../assets/styles/loader.css";
 
-export default function Loader() {
+export default function LeafLoader() {
   return (
     <Box
       sx={{

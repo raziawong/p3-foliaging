@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useSiteContext } from "../../states";
-import Loader from "../global/Loader";
 import { ContentBox } from "../../styles/components";
+import LeafLoader from "../global/LeafLoader";
 
 export default function Listing() {
   const [state] = useSiteContext();
@@ -17,7 +17,7 @@ export default function Listing() {
   return (
     <Fragment>
       {state.isLoading ? (
-        <Loader />
+        <LeafLoader />
       ) : (
         <ContentBox>
           <Grid container sx={{ px: 6, py: 2 }} spacing={2}>
