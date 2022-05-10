@@ -84,7 +84,6 @@ export default function Register() {
             label="Username"
             name="username"
             autoComplete="username"
-            autoFocus
             color="primary"
             value={registerFields.username}
             onChange={handleChange}
@@ -98,7 +97,6 @@ export default function Register() {
             label="Email"
             name="email"
             autoComplete="email"
-            autoFocus
             color="primary"
             value={registerFields.email}
             onChange={handleChange}
