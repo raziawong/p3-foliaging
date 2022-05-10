@@ -6,18 +6,21 @@ const apiBase = axios.create({
 
 const apiPaths = {
   products: "/products",
+  login: "/accounts/login",
+  logout: "/accounts/logout",
 };
 
 const getProducts = async (params) => {
-  try {
-    return await apiBase.get(apiPaths.products, { params });
-  } catch (err) {
-    console.log(err.message);
-  }
+  return await apiBase.get(apiPaths.products, { params });
+};
+
+const getAccountAuth = async (body) => {
+  return await apiBase.post(apiPaths.login, { ...body });
 };
 
 const fetchData = {
-  products: (params) => getProducts(params),
+  products: async (params) => await getProducts(params),
+  authentication: async (body) => await getAccountAuth(body),
 };
 
 export { apiBase, apiPaths, fetchData };

@@ -5,7 +5,7 @@ import siteReducer, {
   setLoading,
 } from "./siteReducer";
 
-const SiteContext = createContext();
+export const SiteContext = createContext();
 SiteContext.displayName = "SiteContext";
 
 export const useSiteContext = () => useContext(SiteContext);
