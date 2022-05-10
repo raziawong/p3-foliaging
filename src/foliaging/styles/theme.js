@@ -37,8 +37,8 @@ let siteTheme = createTheme({
     },
     background: {
       default: siteColors.dark,
-      light: siteColors.light,
       paper: siteColors.dark,
+      light: siteColors.light,
     },
   },
   typography: {
@@ -74,6 +74,11 @@ let siteTheme = createTheme({
     borderRadius: 0,
   },
   components: {
+    MuiPaper: {
+      defaultProps: {
+        color: "transparent",
+      },
+    },
     MuiAppBar: {
       defaultProps: {
         color: "transparent",

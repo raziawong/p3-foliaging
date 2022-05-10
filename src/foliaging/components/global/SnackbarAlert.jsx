@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Icon, Snackbar } from "@mui/material";
 import { setError, useSiteContext } from "../../states";
+import siteColors from "../../styles/colors";
 
 export default function SnackbarAlert() {
   const [state, dispatch] = useSiteContext();
@@ -19,9 +20,9 @@ export default function SnackbarAlert() {
   }, [state.error, state.success]);
 
   return (
-    <Snackbar open={isOpen} onClose={handleClose} autoHideDuration={8000}>
+    <Snackbar open={isOpen} onClose={handleClose}>
       <Alert
-        sx={{ alignItems: "center" }}
+        sx={{ alignItems: "center", bgcolor: siteColors.charcoal }}
         onClose={handleClose}
         icon={
           <Icon
