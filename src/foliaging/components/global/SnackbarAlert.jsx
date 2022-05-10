@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Icon, Slide, Snackbar } from "@mui/material";
+import { Alert, Icon, Snackbar } from "@mui/material";
 import { setError, useSiteContext } from "../../states";
 
 export default function SnackbarAlert() {
