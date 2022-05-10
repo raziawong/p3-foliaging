@@ -64,7 +64,7 @@ export default function Register() {
   };
 
   return (
-    <FlexBox>
+    <FlexBox sx={{ my: 4 }}>
       <FrostedFlexBox
         sx={{
           py: 4,

@@ -33,7 +33,7 @@ export default function Login() {
   };
 
   return (
-    <FlexBox>
+    <FlexBox sx={{ my: 4 }}>
       <FrostedFlexBox
         sx={{
           py: 4,
