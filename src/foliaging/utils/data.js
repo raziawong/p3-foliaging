@@ -8,6 +8,7 @@ const apiPaths = {
   products: "/products",
   login: "/accounts/login",
   logout: "/accounts/logout",
+  refresh: "/accounts/refresh",
 };
 
 const getProducts = async (params) => {
@@ -18,9 +19,23 @@ const getAccountAuth = async (body) => {
   return await apiBase.post(apiPaths.login, { ...body });
 };
 
+const refreshAccountAuth = async (body) => {
+  return await apiBase.post(apiPaths.refresh, { ...body });
+};
+
+const processLogout = async (body) => {
+  return await apiBase.post(apiPaths.logout, { ...body });
+};
+
 const fetchData = {
   products: async (params) => await getProducts(params),
   authentication: async (body) => await getAccountAuth(body),
+  authRefresh: async (body) => await refreshAccountAuth(body),
 };
 
-export { apiBase, apiPaths, fetchData };
+const processData = {
+  logout: async (body) => await processLogout(body),
+};
+
+export { apiBase, apiPaths, fetchData, processData };
+export default fetchData;

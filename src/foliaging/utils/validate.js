@@ -35,14 +35,4 @@ const loginValidator = ({ login, password }) => {
   return messages;
 };
 
-const isTokenValid = ({ exp }) => {
-  const now = Date.now().valueOf() / 1000;
-
-  if (typeof exp !== "undefined" && exp < now) {
-    return false;
-  }
-
-  return true;
-};
-
-export { templates, regex, loginValidator, isTokenValid };
+export { templates, regex, loginValidator };

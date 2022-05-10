@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
+import { getLocalTokens } from "../utils/auth";
 import siteReducer, {
   fetchProducts,
   initialState,
+  processExistTokens,
   setLoading,
 } from "./siteReducer";
 
@@ -15,13 +17,18 @@ export const SiteContextProvider = ({ children }) => {
 
   // component did mount
   useEffect(() => {
+    const { accessToken, refreshToken } = getLocalTokens();
+    if (accessToken && refreshToken) {
+      processExistTokens({ dispatch, refreshToken });
+    }
+
     dispatch(setLoading(true));
-    const loadProducts = async () => fetchProducts({ dispatch });
-    loadProducts();
+    fetchProducts({ dispatch });
   }, []);
 
   return (
     <SiteContext.Provider value={[globalState, dispatch]}>
+      {console.log(globalState)}
       {children}
     </SiteContext.Provider>
   );
