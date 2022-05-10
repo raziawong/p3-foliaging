@@ -3,23 +3,30 @@ import siteColors from "./colors";
 
 let siteTheme = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
     primary: {
       main: siteColors.primary,
+      light: siteColors.champagne,
+      dark: siteColors.mustard,
     },
     secondary: {
       main: siteColors.secondary,
+      light: siteColors.honeydew,
+      dark: siteColors.feldgrau,
     },
     tertiary: {
       main: siteColors.tertiary,
+      light: siteColors.lavendar,
+      dark: siteColors.charcoal,
     },
     text: {
       primary: siteColors.primaryText,
       secondary: siteColors.secondaryText,
     },
     background: {
-      default: siteColors.background,
-      paper: siteColors.backgoundContrast,
+      default: siteColors.dark,
+      light: siteColors.light,
+      paper: siteColors.dark,
     },
   },
   typography: {

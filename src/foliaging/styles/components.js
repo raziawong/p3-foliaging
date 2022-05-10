@@ -32,6 +32,38 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   maxWidth: "100%",
 }));
 
+export const FlexBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  boxSizing: "border-box",
+  width: "100%",
+  maxWidth: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+export const FrostedFlexBox = styled(Box)(({ theme }) => ({
+  position: "relative",
+  boxSizing: "border-box",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "100%",
+  background: "inherit",
+  boxShadow: "0 0 1.5rem 0 rgba(0, 0, 0, .1)",
+  "&:before": {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    content: `''`,
+    boxShadow: `inset 0 0 2000px ${alpha(siteColors.light, 0.192)}`,
+    filter: "blur(10px)",
+    background: "inherit",
+  },
+}));
+
 export const NavBarLogo = styled(Link)(({ theme }) => ({
   ...theme.typography.button,
   display: "inline-flex",
@@ -55,20 +87,16 @@ export const NavBarLogo = styled(Link)(({ theme }) => ({
 }));
 
 export const NavBarLink = styled(NavLink)(({ theme }) => ({
-  color: siteColors.tertiary,
+  color: theme.palette.tertiary.light,
   textDecoration: "none",
-  fontFamily: theme.typography.fontFamily,
-  fontSize: theme.typography.h6.fontSize,
   fontWeight: "semibold",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  textTransform: "uppercase",
   marginLeft: theme.spacing(1),
   "&:hover": {
-    borderBottom: `1px solid ${siteColors.tertiary}`,
+    borderBottom: `1px solid ${theme.palette.tertiary.main}`,
   },
   "&.active": {
-    color: siteColors.primary,
+    color: theme.palette.primary.main,
     padding: "4px",
     borderRadius: "4px",
     "&:hover": {
@@ -78,7 +106,6 @@ export const NavBarLink = styled(NavLink)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     margin: "0 0 0 0",
     padding: "0.5rem",
-    justifyContent: "flex-start",
   },
 }));
 
@@ -89,6 +116,6 @@ export const NavBarDrawer = styled(Drawer)(({ theme }) => ({
     display: "flex",
   },
   "& .MuiDrawer-paper": {
-    backgroundColor: alpha(siteColors.backgroundHeader, 0.9),
+    backgroundColor: alpha(siteColors.feldgrau, 0.9),
   },
 }));
