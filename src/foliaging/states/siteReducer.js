@@ -14,6 +14,7 @@ export const stateConst = {
   SET_PRODUCTS: "SET_PRODUCTS",
   SET_USER: "SET_USER",
   RESET_USER: "RESET_USER",
+  SET_CART_ITEMS: "SET_CART_ITEMS",
 };
 
 export const initialState = {
@@ -21,6 +22,7 @@ export const initialState = {
   isLoading: false,
   products: [],
   user: {},
+  cart: {},
   tokenIntervalId: "",
   error: "",
   success: "",
@@ -80,6 +82,14 @@ export const siteReducer = (state = initialState, { type, payload }) => {
         isAuthenticated: false,
         tokenIntervalId: "",
         user: {},
+        cart: {},
+      };
+    }
+
+    case stateConst.SET_CART_ITEMS: {
+      return {
+        ...state,
+        cart: payload,
       };
     }
 
@@ -111,6 +121,8 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
 
       setLocalTokens(resp.data.tokens);
       dispatch(setUser(decoded));
+
+      fetchCartItems({ dispatch, userId: decoded.id, token: accessToken });
     }
   } catch (err) {
     console.log(err);
@@ -127,9 +139,29 @@ export const processExistTokens = async ({ dispatch, refreshToken }) => {
   if (newToken) {
     let decoded = jwt(newToken.accessToken);
     decoded.intervalId = triggerRefreshInterval(refreshToken, dispatch);
+
     dispatch(setUser(decoded));
+
+    fetchCartItems({
+      dispatch,
+      userId: decoded.id,
+      token: newToken.accessToken,
+    });
   } else {
     dispatch(resetUser());
+  }
+};
+
+export const fetchCartItems = async ({ dispatch, userId, token }) => {
+  try {
+    const resp = await fetchData.cart({ cid: userId }, token);
+    if (resp) {
+      dispatch(setCartItems(resp.data));
+    }
+  } catch (err) {
+    dispatch(setError(messages.cartFetchError));
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 
@@ -155,6 +187,10 @@ export const setUser = (payload) => {
 
 export const resetUser = () => {
   return { type: stateConst.RESET_USER };
+};
+
+export const setCartItems = (payload) => {
+  return { type: stateConst.SET_CART_ITEMS, payload };
 };
 
 export default siteReducer;

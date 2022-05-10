@@ -6,6 +6,7 @@ const messages = {
   registerSuccess: (name) => `Registration of ${name} completed`,
   registerDenied: "Registration failed. Please try again",
   registerFailed: "Something went wrong with registration. Please try again",
+  cartFetchError: "Something went wrong with retrieving cart. Please try again",
 };
 
 export { messages };
