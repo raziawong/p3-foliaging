@@ -6,6 +6,7 @@ const apiBase = axios.create({
 
 const apiPaths = {
   products: "/products",
+  register: "/accounts/register",
   login: "/accounts/login",
   logout: "/accounts/logout",
   refresh: "/accounts/refresh",
@@ -27,6 +28,10 @@ const processLogout = async (body) => {
   return await apiBase.post(apiPaths.logout, { ...body });
 };
 
+const processRegister = async (body) => {
+  return await apiBase.post(apiPaths.register, { ...body });
+};
+
 const fetchData = {
   products: async (params) => await getProducts(params),
   authentication: async (body) => await getAccountAuth(body),
@@ -35,6 +40,7 @@ const fetchData = {
 
 const processData = {
   logout: async (body) => await processLogout(body),
+  register: async (body) => await processRegister(body),
 };
 
 export { apiBase, apiPaths, fetchData, processData };

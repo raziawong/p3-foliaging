@@ -23,6 +23,7 @@ export default function Login() {
   };
 
   const handleSubmit = (evt) => {
+    evt.preventDefault();
     const messages = loginValidator(loginFields);
     if (Object.keys(messages).length) {
       setValidationMsgs(messages);
