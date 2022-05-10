@@ -23,6 +23,18 @@ let siteTheme = createTheme({
       primary: siteColors.primaryText,
       secondary: siteColors.secondaryText,
     },
+    error: {
+      main: siteColors.error,
+    },
+    info: {
+      main: siteColors.info,
+    },
+    success: {
+      main: siteColors.success,
+    },
+    warning: {
+      main: siteColors.warning,
+    },
     background: {
       default: siteColors.dark,
       light: siteColors.light,

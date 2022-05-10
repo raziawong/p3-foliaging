@@ -27,6 +27,14 @@ const siteColors = {
   primaryText: "#FEEFE5",
   // cultured (super light green)
   secondaryText: "#F1F2EE",
+  // forest green crayola
+  success: "#57A773",
+  // cyan process,
+  info: "#08B2E3",
+  // light pink
+  error: "#FFA9B7",
+  // orange crayola
+  warning: "#FF773D",
 };
 
 export default siteColors;

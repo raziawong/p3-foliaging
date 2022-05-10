@@ -7,8 +7,8 @@ import {
   Button,
   List,
   ListItem,
-  ListItemText,
   Toolbar,
+  Typography,
   useScrollTrigger,
 } from "@mui/material";
 import NavDrawer from "./NavDrawer";
@@ -32,22 +32,24 @@ export default function NavBar() {
             py: { xs: 1, md: 2 },
             width: "100%",
             maxWidth: "100%",
-            backgroundColor: trigger
-              ? alpha(siteColors.backgroundHeader, 0.8)
-              : "",
+            backgroundColor: trigger ? alpha(siteColors.feldgrau, 0.8) : "",
           }}>
           <Box sx={{ position: "relative", flexGrow: { xs: 1, md: "unset" } }}>
             <NavBarLogo to="/">
               <img src={logo} alt="foliaging" />
             </NavBarLogo>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1 }}>
-            <ListItem sx={{ display: "flex" }}>
-              <ListItemText>
-                <NavBarLink to="/products">Products</NavBarLink>
-              </ListItemText>
+          <List
+            sx={{
+              display: { xs: "none", md: "flex" },
+              flexGrow: 1,
+            }}>
+            <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+              <NavBarLink to="/products" color="secondary">
+                <Typography variant="subtitle1">Products</Typography>
+              </NavBarLink>
             </ListItem>
-          </Box>
+          </List>
           <Box sx={{ display: "flex", justifyContent: "flex-end", ml: "1rem" }}>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <NavDrawer drawOpen={drawOpen} setDrawOpen={setDrawOpen} />
