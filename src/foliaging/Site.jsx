@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { ViewContainer, ContentContainer } from "./styles/components";
 import { HeaderWave, NavBar } from "./components";
 import { Home, Products, Login, Register } from "./views";
+import SnackbarAlert from "./components/global/SnackbarAlert";
 
 export default function Site() {
   return (
@@ -18,6 +19,7 @@ export default function Site() {
             <Route index path="/register" element={<Register />} />
           </Routes>
         </ContentContainer>
+        <SnackbarAlert />
       </ViewContainer>
     </Fragment>
   );
