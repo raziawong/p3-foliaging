@@ -6,7 +6,7 @@ export default function LeafLoader() {
   return (
     <Box
       sx={{
-        minHeight: "50vw",
+        minHeight: "30vw",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
