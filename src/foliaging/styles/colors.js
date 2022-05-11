@@ -37,4 +37,15 @@ const siteColors = {
   warning: "#FF773D",
 };
 
+export const avatarColors = [
+  siteColors.champagne,
+  siteColors.mustard,
+  siteColors.primary,
+  siteColors.honeydew,
+  siteColors.feldgrau,
+  siteColors.secondary,
+  siteColors.lavendar,
+  siteColors.tertiary,
+];
+
 export default siteColors;
