@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import { NavBarDrawer, NavBarLink } from "../../styles/components";
-import { useSiteContext } from "../../states/SiteContext";
 import { avatarColors } from "../../styles/colors";
 
 export default function NavDrawer({
@@ -38,10 +37,8 @@ export default function NavDrawer({
             <Box
               sx={{
                 display: "flex",
-                justifyContent: globalState.isAuthenticated
-                  ? "space-evenly"
-                  : "center",
-                flexDirection: globalState.isAuthenticated ? "column" : "row",
+                justifyContent: "space-evenly",
+                flexWrap: "wrap",
                 width: "100%",
               }}>
               {globalState.isAuthenticated ? (
@@ -58,7 +55,9 @@ export default function NavDrawer({
                     }>
                     Profile
                   </Button>
-                  <Button startIcon={<Icon className="ri-logout-box-r-line" />}>
+                  <Button
+                    onClick={handleLogout}
+                    startIcon={<Icon className="ri-logout-box-r-line" />}>
                     Logout
                   </Button>
                 </Fragment>
@@ -81,11 +80,17 @@ export default function NavDrawer({
           </ListItem>
         </List>
       </NavBarDrawer>
-      <IconButton href="/cart" color="primary" aria-label="cart">
-        <Badge badgeContent={globalState.cart?.items?.length} color="secondary">
-          <Icon className="ri-shopping-cart-2-line" />
-        </Badge>
-      </IconButton>
+      {globalState.isAuthenticated ? (
+        <IconButton href="/cart" color="primary" aria-label="cart">
+          <Badge
+            badgeContent={globalState.cart?.items?.length}
+            color="secondary">
+            <Icon className="ri-shopping-cart-2-line" />
+          </Badge>
+        </IconButton>
+      ) : (
+        <Fragment />
+      )}
       <IconButton onClick={handleClick}>
         <Icon color="primary" className="ri-menu-4-line" />
       </IconButton>
