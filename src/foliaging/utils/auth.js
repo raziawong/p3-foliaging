@@ -18,6 +18,10 @@ const getLocalTokens = () => {
   return false;
 };
 
+const removeLocalTokens = () => {
+  return localStorage.removeItem("tokens");
+};
+
 const isTokenValid = ({ exp }) => {
   const now = Date.now().valueOf() / 1000;
   if (typeof exp !== "undefined" && exp < now) {
@@ -41,8 +45,12 @@ const getRefreshedToken = async (refreshToken) => {
 
 const triggerRefreshInterval = (refreshToken, dispatch, intervalId = "") => {
   const id = setInterval(() => {
-    if (!isTokenValid(refreshToken) && intervalId) {
-      clearInterval(intervalId);
+    const isValid = isTokenValid(refreshToken);
+    if (!isValid) {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+      removeLocalTokens();
       dispatch(resetUser());
     } else {
       const doRefresh = async () => {
@@ -61,6 +69,7 @@ const triggerRefreshInterval = (refreshToken, dispatch, intervalId = "") => {
 export {
   setLocalTokens,
   getLocalTokens,
+  removeLocalTokens,
   isTokenValid,
   triggerRefreshInterval,
   getRefreshedToken,

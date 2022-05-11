@@ -45,7 +45,6 @@ const getUserProfile = async (token) => {
 };
 
 const getUserCart = async (params, token) => {
-  console.log(getHeaderConfig(token));
   return await apiBase.get(apiPaths.userCart, {
     params,
     ...getHeaderConfig(token),

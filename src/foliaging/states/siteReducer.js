@@ -3,6 +3,7 @@ import { messages } from "../utils/helpers";
 import jwt from "jwt-decode";
 import {
   getRefreshedToken,
+  removeLocalTokens,
   setLocalTokens,
   triggerRefreshInterval,
 } from "../utils/auth";
@@ -148,6 +149,7 @@ export const processExistTokens = async ({ dispatch, refreshToken }) => {
       token: newToken.accessToken,
     });
   } else {
+    removeLocalTokens();
     dispatch(resetUser());
   }
 };
