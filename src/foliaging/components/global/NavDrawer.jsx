@@ -43,6 +43,7 @@ export default function NavDrawer({
               {globalState.isAuthenticated ? (
                 <Fragment>
                   <Button
+                    href="/profile"
                     startIcon={
                       <BoringAvatar
                         size={25}

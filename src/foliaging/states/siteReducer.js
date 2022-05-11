@@ -4,6 +4,7 @@ import jwt from "jwt-decode";
 import {
   getRefreshedToken,
   removeLocalTokens,
+  setLocalTokens,
   triggerRefreshInterval,
 } from "../utils/auth";
 
@@ -104,6 +105,8 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
 
       dispatch(setLoading(true));
 
+      setLocalTokens({ accessToken, refreshToken });
+
       fetchCartItems({
         dispatch,
         userId: decoded.id,
@@ -168,6 +171,8 @@ export const processExistTokens = async ({ dispatch, refreshToken }) => {
     const intervalId = triggerRefreshInterval(refreshToken, dispatch);
 
     dispatch(setLoading(true));
+
+    setLocalTokens({ accessToken: newToken.accessToken });
 
     fetchCartItems({
       dispatch,

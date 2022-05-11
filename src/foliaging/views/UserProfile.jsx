@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import fluidImage from "../../assets/images/fluid3.svg";
 import { useSiteContext } from "../states";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -41,7 +42,13 @@ export default function UserProfile() {
   };
 
   return (
-    <FlexBox sx={{ my: 4 }}>
+    <FlexBox
+      sx={{
+        my: 4,
+        p: 2,
+        background: `url(${fluidImage}) no-repeat center`,
+        backgroundSize: "cover",
+      }}>
       <FrostedContentBox sx={{ py: 4, width: "90%" }}>
         <FlexBox>
           <Tabs
