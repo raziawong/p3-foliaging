@@ -12,6 +12,7 @@ const apiPaths = {
   refresh: "/accounts/refresh",
   userProfile: "/user/profile",
   profileUpdate: "/user/profile/update",
+  passwordUpdate: "/user/profile/password/update",
   userAddresses: "/user/addresses",
   addressAdd: "/user/address/add",
   addressUpdate: "/user/address/update",
@@ -64,6 +65,14 @@ const processLogout = async (body) => {
 
 const processRegister = async (body) => {
   return await apiBase.post(apiPaths.register, { ...body });
+};
+
+const processPasswordUpdate = async (body, token) => {
+  return await apiBase.patch(
+    apiPaths.passwordUpdate,
+    { ...body },
+    getHeaderConfig(token)
+  );
 };
 
 const processProfileUpdate = async (body, token) => {
@@ -128,6 +137,8 @@ const processData = {
   logout: async (body) => await processLogout(body),
   register: async (body) => await processRegister(body),
   profileUpdate: async (body, token) => await processProfileUpdate(body, token),
+  passwordUpdate: async (body, token) =>
+    await processPasswordUpdate(body, token),
   addressAdd: async (body, token) => await processAddressAdd(body, token),
   addressUpdate: async (body, token) => await processAddressUpdate(body, token),
   cartAdd: async (body, token) => await processCartAdd(body, token),

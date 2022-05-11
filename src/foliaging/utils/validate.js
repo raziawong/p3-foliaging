@@ -16,6 +16,26 @@ const regex = {
   password: new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/),
 };
 
+const newPasswordValidator = ({ password, confirm_password }) => {
+  const messages = {};
+
+  if (!password) {
+    messages.password = templates.required;
+  } else if (regex.spaces.test(password)) {
+    messages.password = templates.spaces;
+  } else if (!regex.password.test(password)) {
+    messages.password = templates.passwordStrength;
+  } else if (password !== confirm_password) {
+    messages.confirm_password = templates.passwordMatch;
+  }
+
+  if (!confirm_password) {
+    messages.confirm_password = templates.required;
+  }
+
+  return messages;
+};
+
 const loginValidator = ({ login, password }) => {
   const messages = {};
 
@@ -58,21 +78,18 @@ const registerValidator = ({ username, email, password, confirm_password }) => {
     messages.email = templates.maxLength(320);
   }
 
-  if (!password) {
-    messages.password = templates.required;
-  } else if (regex.spaces.test(password)) {
-    messages.password = templates.spaces;
-  } else if (!regex.password.test(password)) {
-    messages.password = templates.passwordStrength;
-  } else if (password !== confirm_password) {
-    messages.confirm_password = templates.passwordMatch;
-  }
+  const passwordValidation = newPasswordValidator({
+    password,
+    confirm_password,
+  });
 
-  if (!confirm_password) {
-    messages.confirm_password = templates.required;
-  }
-
-  return messages;
+  return { ...messages, ...passwordValidation };
 };
 
-export { templates, regex, loginValidator, registerValidator };
+export {
+  templates,
+  regex,
+  newPasswordValidator,
+  loginValidator,
+  registerValidator,
+};

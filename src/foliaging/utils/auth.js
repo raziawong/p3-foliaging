@@ -1,5 +1,5 @@
 import jwt from "jwt-decode";
-import { resetUser, setUser } from "../states/siteReducer";
+import { resetUser } from "../states/siteReducer";
 import fetchData from "./data";
 
 const setLocalTokens = (tokens) => {
@@ -55,9 +55,7 @@ const triggerRefreshInterval = (refreshToken, dispatch, intervalId = "") => {
     } else {
       const doRefresh = async () => {
         const tokens = await getRefreshedToken(refreshToken);
-        const decoded = jwt(tokens.accessToken);
         setLocalTokens(tokens);
-        dispatch(setUser(decoded));
       };
       doRefresh();
     }

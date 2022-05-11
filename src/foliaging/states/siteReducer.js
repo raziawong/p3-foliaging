@@ -4,7 +4,6 @@ import jwt from "jwt-decode";
 import {
   getRefreshedToken,
   removeLocalTokens,
-  setLocalTokens,
   triggerRefreshInterval,
 } from "../utils/auth";
 
@@ -60,17 +59,13 @@ export const siteReducer = (state = initialState, { type, payload }) => {
     }
 
     case stateConst.SET_USER: {
-      const { email, username, id, intervalId } = payload;
+      const { intervalId, ...details } = payload;
 
       return {
         ...state,
         isAuthenticated: true,
         tokenIntervalId: state.tokenIntervalId || intervalId,
-        user: {
-          id,
-          email,
-          username,
-        },
+        user: { ...state.user, ...details },
       };
     }
 
@@ -99,6 +94,34 @@ export const siteReducer = (state = initialState, { type, payload }) => {
   }
 };
 
+export const fetchAuthTokens = async ({ dispatch, body }) => {
+  try {
+    const resp = await fetchData.authentication(body);
+    if (resp?.data?.tokens) {
+      const { accessToken, refreshToken } = resp.data.tokens;
+      const decoded = jwt(accessToken);
+      const intervalId = triggerRefreshInterval(refreshToken);
+
+      dispatch(setLoading(true));
+
+      fetchCartItems({
+        dispatch,
+        userId: decoded.id,
+        token: accessToken,
+      });
+
+      fetchUserDetails({ dispatch, intervalId, token: accessToken });
+    }
+  } catch (err) {
+    console.log(err);
+    if (err.response?.status === 401 || err.response?.status === 402) {
+      dispatch(setError(err.response.data.error));
+    } else {
+      dispatch(setError(messages.verificationError));
+    }
+  }
+};
+
 export const fetchProducts = async ({ dispatch }) => {
   try {
     const products = await fetchData.products({});
@@ -112,45 +135,16 @@ export const fetchProducts = async ({ dispatch }) => {
   }
 };
 
-export const fetchAuthTokens = async ({ dispatch, body }) => {
+export const fetchUserDetails = async ({ dispatch, token }) => {
   try {
-    const resp = await fetchData.authentication(body);
-    if (resp?.data?.tokens) {
-      const { accessToken, refreshToken } = resp.data.tokens;
-      let decoded = jwt(accessToken);
-      decoded.intervalId = triggerRefreshInterval(refreshToken);
-
-      setLocalTokens(resp.data.tokens);
-      dispatch(setUser(decoded));
-
-      fetchCartItems({ dispatch, userId: decoded.id, token: accessToken });
+    const resp = await fetchData.profile(token);
+    if (resp) {
+      dispatch(setUser(resp.data.user));
     }
   } catch (err) {
-    console.log(err);
-    if (err.response?.status === 401 || err.response?.status === 402) {
-      dispatch(setError(err.response.data.error));
-    } else {
-      dispatch(setError(messages.verificationError));
-    }
-  }
-};
-
-export const processExistTokens = async ({ dispatch, refreshToken }) => {
-  const newToken = await getRefreshedToken(refreshToken);
-  if (newToken) {
-    let decoded = jwt(newToken.accessToken);
-    decoded.intervalId = triggerRefreshInterval(refreshToken, dispatch);
-
-    dispatch(setUser(decoded));
-
-    fetchCartItems({
-      dispatch,
-      userId: decoded.id,
-      token: newToken.accessToken,
-    });
-  } else {
-    removeLocalTokens();
-    dispatch(resetUser());
+    dispatch(setError(messages.userId));
+  } finally {
+    dispatch(setLoading(false));
   }
 };
 
@@ -164,6 +158,27 @@ export const fetchCartItems = async ({ dispatch, userId, token }) => {
     dispatch(setError(messages.cartFetchError));
   } finally {
     dispatch(setLoading(false));
+  }
+};
+
+export const processExistTokens = async ({ dispatch, refreshToken }) => {
+  const newToken = await getRefreshedToken(refreshToken);
+  if (newToken) {
+    const decoded = jwt(newToken.accessToken);
+    const intervalId = triggerRefreshInterval(refreshToken, dispatch);
+
+    dispatch(setLoading(true));
+
+    fetchCartItems({
+      dispatch,
+      userId: decoded.id,
+      token: newToken.accessToken,
+    });
+
+    fetchUserDetails({ dispatch, intervalId, token: newToken.accessToken });
+  } else {
+    removeLocalTokens();
+    dispatch(resetUser());
   }
 };
 

@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography,
 } from "@mui/material";
 import { NavBarDrawer, NavBarLink } from "../../styles/components";
 import { avatarColors } from "../../styles/colors";

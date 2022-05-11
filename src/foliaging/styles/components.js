@@ -32,6 +32,23 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   maxWidth: "100%",
 }));
 
+export const FrostedContentBox = styled(ContentBox)(({ theme }) => ({
+  width: "100%",
+  background: "inherit",
+  boxShadow: "0 0 1.5rem 0 rgba(0, 0, 0, .1)",
+  "&:before": {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    content: `''`,
+    boxShadow: `inset 0 2000px ${alpha(siteColors.dark, 0.5)}`,
+    filter: "blur(10px)",
+    background: "inherit",
+  },
+}));
+
 export const FlexBox = styled(ContentBox)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -49,7 +66,7 @@ export const FrostedFlexBox = styled(FlexBox)(({ theme }) => ({
     right: 0,
     bottom: 0,
     content: `''`,
-    boxShadow: `inset 0 0 2000px ${alpha(siteColors.dark, 0.192)}`,
+    boxShadow: `inset 0 2000px ${alpha(siteColors.dark, 0.5)}`,
     filter: "blur(10px)",
     background: "inherit",
   },
