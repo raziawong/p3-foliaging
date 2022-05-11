@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Button, TextField, Typography } from "@mui/material";
+import fluidImage from "../../assets/images/fluid2.svg";
+import { Button, Card, CardMedia, TextField, Typography } from "@mui/material";
 import { ContentBox, FlexBox, FrostedFlexBox } from "../styles/components";
 import { registerValidator } from "../utils/validate";
 import { useSiteContext } from "../states/SiteContext";
 import { processData } from "../utils/data";
 import { messages } from "../utils/helpers";
 import { setError, setSuccess } from "../states/siteReducer";
+import { Box } from "@mui/system";
+import siteColors from "../styles/colors";
 
 const registerUser = async (data) => {
   let results = { success: false, message: "" };
@@ -65,79 +68,95 @@ export default function Register() {
 
   return (
     <FlexBox sx={{ my: 4 }}>
-      <FrostedFlexBox
-        sx={{
-          py: 4,
-          flexDirection: "column",
-          width: { xs: "90%", sm: "70%", lg: "50%" },
-        }}>
-        <Typography variant="h3" component="h1" sx={{ flexGrow: 1 }}>
-          Create An Account
-        </Typography>
-        <ContentBox
-          component="form"
-          sx={{ py: 4, px: { xs: 2, md: 6, lg: 8 } }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Username"
-            name="username"
-            autoComplete="username"
-            color="primary"
-            value={registerFields.username}
-            onChange={handleChange}
-            error={!!validationMsgs.username || false}
-            helperText={validationMsgs.username}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Email"
-            name="email"
-            autoComplete="email"
-            color="primary"
-            value={registerFields.email}
-            onChange={handleChange}
-            error={!!validationMsgs.email || false}
-            helperText={validationMsgs.email}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            autoComplete="new-password"
-            color="primary"
-            value={registerFields.password}
-            onChange={handleChange}
-            error={!!validationMsgs.password || false}
-            helperText={validationMsgs.password}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="confirm_password"
-            label="Confirm Password"
-            type="password"
-            color="primary"
-            autoComplete="new-password"
-            value={registerFields.confirm_password}
-            onChange={handleChange}
-            error={!!validationMsgs.confirm_password || false}
-            helperText={validationMsgs.confirm_password}
-          />
-          <FlexBox sx={{ pt: 6, justifyContent: "flex-end" }}>
-            <Button variant="outlined" color="primary" onClick={handleSubmit}>
-              Register Now
-            </Button>
-          </FlexBox>
-        </ContentBox>
-      </FrostedFlexBox>
+      <Box
+        sx={{ width: "90%" }}
+        display="grid"
+        gridTemplateColumns="repeat(5, 1fr)"
+        gridTemplateRow="repeat(4, 1fr)">
+        <Box gridArea="1 / 1 / 5 / 4" sx={{ zIndex: 1 }}>
+          <Card>
+            <CardMedia component="img" image={fluidImage} height="600" />
+          </Card>
+        </Box>
+        <Box gridArea="2 / 1 / 3 / 6" sx={{ zIndex: 3 }}>
+          <Typography
+            variant="h3"
+            component="h1"
+            sx={{ pl: 4, color: siteColors.charcoal }}>
+            Create An Account
+          </Typography>
+        </Box>
+        <Box gridArea="2 / 2 / 4 / 6" sx={{ zIndex: 2 }}>
+          <FrostedFlexBox sx={{ py: 4, flexDirection: "column" }}>
+            <ContentBox
+              component="form"
+              sx={{ py: 4, px: { xs: 2, md: 6, lg: 8 } }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Username"
+                name="username"
+                autoComplete="username"
+                color="primary"
+                value={registerFields.username}
+                onChange={handleChange}
+                error={!!validationMsgs.username || false}
+                helperText={validationMsgs.username}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Email"
+                name="email"
+                autoComplete="email"
+                color="primary"
+                value={registerFields.email}
+                onChange={handleChange}
+                error={!!validationMsgs.email || false}
+                helperText={validationMsgs.email}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                autoComplete="new-password"
+                color="primary"
+                value={registerFields.password}
+                onChange={handleChange}
+                error={!!validationMsgs.password || false}
+                helperText={validationMsgs.password}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="confirm_password"
+                label="Confirm Password"
+                type="password"
+                color="primary"
+                autoComplete="new-password"
+                value={registerFields.confirm_password}
+                onChange={handleChange}
+                error={!!validationMsgs.confirm_password || false}
+                helperText={validationMsgs.confirm_password}
+              />
+              <FlexBox sx={{ pt: 6, justifyContent: "flex-end" }}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleSubmit}>
+                  Register Now
+                </Button>
+              </FlexBox>
+            </ContentBox>
+          </FrostedFlexBox>
+        </Box>
+      </Box>
     </FlexBox>
   );
 }
