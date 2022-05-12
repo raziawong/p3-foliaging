@@ -7,15 +7,15 @@ import { SiteContainer } from "./foliaging/styles/components";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <SiteContextProvider>
       <ThemeProvider theme={siteTheme}>
-        <CssBaseline />
-        <SiteContextProvider>
+        <BrowserRouter>
+          <CssBaseline />
           <SiteContainer>
             <Site />
           </SiteContainer>
-        </SiteContextProvider>
+        </BrowserRouter>
       </ThemeProvider>
-    </BrowserRouter>
+    </SiteContextProvider>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import fluidImage from "../../assets/images/fluid3.svg";
-import { useSiteContext } from "../states";
+import { useSiteStateContext } from "../states";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { Box, Tabs, Tab, useTheme } from "@mui/material";
@@ -30,7 +30,7 @@ TabPanel.propTypes = {
 
 export default function UserProfile() {
   const theme = useTheme();
-  const [state] = useSiteContext();
+  const state = useSiteStateContext();
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleChange = (evt, index) => {

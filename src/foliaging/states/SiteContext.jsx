@@ -12,10 +12,10 @@ import siteReducer, {
   setLoading,
 } from "./siteReducer";
 
-export const SiteStateContext = createContext();
+export const SiteStateContext = createContext({});
 SiteStateContext.displayName = "SiteStateContext";
 
-export const SiteDispatchContext = createContext();
+export const SiteDispatchContext = createContext({});
 SiteDispatchContext.displayName = "SiteDispatchContext";
 
 export const useSiteStateContext = () => useContext(SiteStateContext);
@@ -36,12 +36,12 @@ export const SiteContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <SiteDispatchContext.Provider value={dispatch}>
-      <SiteStateContext.Provider value={globalState}>
+    <SiteStateContext.Provider value={globalState}>
+      <SiteDispatchContext.Provider value={dispatch}>
         {console.log(globalState)}
         {children}
-      </SiteStateContext.Provider>
-    </SiteDispatchContext.Provider>
+      </SiteDispatchContext.Provider>
+    </SiteStateContext.Provider>
   );
 };
 
