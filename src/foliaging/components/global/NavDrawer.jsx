@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { default as BoringAvatar } from "boring-avatars";
 import {
   Badge,
-  Box,
   Button,
   Icon,
   IconButton,

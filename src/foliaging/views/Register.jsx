@@ -3,7 +3,7 @@ import fluidImage from "../../assets/images/fluid2.svg";
 import { Button, Card, CardMedia, TextField, Typography } from "@mui/material";
 import { ContentBox, FlexBox, FrostedFlexBox } from "../styles/components";
 import { messages, processData, registerValidator } from "../utils";
-import { useSiteContext } from "../states/SiteContext";
+import { useSiteDispatchContext } from "../states/SiteContext";
 import { setError, setSuccess } from "../states/siteReducer";
 import { Box } from "@mui/system";
 import siteColors from "../styles/colors";
@@ -29,7 +29,7 @@ const registerUser = async (data) => {
 };
 
 export default function Register() {
-  const [, dispatch] = useSiteContext();
+  const dispatch = useSiteDispatchContext();
 
   const [registerFields, setRegisterFields] = useState({
     username: "",

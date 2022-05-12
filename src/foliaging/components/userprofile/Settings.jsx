@@ -1,6 +1,11 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
-import { setError, setSuccess, useSiteContext } from "../../states";
+import {
+  setError,
+  setSuccess,
+  useSiteDispatchContext,
+  useSiteStateContext,
+} from "../../states";
 import { FlexBox } from "../../styles/components";
 import {
   messages,
@@ -11,7 +16,9 @@ import {
 import LeafLoader from "../global/LeafLoader";
 
 export default function Settings() {
-  const [state, dispatch] = useSiteContext();
+  const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
+
   const { isLoading, user } = state;
 
   const [passwordFields, setPasswordFields] = useState({

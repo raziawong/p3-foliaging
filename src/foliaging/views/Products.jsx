@@ -2,6 +2,7 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { ProductsListing } from "../components";
 import { ContentBox } from "../styles/components";
+
 export default function Products() {
   return (
     <ContentBox sx={{ my: 4 }}>

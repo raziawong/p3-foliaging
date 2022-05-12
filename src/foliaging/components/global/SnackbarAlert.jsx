@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Icon, Snackbar } from "@mui/material";
-import { setError, useSiteContext } from "../../states";
+import {
+  setError,
+  useSiteStateContext,
+  useSiteDispatchContext,
+} from "../../states";
 import siteColors from "../../styles/colors";
 
 export default function SnackbarAlert() {
-  const [state, dispatch] = useSiteContext();
+  const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
 
   const [isOpen, setIsOpen] = useState(false);
 

@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
+import React, {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useReducer,
+} from "react";
 import { getLocalTokens } from "../utils";
 import siteReducer, {
   fetchProducts,
@@ -7,16 +12,20 @@ import siteReducer, {
   setLoading,
 } from "./siteReducer";
 
-export const SiteContext = createContext();
-SiteContext.displayName = "SiteContext";
+export const SiteStateContext = createContext();
+SiteStateContext.displayName = "SiteStateContext";
 
-export const useSiteContext = () => useContext(SiteContext);
+export const SiteDispatchContext = createContext();
+SiteDispatchContext.displayName = "SiteDispatchContext";
+
+export const useSiteStateContext = () => useContext(SiteStateContext);
+export const useSiteDispatchContext = () => useContext(SiteDispatchContext);
 
 export const SiteContextProvider = ({ children }) => {
   const [globalState, dispatch] = useReducer(siteReducer, initialState);
 
   // component did mount
-  useEffect(() => {
+  useLayoutEffect(() => {
     const { accessToken, refreshToken } = getLocalTokens();
     if (accessToken && refreshToken) {
       processExistTokens({ dispatch, refreshToken });
@@ -27,11 +36,13 @@ export const SiteContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <SiteContext.Provider value={[globalState, dispatch]}>
-      {console.log(globalState)}
-      {children}
-    </SiteContext.Provider>
+    <SiteDispatchContext.Provider value={dispatch}>
+      <SiteStateContext.Provider value={globalState}>
+        {console.log(globalState)}
+        {children}
+      </SiteStateContext.Provider>
+    </SiteDispatchContext.Provider>
   );
 };
 
-export default SiteContext;
+export default SiteContextProvider;

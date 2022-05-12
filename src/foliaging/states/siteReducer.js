@@ -23,7 +23,7 @@ export const initialState = {
   isLoading: false,
   products: [],
   user: {},
-  cart: {},
+  cart: [],
   tokenIntervalId: "",
   error: "",
   success: "",

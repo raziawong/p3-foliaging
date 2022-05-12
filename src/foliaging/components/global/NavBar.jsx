@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { useSiteStateContext, useSiteDispatchContext } from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
   alpha,
@@ -19,12 +20,13 @@ import { default as BoringAvatar } from "boring-avatars";
 import NavDrawer from "./NavDrawer";
 import { FlexBox, NavBarLink, NavBarLogo } from "../../styles/components";
 import siteColors, { avatarColors } from "../../styles/colors";
-import { useSiteContext } from "../../states/SiteContext";
 import { resetUser } from "../../states/siteReducer";
 import { removeLocalTokens } from "../../utils";
 
 export default function NavBar() {
-  const [state, dispatch] = useSiteContext();
+  const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 70,

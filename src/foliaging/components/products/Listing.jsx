@@ -7,12 +7,12 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { useSiteContext } from "../../states";
+import { useSiteStateContext } from "../../states";
 import { ContentBox } from "../../styles/components";
 import LeafLoader from "../global/LeafLoader";
 
 export default function Listing() {
-  const [state] = useSiteContext();
+  const state = useSiteStateContext();
 
   return (
     <Fragment>

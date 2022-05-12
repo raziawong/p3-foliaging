@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSiteDispatchContext, fetchAuthTokens } from "../states";
 import fluidImage from "../../assets/images/fluid1.svg";
 import {
   Box,
@@ -10,12 +11,10 @@ import {
 } from "@mui/material";
 import { ContentBox, FlexBox, FrostedFlexBox } from "../styles/components";
 import { loginValidator } from "../utils";
-import { useSiteContext } from "../states/SiteContext";
-import { fetchAuthTokens } from "../states/siteReducer";
 import siteColors from "../styles/colors";
 
 export default function Login() {
-  const [, dispatch] = useSiteContext();
+  const dispatch = useSiteDispatchContext();
 
   const [loginFields, setLoginFields] = useState({
     login: "",
