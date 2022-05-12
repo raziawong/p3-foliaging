@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import { default as BoringAvatar } from "boring-avatars";
 import {
   Badge,
@@ -18,9 +19,12 @@ export default function NavDrawer({
   setDrawOpen,
   handleLogout,
 }) {
+  const navigate = useNavigate();
+
   const handleClick = () => {
     setDrawOpen(true);
   };
+
   const handleClose = () => {
     setDrawOpen(false);
   };
@@ -36,7 +40,8 @@ export default function NavDrawer({
               {globalState.isAuthenticated ? (
                 <Fragment>
                   <Button
-                    href="/profile"
+                    onClick={() => navigate("/profile")}
+                    aria-label="to profile"
                     startIcon={
                       <BoringAvatar
                         size={25}
@@ -49,6 +54,7 @@ export default function NavDrawer({
                     Profile
                   </Button>
                   <Button
+                    aria-label="logout"
                     onClick={handleLogout}
                     startIcon={<Icon className="ri-logout-box-r-line" />}>
                     Logout
@@ -56,10 +62,18 @@ export default function NavDrawer({
                 </Fragment>
               ) : (
                 <Fragment>
-                  <Button href="/login" variant="outlined" color="primary">
+                  <Button
+                    onClick={() => navigate("/login")}
+                    aria-label="to login"
+                    variant="outlined"
+                    color="primary">
                     Login
                   </Button>
-                  <Button href="/register" variant="outlined" color="tertiary">
+                  <Button
+                    onClick={() => navigate("/register")}
+                    aria-label="to cart"
+                    variant="outlined"
+                    color="tertiary">
                     Register
                   </Button>
                 </Fragment>
@@ -68,13 +82,18 @@ export default function NavDrawer({
           </ListItem>
           <ListItem>
             <ListItemText>
-              <NavBarLink to="/products">Products</NavBarLink>
+              <NavBarLink to="/products" aria-label="to products">
+                Products
+              </NavBarLink>
             </ListItemText>
           </ListItem>
         </List>
       </NavBarDrawer>
       {globalState.isAuthenticated ? (
-        <IconButton href="/cart" color="primary" aria-label="cart">
+        <IconButton
+          onClick={() => navigate("/cart")}
+          aria-label="to cart"
+          color="primary">
           <Badge badgeContent={globalState.cart?.length} color="secondary">
             <Icon className="ri-shopping-cart-2-line" />
           </Badge>
@@ -82,7 +101,7 @@ export default function NavDrawer({
       ) : (
         <Fragment />
       )}
-      <IconButton onClick={handleClick}>
+      <IconButton aria-label="expand drawer menu" onClick={handleClick}>
         <Icon color="primary" className="ri-menu-4-line" />
       </IconButton>
     </Fragment>

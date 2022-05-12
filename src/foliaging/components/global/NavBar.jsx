@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSiteStateContext, useSiteDispatchContext } from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
@@ -26,6 +27,7 @@ import { removeLocalTokens } from "../../utils";
 export default function NavBar() {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
+  const navigate = useNavigate();
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -38,6 +40,7 @@ export default function NavBar() {
     evt.preventDefault();
     removeLocalTokens();
     dispatch(resetUser());
+    navigate("/login");
   };
 
   return (
@@ -51,7 +54,7 @@ export default function NavBar() {
             maxWidth: "100%",
           }}>
           <Box sx={{ position: "relative", flexGrow: { xs: 1, md: "unset" } }}>
-            <NavBarLogo to="/">
+            <NavBarLogo araia-label="to home" to="/">
               <img src={logo} alt="foliaging" />
             </NavBarLogo>
           </Box>
@@ -69,7 +72,10 @@ export default function NavBar() {
               {state.isAuthenticated ? (
                 <Fragment>
                   <Tooltip title="Cart">
-                    <IconButton href="/cart" color="primary" aria-label="cary">
+                    <IconButton
+                      color="primary"
+                      aria-label="to cart"
+                      onClick={() => navigate("/cart")}>
                       <Badge
                         badgeContent={state.cart?.length}
                         color="secondary">
@@ -78,7 +84,9 @@ export default function NavBar() {
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="Profile">
-                    <IconButton href="/profile" aria-label="profile">
+                    <IconButton
+                      aria-label="to profile"
+                      onClick={() => navigate("/profile")}>
                       <BoringAvatar
                         size={25}
                         square={true}
@@ -91,7 +99,7 @@ export default function NavBar() {
                   <Tooltip title="Logout">
                     <IconButton
                       color="primary"
-                      aria-label="logout"
+                      aria-label="to logout"
                       onClick={handleLogout}>
                       <Icon className="ri-logout-box-r-line" />
                     </IconButton>
@@ -100,10 +108,10 @@ export default function NavBar() {
               ) : (
                 <Fragment>
                   <Button
-                    href="/login"
                     variant="outlined"
                     color="primary"
-                    aria-label="login">
+                    aria-label="to login"
+                    onClick={() => navigate("/login")}>
                     Login
                   </Button>
                 </Fragment>
@@ -123,7 +131,10 @@ export default function NavBar() {
           <FlexBox>
             <List>
               <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-                <NavBarLink to="/products" color="secondary">
+                <NavBarLink
+                  to="/products"
+                  color="secondary"
+                  aria-label="to products">
                   <Typography variant="subtitle1">Products</Typography>
                 </NavBarLink>
               </ListItem>
