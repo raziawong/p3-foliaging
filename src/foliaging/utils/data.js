@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const apiBase = axios.create({
-  baseURL: "https://tgc16-foliaging-express.herokuapp.com/api",
+export const apiBase = axios.create({
+  baseURL: "http://localhost:3001/api",
 });
 
-const apiPaths = {
+export const apiPaths = {
   products: "/products",
   register: "/accounts/register",
   login: "/accounts/login",
@@ -123,7 +123,7 @@ const processCartDelete = async (params, token) => {
   );
 };
 
-const fetchData = {
+export const fetchData = {
   products: async (params) => await getProducts(params),
   authentication: async (body) => await getAccountAuth(body),
   authRefresh: async (body) => await refreshAccountAuth(body),
@@ -133,7 +133,7 @@ const fetchData = {
   checkout: async (params, token) => await getUserCheckout(params, token),
 };
 
-const processData = {
+export const processData = {
   logout: async (body) => await processLogout(body),
   register: async (body) => await processRegister(body),
   profileUpdate: async (body, token) => await processProfileUpdate(body, token),
@@ -146,5 +146,4 @@ const processData = {
   cartRemove: async (params, token) => await processCartDelete(params, token),
 };
 
-export { apiBase, apiPaths, fetchData, processData };
 export default fetchData;

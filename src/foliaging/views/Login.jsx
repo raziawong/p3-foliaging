@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ContentBox, FlexBox, FrostedFlexBox } from "../styles/components";
-import { loginValidator } from "../utils/validate";
+import { loginValidator } from "../utils";
 import { useSiteContext } from "../states/SiteContext";
 import { fetchAuthTokens } from "../states/siteReducer";
 import siteColors from "../styles/colors";

@@ -1,12 +1,12 @@
-import { fetchData } from "../utils/data";
-import { messages } from "../utils/helpers";
-import jwt from "jwt-decode";
 import {
+  messages,
+  fetchData,
   getRefreshedToken,
   removeLocalTokens,
   setLocalTokens,
   triggerRefreshInterval,
-} from "../utils/auth";
+} from "../utils";
+import jwt from "jwt-decode";
 
 export const stateConst = {
   SET_SUCCESS: "SET_SUCCESS",

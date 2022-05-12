@@ -1,6 +1,6 @@
 // colors generated and selected from https://coolors.co/
 
-const siteColors = {
+export const siteColors = {
   // orange yellow crayola
   primary: "#FFD275",
   // medium champagne (light orange yellow)

@@ -2,7 +2,7 @@ import jwt from "jwt-decode";
 import { resetUser } from "../states/siteReducer";
 import fetchData from "./data";
 
-const setLocalTokens = (tokens) => {
+export const setLocalTokens = (tokens) => {
   const localTokens = getLocalTokens();
   return localStorage.setItem(
     "tokens",
@@ -10,7 +10,7 @@ const setLocalTokens = (tokens) => {
   );
 };
 
-const getLocalTokens = () => {
+export const getLocalTokens = () => {
   const tokens = localStorage.getItem("tokens");
   if (tokens) {
     return JSON.parse(tokens);
@@ -18,11 +18,11 @@ const getLocalTokens = () => {
   return false;
 };
 
-const removeLocalTokens = () => {
+export const removeLocalTokens = () => {
   return localStorage.removeItem("tokens");
 };
 
-const isTokenValid = ({ exp }) => {
+export const isTokenValid = ({ exp }) => {
   const now = Date.now().valueOf() / 1000;
   if (typeof exp !== "undefined" && exp < now) {
     return false;
@@ -30,7 +30,7 @@ const isTokenValid = ({ exp }) => {
   return true;
 };
 
-const getRefreshedToken = async (refreshToken) => {
+export const getRefreshedToken = async (refreshToken) => {
   const decodedRefresh = jwt(refreshToken);
   let resp = false;
   if (isTokenValid(decodedRefresh)) {
@@ -43,7 +43,11 @@ const getRefreshedToken = async (refreshToken) => {
   return resp;
 };
 
-const triggerRefreshInterval = (refreshToken, dispatch, intervalId = "") => {
+export const triggerRefreshInterval = (
+  refreshToken,
+  dispatch,
+  intervalId = ""
+) => {
   const id = setInterval(() => {
     const isValid = isTokenValid(refreshToken);
     if (!isValid) {
@@ -64,11 +68,4 @@ const triggerRefreshInterval = (refreshToken, dispatch, intervalId = "") => {
   return id;
 };
 
-export {
-  setLocalTokens,
-  getLocalTokens,
-  removeLocalTokens,
-  isTokenValid,
-  triggerRefreshInterval,
-  getRefreshedToken,
-};
+export default triggerRefreshInterval;

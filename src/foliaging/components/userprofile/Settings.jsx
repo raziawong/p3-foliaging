@@ -2,10 +2,12 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { setError, setSuccess, useSiteContext } from "../../states";
 import { FlexBox } from "../../styles/components";
-import { getLocalTokens } from "../../utils/auth";
-import { processData } from "../../utils/data";
-import { messages } from "../../utils/helpers";
-import { newPasswordValidator } from "../../utils/validate";
+import {
+  messages,
+  getLocalTokens,
+  processData,
+  newPasswordValidator,
+} from "../../utils";
 import LeafLoader from "../global/LeafLoader";
 
 export default function Settings() {

@@ -21,7 +21,7 @@ import { FlexBox, NavBarLink, NavBarLogo } from "../../styles/components";
 import siteColors, { avatarColors } from "../../styles/colors";
 import { useSiteContext } from "../../states/SiteContext";
 import { resetUser } from "../../states/siteReducer";
-import { removeLocalTokens } from "../../utils/auth";
+import { removeLocalTokens } from "../../utils";
 
 export default function NavBar() {
   const [state, dispatch] = useSiteContext();

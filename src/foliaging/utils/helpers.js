@@ -1,4 +1,4 @@
-const messages = {
+export const messages = {
   productsFetchError:
     "Something went wrong retrieving products. Please try again",
   verificationError:
@@ -14,4 +14,4 @@ const messages = {
   cartFetchError: "Something went wrong retrieving cart. Please try again",
 };
 
-export { messages };
+export default messages;

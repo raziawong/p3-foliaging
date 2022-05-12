@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
-import { getLocalTokens } from "../utils/auth";
+import { getLocalTokens } from "../utils";
 import siteReducer, {
   fetchProducts,
   initialState,

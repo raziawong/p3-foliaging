@@ -1,4 +1,4 @@
-const templates = {
+export const templates = {
   required: `This is required`,
   spaces: `This cannot contain only space(s)`,
   alphaNumeric: `This can only be alphanumeric inclusive of '-' and/or '_'`,
@@ -9,14 +9,14 @@ const templates = {
   passwordMatch: `Password does not match`,
 };
 
-const regex = {
+export const regex = {
   spaces: /^[\s]*$/,
   alphaNumeric: /^[A-Za-zÀ-ȕ0-9\-_]*$/,
   email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
   password: new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/),
 };
 
-const newPasswordValidator = ({ password, confirm_password }) => {
+export const newPasswordValidator = ({ password, confirm_password }) => {
   const messages = {};
 
   if (!password) {
@@ -36,7 +36,7 @@ const newPasswordValidator = ({ password, confirm_password }) => {
   return messages;
 };
 
-const loginValidator = ({ login, password }) => {
+export const loginValidator = ({ login, password }) => {
   const messages = {};
 
   if (!login) {
@@ -57,7 +57,12 @@ const loginValidator = ({ login, password }) => {
   return messages;
 };
 
-const registerValidator = ({ username, email, password, confirm_password }) => {
+export const registerValidator = ({
+  username,
+  email,
+  password,
+  confirm_password,
+}) => {
   const messages = {};
 
   if (!username) {
@@ -86,10 +91,4 @@ const registerValidator = ({ username, email, password, confirm_password }) => {
   return { ...messages, ...passwordValidation };
 };
 
-export {
-  templates,
-  regex,
-  newPasswordValidator,
-  loginValidator,
-  registerValidator,
-};
+export default regex;
