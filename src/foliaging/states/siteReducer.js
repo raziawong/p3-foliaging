@@ -216,6 +216,34 @@ export const processExistTokens = async ({ dispatch, refreshToken }) => {
   }
 };
 
+export const processCartUpdate = async ({ dispatch, token, cartItem }) => {
+  try {
+    if (token) {
+      const resp = await processData.cartUpdate({ ...cartItem }, token);
+
+      if (resp.data?.item) {
+        dispatch(updateCartItem(resp.data.item));
+      }
+    }
+  } catch (err) {
+    dispatch(setError(messages.cartUpdateError));
+  }
+};
+
+export const processCartDelete = async ({ dispatch, token, cid, pid }) => {
+  try {
+    if (token) {
+      const resp = await processData.cartRemove({ cid, pid }, token);
+
+      if (resp.data?.success) {
+        dispatch(deleteCartItem({ pid }));
+      }
+    }
+  } catch (err) {
+    dispatch(setError(messages.cartDeleteError));
+  }
+};
+
 export const setSuccess = (payload) => {
   return { type: stateConst.SET_SUCCESS, payload };
 };
