@@ -126,7 +126,10 @@ export default function NavBar() {
           sx={{
             width: "100%",
             maxWidth: "100%",
-            backgroundColor: trigger ? alpha(siteColors.dark, 0.8) : "",
+            borderBottom: trigger
+              ? "none"
+              : `1px solid ${alpha(siteColors.honeydew, 0.3)}`,
+            backgroundColor: trigger ? alpha(siteColors.feldgrau, 0.95) : "",
           }}>
           <FlexBox>
             <List>
