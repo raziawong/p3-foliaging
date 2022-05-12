@@ -43,8 +43,8 @@ export const FrostedContentBox = styled(ContentBox)(({ theme }) => ({
     right: 0,
     bottom: 0,
     content: `''`,
-    boxShadow: `inset 0 2000px ${alpha(siteColors.dark, 0.5)}`,
-    filter: "blur(10px)",
+    boxShadow: `inset 0 0 0 2000px ${alpha(siteColors.dark, 0.1)}`,
+    backdropFilter: "blur(10px)",
     background: "inherit",
   },
 }));
