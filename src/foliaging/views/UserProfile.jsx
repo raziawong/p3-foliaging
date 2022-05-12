@@ -45,11 +45,12 @@ export default function UserProfile() {
     <FlexBox
       sx={{
         my: 4,
-        p: 2,
+        p: 1,
         background: `url(${fluidImage}) no-repeat center`,
         backgroundSize: "cover",
       }}>
-      <FrostedContentBox sx={{ py: 4, width: "90%" }}>
+      <FrostedContentBox
+        sx={{ py: 2, width: "90%", overflowWrap: "break-word" }}>
         <FlexBox>
           <Tabs
             value={tabIndex}

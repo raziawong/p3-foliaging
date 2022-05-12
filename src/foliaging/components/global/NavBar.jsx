@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { default as BoringAvatar } from "boring-avatars";
 import NavDrawer from "./NavDrawer";
-import { NavBarLink, NavBarLogo } from "../../styles/components";
+import { FlexBox, NavBarLink, NavBarLogo } from "../../styles/components";
 import siteColors, { avatarColors } from "../../styles/colors";
 import { useSiteContext } from "../../states/SiteContext";
 import { resetUser } from "../../states/siteReducer";
@@ -40,33 +40,22 @@ export default function NavBar() {
 
   return (
     <Fragment>
-      <AppBar position="sticky">
+      <AppBar position="static">
         <Toolbar
           component="nav"
           sx={{
-            py: { xs: 1, md: 2 },
+            pt: { xs: 1, md: 2 },
             width: "100%",
             maxWidth: "100%",
-            backgroundColor: trigger ? alpha(siteColors.feldgrau, 0.8) : "",
           }}>
           <Box sx={{ position: "relative", flexGrow: { xs: 1, md: "unset" } }}>
             <NavBarLogo to="/">
               <img src={logo} alt="foliaging" />
             </NavBarLogo>
           </Box>
-          <List
-            sx={{
-              display: { xs: "none", md: "flex" },
-              flexGrow: 1,
-            }}>
-            <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-              <NavBarLink to="/products" color="secondary">
-                <Typography variant="subtitle1">Products</Typography>
-              </NavBarLink>
-            </ListItem>
-          </List>
-          <Box sx={{ display: "flex", justifyContent: "flex-end", ml: "1rem" }}>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <FlexBox sx={{ flexGrow: 1 }}></FlexBox>
+          <FlexBox sx={{ justifyContent: "flex-end", ml: "1rem" }}>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <NavDrawer
                 globalState={state}
                 drawOpen={drawOpen}
@@ -74,13 +63,13 @@ export default function NavBar() {
                 handleLogout={handleLogout}
               />
             </Box>
-            <Box sx={{ display: { xs: "none", md: "inline-flex" }, gap: 1 }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
               {state.isAuthenticated ? (
                 <Fragment>
                   <Tooltip title="Cart">
                     <IconButton href="/cart" color="primary" aria-label="cary">
                       <Badge
-                        badgeContent={state.cart?.items?.length}
+                        badgeContent={state.cart?.length}
                         color="secondary">
                         <Icon className="ri-shopping-cart-2-line" />
                       </Badge>
@@ -118,7 +107,26 @@ export default function NavBar() {
                 </Fragment>
               )}
             </Box>
-          </Box>
+          </FlexBox>
+        </Toolbar>
+      </AppBar>
+      <AppBar position="sticky" sx={{ display: { xs: "none", md: "initial" } }}>
+        <Toolbar
+          component="nav"
+          sx={{
+            width: "100%",
+            maxWidth: "100%",
+            backgroundColor: trigger ? alpha(siteColors.dark, 0.8) : "",
+          }}>
+          <FlexBox>
+            <List>
+              <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+                <NavBarLink to="/products" color="secondary">
+                  <Typography variant="subtitle1">Products</Typography>
+                </NavBarLink>
+              </ListItem>
+            </List>
+          </FlexBox>
         </Toolbar>
       </AppBar>
     </Fragment>

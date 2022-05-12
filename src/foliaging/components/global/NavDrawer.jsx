@@ -10,7 +10,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import { NavBarDrawer, NavBarLink } from "../../styles/components";
+import { FlexBox, NavBarDrawer, NavBarLink } from "../../styles/components";
 import { avatarColors } from "../../styles/colors";
 
 export default function NavDrawer({
@@ -33,13 +33,7 @@ export default function NavDrawer({
           <ListItem
             sx={{ p: 2, display: { xs: "flex", sm: "none" } }}></ListItem>
           <ListItem sx={{ my: 3, width: "100%" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                flexWrap: "wrap",
-                width: "100%",
-              }}>
+            <FlexBox sx={{ justifyContent: "space-evenly", flexWrap: "wrap" }}>
               {globalState.isAuthenticated ? (
                 <Fragment>
                   <Button
@@ -71,7 +65,7 @@ export default function NavDrawer({
                   </Button>
                 </Fragment>
               )}
-            </Box>
+            </FlexBox>
           </ListItem>
           <ListItem>
             <ListItemText>
@@ -82,9 +76,7 @@ export default function NavDrawer({
       </NavBarDrawer>
       {globalState.isAuthenticated ? (
         <IconButton href="/cart" color="primary" aria-label="cart">
-          <Badge
-            badgeContent={globalState.cart?.items?.length}
-            color="secondary">
+          <Badge badgeContent={globalState.cart?.length} color="secondary">
             <Icon className="ri-shopping-cart-2-line" />
           </Badge>
         </IconButton>

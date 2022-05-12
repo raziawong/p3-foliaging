@@ -127,9 +127,9 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
 
 export const fetchProducts = async ({ dispatch }) => {
   try {
-    const products = await fetchData.products({});
-    if (products) {
-      dispatch(setProducts(products.data));
+    const resp = await fetchData.products({});
+    if (resp.data) {
+      dispatch(setProducts(resp.data));
     }
   } catch (err) {
     dispatch(setError(messages.productsFetchError));
@@ -141,7 +141,7 @@ export const fetchProducts = async ({ dispatch }) => {
 export const fetchUserDetails = async ({ dispatch, token }) => {
   try {
     const resp = await fetchData.profile(token);
-    if (resp) {
+    if (resp.data?.user) {
       dispatch(setUser(resp.data.user));
     }
   } catch (err) {
@@ -154,8 +154,8 @@ export const fetchUserDetails = async ({ dispatch, token }) => {
 export const fetchCartItems = async ({ dispatch, userId, token }) => {
   try {
     const resp = await fetchData.cart({ cid: userId }, token);
-    if (resp) {
-      dispatch(setCartItems(resp.data));
+    if (resp.data?.items) {
+      dispatch(setCartItems(resp.data.items));
     }
   } catch (err) {
     dispatch(setError(messages.cartFetchError));
