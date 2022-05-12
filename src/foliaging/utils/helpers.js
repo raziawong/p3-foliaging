@@ -12,6 +12,8 @@ export const messages = {
   passswordUpdateSuccess: "Password updated successfully",
   userUpdateError: "Issue encountered during update. Please try again",
   cartFetchError: "Something went wrong retrieving cart. Please try again",
+  cartUpdateError: "Something went wrong updating cart item. Please try again",
+  cartDeleteError: "Something went wrong deleting cart item. Please try again",
 };
 
 export default messages;

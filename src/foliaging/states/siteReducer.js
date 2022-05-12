@@ -5,6 +5,7 @@ import {
   removeLocalTokens,
   setLocalTokens,
   triggerRefreshInterval,
+  processData,
 } from "../utils";
 import jwt from "jwt-decode";
 
@@ -16,6 +17,8 @@ export const stateConst = {
   SET_USER: "SET_USER",
   RESET_USER: "RESET_USER",
   SET_CART_ITEMS: "SET_CART_ITEMS",
+  UPDATE_CART_ITEM: "UPDATE_CART_ITEM",
+  DELETE_CART_ITEM: "DELETE_CART_ITEM",
 };
 
 export const initialState = {
@@ -87,6 +90,32 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         cart: payload,
+      };
+    }
+
+    case stateConst.UPDATE_CART_ITEM: {
+      const newCart = state.cart?.map((item) => {
+        let newItem = item;
+        if (item.id === payload.id) {
+          newItem = payload;
+        }
+        return newItem;
+      });
+
+      return {
+        ...state,
+        cart: newCart,
+      };
+    }
+
+    case stateConst.DELETE_CART_ITEM: {
+      const newCart = state.cart?.filter(
+        (item) => item.product_id !== payload.pid
+      );
+
+      return {
+        ...state,
+        cart: newCart,
       };
     }
 
@@ -213,6 +242,14 @@ export const resetUser = () => {
 
 export const setCartItems = (payload) => {
   return { type: stateConst.SET_CART_ITEMS, payload };
+};
+
+export const updateCartItem = (payload) => {
+  return { type: stateConst.UPDATE_CART_ITEM, payload };
+};
+
+export const deleteCartItem = (payload) => {
+  return { type: stateConst.DELETE_CART_ITEM, payload };
 };
 
 export default siteReducer;

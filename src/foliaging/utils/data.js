@@ -116,11 +116,10 @@ const processCartUpdate = async (body, token) => {
 };
 
 const processCartDelete = async (params, token) => {
-  return await apiBase.delete(
-    apiPaths.cartItemRemove,
-    { params },
-    getHeaderConfig(token)
-  );
+  return await apiBase.delete(apiPaths.cartItemRemove, {
+    params,
+    ...getHeaderConfig(token),
+  });
 };
 
 export const fetchData = {
