@@ -32,7 +32,9 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   maxWidth: "100%",
 }));
 
-export const FrostedContentBox = styled(ContentBox)(({ theme }) => ({
+export const FrostedContentBox = styled(ContentBox, {
+  shouldForwardProp: (prop) => prop !== "shadowColor" || prop !== "shadowAlpha",
+})(({ shadowColor, shadowAlpha, theme }) => ({
   width: "100%",
   background: "inherit",
   boxShadow: "0 0 1.5rem 0 rgba(0, 0, 0, .1)",
@@ -43,7 +45,10 @@ export const FrostedContentBox = styled(ContentBox)(({ theme }) => ({
     right: 0,
     bottom: 0,
     content: `''`,
-    boxShadow: `inset 0 0 0 2000px ${alpha(siteColors.dark, 0.1)}`,
+    boxShadow: `inset 0 0 0 2000px ${alpha(
+      shadowColor || siteColors.dark,
+      shadowAlpha || 0.1
+    )}`,
     backdropFilter: "blur(10px)",
     background: "inherit",
   },
@@ -55,7 +60,9 @@ export const FlexBox = styled(ContentBox)(({ theme }) => ({
   justifyContent: "center",
 }));
 
-export const FrostedFlexBox = styled(FlexBox)(({ theme }) => ({
+export const FrostedFlexBox = styled(FlexBox, {
+  shouldForwardProp: (prop) => prop !== "shadowColor" || prop !== "shadowAlpha",
+})(({ shadowColor, shadowAlpha, theme }) => ({
   width: "100%",
   background: "inherit",
   boxShadow: "0 0 1.5rem 0 rgba(0, 0, 0, .1)",
@@ -66,7 +73,10 @@ export const FrostedFlexBox = styled(FlexBox)(({ theme }) => ({
     right: 0,
     bottom: 0,
     content: `''`,
-    boxShadow: `inset 0 0 0 2000px ${alpha(siteColors.dark, 0.1)}`,
+    boxShadow: `inset 0 0 0 2000px ${alpha(
+      shadowColor || siteColors.dark,
+      shadowAlpha || 0.1
+    )}`,
     backdropFilter: "blur(10px)",
     background: "inherit",
   },
