@@ -1,6 +1,6 @@
 import jwt from "jwt-decode";
-import { resetUser } from "../states/siteReducer";
-import fetchData from "./api";
+import { processLogout } from "../states/siteReducer";
+import { processData } from "./api";
 
 export const setLocalTokens = (tokens) => {
   const localTokens = getLocalTokens();
@@ -40,11 +40,11 @@ export const isTokenValid = ({ exp }) => {
   return true;
 };
 
-export const getRefreshedToken = async (refreshToken) => {
+export const getRefreshedToken = async (refreshToken, accessToken) => {
   const decodedRefresh = jwt(refreshToken);
   let resp = false;
   if (isTokenValid(decodedRefresh)) {
-    resp = await fetchData.authRefresh({ refreshToken });
+    resp = await processData.refreshToken({ refreshToken }, accessToken);
     if (resp?.data) {
       setLocalTokens({ accessToken: resp.data.accessToken });
       return resp.data;
@@ -53,24 +53,19 @@ export const getRefreshedToken = async (refreshToken) => {
   return resp;
 };
 
-export const triggerRefreshInterval = (
-  refreshToken,
-  dispatch,
-  intervalId = ""
-) => {
+export const triggerRefreshInterval = (dispatch) => {
   const id = setInterval(() => {
+    const { refreshToken, accessToken } = getLocalTokens();
     const isValid = isTokenValid(refreshToken);
+
     if (!isValid) {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-      removeLocalTokens();
-      dispatch(resetUser());
+      processLogout();
     } else {
       const doRefresh = async () => {
-        const tokens = await getRefreshedToken(refreshToken);
+        const tokens = await getRefreshedToken(refreshToken, accessToken);
         setLocalTokens(tokens);
       };
+
       doRefresh();
     }
   }, 720000);

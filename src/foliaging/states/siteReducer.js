@@ -6,6 +6,7 @@ import {
   setLocalTokens,
   triggerRefreshInterval,
   processData,
+  getLocalTokens,
 } from "../utils";
 import jwt from "jwt-decode";
 
@@ -71,14 +72,16 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: true,
-        tokenIntervalId: state.tokenIntervalId || intervalId,
+        tokenIntervalId: intervalId || state.tokenIntervalId,
         user: { ...state.user, ...details },
       };
     }
 
     case stateConst.RESET_USER: {
       const { tokenIntervalId } = state;
-      if (tokenIntervalId) clearInterval(tokenIntervalId);
+      if (tokenIntervalId) {
+        clearInterval(tokenIntervalId);
+      }
 
       return {
         ...state,
@@ -97,7 +100,6 @@ export const siteReducer = (state = initialState, { type, payload }) => {
     }
 
     case stateConst.ADD_CART_ITEM: {
-      console.log(payload);
       let hasItem = false;
       let newCart = state.cart?.map((item) => {
         let newItem = item;
@@ -162,7 +164,7 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
     if (resp?.data?.tokens) {
       const { accessToken, refreshToken } = resp.data.tokens;
       const decoded = jwt(accessToken);
-      const intervalId = triggerRefreshInterval(refreshToken);
+      const intervalId = triggerRefreshInterval();
 
       dispatch(setLoading(true));
 
@@ -177,7 +179,6 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
       fetchUserDetails({ dispatch, intervalId, token: accessToken });
     }
   } catch (err) {
-    console.log(err);
     if (err.response?.status === 401 || err.response?.status === 402) {
       dispatch(setError(err.response.data.error));
     } else {
@@ -199,11 +200,11 @@ export const fetchProducts = async ({ dispatch }) => {
   }
 };
 
-export const fetchUserDetails = async ({ dispatch, token }) => {
+export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
   try {
     const resp = await fetchData.profile(token);
     if (resp.data?.user) {
-      dispatch(setUser(resp.data.user));
+      dispatch(setUser({ ...resp.data.user, intervalId }));
     }
   } catch (err) {
     dispatch(setError(messages.userId));
@@ -225,11 +226,15 @@ export const fetchCartItems = async ({ dispatch, userId, token }) => {
   }
 };
 
-export const processExistTokens = async ({ dispatch, refreshToken }) => {
-  const newToken = await getRefreshedToken(refreshToken);
+export const processExistTokens = async ({
+  dispatch,
+  accessToken,
+  refreshToken,
+}) => {
+  const newToken = await getRefreshedToken(refreshToken, accessToken);
   if (newToken) {
     const decoded = jwt(newToken.accessToken);
-    const intervalId = triggerRefreshInterval(refreshToken, dispatch);
+    const intervalId = triggerRefreshInterval(dispatch);
 
     dispatch(setLoading(true));
 
@@ -314,10 +319,20 @@ export const processCheckout = async ({ dispatch, token, details }) => {
   }
 };
 
-export const processLogout = async ({ dispatch }) => {
-  removeLocalTokens();
-  dispatch(resetUser());
-  dispatch(setError(messages.sessionExpired));
+export const processLogout = ({ dispatch }) => {
+  try {
+    const { accessToken, refreshToken } = getLocalTokens();
+
+    if (accessToken && refreshToken) {
+      processData.blacklistToken({ refreshToken }, accessToken);
+      removeLocalTokens();
+    }
+
+    dispatch(resetUser());
+    dispatch(setError(messages.sessionExpired));
+  } catch (err) {
+    console.log(err);
+  }
 
   // TODO blacklisted token
 };

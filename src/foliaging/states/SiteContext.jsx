@@ -28,7 +28,7 @@ export const SiteContextProvider = ({ children }) => {
   useLayoutEffect(() => {
     const { accessToken, refreshToken } = getLocalTokens();
     if (accessToken && refreshToken) {
-      processExistTokens({ dispatch, refreshToken });
+      processExistTokens({ dispatch, accessToken, refreshToken });
     }
 
     dispatch(setLoading(true));

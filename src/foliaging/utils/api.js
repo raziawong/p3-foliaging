@@ -21,6 +21,7 @@ export const apiPaths = {
   cartItemRemove: "/user/cart/remove",
   cartItemQuantity: "/user/cart/quantity/update",
   userCheckout: "/user/checkout",
+  userLogout: "/user/logout",
 };
 
 const getHeaderConfig = (token) => {
@@ -35,10 +36,6 @@ const getProducts = async (params) => {
 
 const getAccountAuth = async (body) => {
   return await apiBase.post(apiPaths.login, { ...body });
-};
-
-const refreshAccountAuth = async (body) => {
-  return await apiBase.post(apiPaths.refresh, { ...body });
 };
 
 const getUserProfile = async (token) => {
@@ -57,10 +54,6 @@ const getUserCheckout = async (params, token) => {
     params,
     ...getHeaderConfig(token),
   });
-};
-
-const processLogout = async (body) => {
-  return await apiBase.post(apiPaths.logout, { ...body });
 };
 
 const processRegister = async (body) => {
@@ -122,10 +115,21 @@ const processCartDelete = async (params, token) => {
   });
 };
 
+const processRefresh = async (body, token) => {
+  return await apiBase.post(
+    apiPaths.refresh,
+    { ...body },
+    getHeaderConfig(token)
+  );
+};
+
+const processBlacklistToken = async (body) => {
+  return await apiBase.post(apiPaths.userLogout, { ...body });
+};
+
 export const fetchData = {
   products: async (params) => await getProducts(params),
   authentication: async (body) => await getAccountAuth(body),
-  authRefresh: async (body) => await refreshAccountAuth(body),
   profile: async (token) => await getUserProfile(token),
   addresses: async (params, token) => await getUserCart(params, token),
   cart: async (params, token) => await getUserCart(params, token),
@@ -133,7 +137,6 @@ export const fetchData = {
 };
 
 export const processData = {
-  logout: async (body) => await processLogout(body),
   register: async (body) => await processRegister(body),
   profileUpdate: async (body, token) => await processProfileUpdate(body, token),
   passwordUpdate: async (body, token) =>
@@ -143,6 +146,9 @@ export const processData = {
   cartAdd: async (body, token) => await processCartAdd(body, token),
   cartUpdate: async (body, token) => await processCartUpdate(body, token),
   cartRemove: async (params, token) => await processCartDelete(params, token),
+  refreshToken: async (body, token) => await processRefresh(body, token),
+  blacklistToken: async (body, token) =>
+    await processBlacklistToken(body, token),
 };
 
 export default fetchData;
