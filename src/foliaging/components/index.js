@@ -16,8 +16,10 @@ export * from "./global/SnackbarAlert";
 export { default as ProductsListing } from "./products/Listing";
 export * from "./products/Listing";
 
-export { default as HeaderBanner } from "./shared/HeaderBanner";
-export * from "./shared/HeaderBanner";
+export { default as HeaderBanner } from "./styled/HeaderBanner";
+export * from "./styled/HeaderBanner";
+
+export * from "./styled/components";
 
 export { default as Addresses } from "./userprofile/Addresses";
 export * from "./userprofile/Addresses";

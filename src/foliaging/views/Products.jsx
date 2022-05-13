@@ -1,7 +1,6 @@
 import React from "react";
 import fluidImage from "../../assets/images/fluid_palm.svg";
-import { HeaderBanner, ProductsListing } from "../components";
-import { ContentBox } from "../styles/components";
+import { ContentBox, HeaderBanner, ProductsListing } from "../components";
 
 export default function Products() {
   return (

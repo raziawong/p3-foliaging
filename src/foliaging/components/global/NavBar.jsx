@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { default as BoringAvatar } from "boring-avatars";
 import NavDrawer from "./NavDrawer";
-import { FlexBox, NavBarLink, NavBarLogo } from "../../styles/components";
+import { FlexBox, NavBarLink, NavBarLogo } from "../styled/components";
 import siteColors, { avatarColors } from "../../styles/colors";
 import { resetUser } from "../../states/siteReducer";
 import { removeLocalTokens } from "../../utils";

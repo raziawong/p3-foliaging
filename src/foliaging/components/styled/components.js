@@ -1,7 +1,7 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Link, NavLink } from "react-router-dom";
 import { Box, Drawer } from "@mui/material";
-import siteColors from "./colors";
+import siteColors from "../../styles/colors";
 
 export const SiteContainer = styled(Box)(({ theme }) => ({
   position: "relative",

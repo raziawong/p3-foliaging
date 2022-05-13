@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useSiteStateContext } from "../../states";
-import { ContentBox } from "../../styles/components";
+import { ContentBox } from "../styled/components";
 import LeafLoader from "../global/LeafLoader";
 
 export default function Listing() {

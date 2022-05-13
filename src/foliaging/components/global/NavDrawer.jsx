@@ -10,7 +10,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-import { FlexBox, NavBarDrawer, NavBarLink } from "../../styles/components";
+import { FlexBox, NavBarDrawer, NavBarLink } from "../styled/components";
 import { avatarColors } from "../../styles/colors";
 
 export default function NavDrawer({

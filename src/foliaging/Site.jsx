@@ -1,7 +1,12 @@
 import React, { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ViewContainer, ContentContainer } from "./styles/components";
-import { HeaderWave, NavBar, SnackbarAlert } from "./components";
+import {
+  ViewContainer,
+  ContentContainer,
+  HeaderWave,
+  NavBar,
+  SnackbarAlert,
+} from "./components";
 import {
   Home,
   Products,

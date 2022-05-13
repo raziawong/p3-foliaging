@@ -6,7 +6,7 @@ import {
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
-import { FlexBox } from "../../styles/components";
+import { FlexBox } from "../styled/components";
 import {
   messages,
   getLocalTokens,

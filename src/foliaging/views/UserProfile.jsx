@@ -4,8 +4,13 @@ import { useSiteStateContext } from "../states";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { Box, Tabs, Tab, useTheme } from "@mui/material";
-import { FlexBox, FrostedContentBox } from "../styles/components";
-import { Addresses, Contact, UserSettings } from "../components";
+import {
+  FlexBox,
+  FrostedContentBox,
+  Addresses,
+  Contact,
+  UserSettings,
+} from "../components";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Card, CardMedia, Typography } from "@mui/material";
-import { FlexBox, FrostedContentBox } from "../../styles/components";
+import { FlexBox, FrostedContentBox } from "./components";
 import siteColors from "../../styles/colors";
 
 export default function HeaderBanner({ header, imgSrc }) {

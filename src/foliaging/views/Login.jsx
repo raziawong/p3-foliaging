@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ContentBox, FlexBox, FrostedFlexBox } from "../styles/components";
+import { ContentBox, FlexBox, FrostedFlexBox } from "../components";
 import { loginValidator } from "../utils";
 import siteColors from "../styles/colors";
 
