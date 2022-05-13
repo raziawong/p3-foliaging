@@ -1,6 +1,6 @@
 import jwt from "jwt-decode";
 import { resetUser } from "../states/siteReducer";
-import fetchData from "./data";
+import fetchData from "./api";
 
 export const setLocalTokens = (tokens) => {
   const localTokens = getLocalTokens();
