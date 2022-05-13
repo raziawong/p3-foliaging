@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { ContentFeature } from "../components";
 import fluidImg from "../../assets/images/fluid_monstera.svg";
 
