@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { default as BoringAvatar } from "boring-avatars";
 import {
-  Badge,
   Button,
   Icon,
   IconButton,
@@ -12,13 +11,10 @@ import {
 } from "@mui/material";
 import { FlexBox, NavBarDrawer, NavBarLink } from "../styled/components";
 import { avatarColors } from "../../styles/colors";
+import { useSiteStateContext } from "../../states";
 
-export default function NavDrawer({
-  globalState,
-  drawOpen,
-  setDrawOpen,
-  handleLogout,
-}) {
+export default function NavDrawer({ drawOpen, setDrawOpen, handleLogout }) {
+  const state = useSiteStateContext();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -37,7 +33,7 @@ export default function NavDrawer({
             sx={{ p: 2, display: { xs: "flex", sm: "none" } }}></ListItem>
           <ListItem sx={{ my: 3, width: "100%" }}>
             <FlexBox sx={{ justifyContent: "space-evenly", flexWrap: "wrap" }}>
-              {globalState.isAuthenticated ? (
+              {state.isAuthenticated ? (
                 <Fragment>
                   <Button
                     onClick={() => navigate("/profile")}
@@ -46,7 +42,7 @@ export default function NavDrawer({
                       <BoringAvatar
                         size={25}
                         square={true}
-                        name={globalState.user?.email}
+                        name={state.user?.email}
                         variant="marble"
                         colors={avatarColors}
                       />
@@ -89,18 +85,6 @@ export default function NavDrawer({
           </ListItem>
         </List>
       </NavBarDrawer>
-      {globalState.isAuthenticated ? (
-        <IconButton
-          onClick={() => navigate("/cart")}
-          aria-label="to cart"
-          color="primary">
-          <Badge badgeContent={globalState.cart?.length} color="secondary">
-            <Icon className="ri-shopping-cart-2-line" />
-          </Badge>
-        </IconButton>
-      ) : (
-        <Fragment />
-      )}
       <IconButton aria-label="expand drawer menu" onClick={handleClick}>
         <Icon color="primary" className="ri-menu-4-line" />
       </IconButton>

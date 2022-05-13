@@ -137,3 +137,11 @@ export const NavBarDrawer = styled(Drawer)(({ theme }) => ({
     backgroundColor: alpha(siteColors.feldgrau, 0.9),
   },
 }));
+
+export const NavCartDrawer = styled(Drawer)(({ theme }) => ({
+  flexGrow: 1,
+  display: "flex",
+  "& .MuiDrawer-paper": {
+    backgroundColor: alpha(siteColors.feldgrau, 0.9),
+  },
+}));

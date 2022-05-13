@@ -7,14 +7,7 @@ import {
   NavBar,
   SnackbarAlert,
 } from "./components";
-import {
-  Home,
-  Products,
-  Login,
-  Register,
-  UserProfile,
-  UserCart,
-} from "./views";
+import { Home, Products, Login, Register, UserProfile } from "./views";
 
 export default function Site() {
   return (
@@ -29,7 +22,6 @@ export default function Site() {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/profile" element={<UserProfile />} />
-            <Route exact path="/cart" element={<UserCart />} />
           </Routes>
         </ContentContainer>
         <SnackbarAlert />

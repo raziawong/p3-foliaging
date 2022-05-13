@@ -94,6 +94,28 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       };
     }
 
+    case stateConst.ADD_CART_ITEM: {
+      console.log(payload);
+      let hasItem = false;
+      let newCart = state.cart?.map((item) => {
+        let newItem = item;
+        if (item.id === payload.id) {
+          hasItem = true;
+          newItem = payload;
+        }
+        return newItem;
+      });
+
+      if (!hasItem) {
+        newCart = [...state.cart, payload];
+      }
+
+      return {
+        ...state,
+        cart: newCart,
+      };
+    }
+
     case stateConst.UPDATE_CART_ITEM: {
       const newCart = state.cart?.map((item) => {
         let newItem = item;
@@ -222,7 +244,8 @@ export const processCartAdd = async ({ dispatch, token, cartItem }) => {
       const resp = await processData.cartAdd({ ...cartItem }, token);
 
       if (resp.data?.item) {
-        dispatch(updateCartItem(resp.data.item));
+        dispatch(addCartItem(resp.data.item));
+        dispatch(setSuccess(messages.cartAddSuccess));
       }
     }
   } catch (err) {

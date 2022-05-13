@@ -5,7 +5,6 @@ import logo from "../../../assets/images/brand.svg";
 import {
   alpha,
   AppBar,
-  Badge,
   Box,
   Button,
   Icon,
@@ -21,6 +20,7 @@ import { default as BoringAvatar } from "boring-avatars";
 import NavDrawer from "./NavDrawer";
 import { FlexBox, NavBarLink, NavBarLogo } from "../styled/components";
 import siteColors, { avatarColors } from "../../styles/colors";
+import CartDrawer from "./CartDrawer";
 
 export default function NavBar() {
   const state = useSiteStateContext();
@@ -31,7 +31,9 @@ export default function NavBar() {
     threshold: 70,
   });
 
-  const [drawOpen, setDrawOpen] = useState(false);
+  const [meunOpen, setMenuOpen] = useState(false);
+
+  const [cartOpen, setCartOpen] = useState(false);
 
   const handleLogout = (evt) => {
     evt.preventDefault();
@@ -57,39 +59,26 @@ export default function NavBar() {
           <FlexBox sx={{ flexGrow: 1 }}></FlexBox>
           <FlexBox sx={{ justifyContent: "flex-end", ml: "1rem" }}>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <CartDrawer
+                globalState={state}
+                drawOpen={cartOpen}
+                setDrawOpen={setCartOpen}
+              />
               <NavDrawer
                 globalState={state}
-                drawOpen={drawOpen}
-                setDrawOpen={setDrawOpen}
+                drawOpen={meunOpen}
+                setDrawOpen={setMenuOpen}
                 handleLogout={handleLogout}
               />
             </Box>
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
               {state.isAuthenticated ? (
                 <Fragment>
-                  <Tooltip title="Cart">
-                    {state.cart?.length ? (
-                      <IconButton
-                        color="primary"
-                        aria-label="to cart"
-                        onClick={() => navigate("/cart")}>
-                        <Badge
-                          badgeContent={state.cart?.length}
-                          color="secondary">
-                          <Icon className="ri-shopping-cart-2-fill" />
-                        </Badge>
-                      </IconButton>
-                    ) : (
-                      <IconButton
-                        color="primary"
-                        aria-label="to cart"
-                        onClick={() => navigate("/cart")}>
-                        <Badge color="secondary">
-                          <Icon className="ri-shopping-cart-2-line" />
-                        </Badge>
-                      </IconButton>
-                    )}
-                  </Tooltip>
+                  <CartDrawer
+                    globalState={state}
+                    drawOpen={cartOpen}
+                    setDrawOpen={setCartOpen}
+                  />
                   <Tooltip title="Profile">
                     <IconButton
                       aria-label="to profile"

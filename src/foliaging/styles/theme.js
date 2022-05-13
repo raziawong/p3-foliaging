@@ -98,6 +98,13 @@ let siteTheme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: "2px",
+        },
+      },
+    },
   },
 });
 

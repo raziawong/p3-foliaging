@@ -12,6 +12,3 @@ export * from "./Products";
 
 export { default as UserProfile } from "./UserProfile";
 export * from "./UserProfile";
-
-export { default as UserCart } from "./UserCart";
-export * from "./UserCart";
