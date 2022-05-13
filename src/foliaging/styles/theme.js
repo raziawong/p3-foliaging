@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { alpha, createTheme, responsiveFontSizes } from "@mui/material/styles";
 import siteColors from "./colors";
 
 let siteTheme = createTheme({
@@ -36,8 +36,8 @@ let siteTheme = createTheme({
       main: siteColors.warning,
     },
     background: {
-      default: siteColors.dark,
-      paper: siteColors.dark,
+      default: siteColors.background,
+      paper: alpha(siteColors.background, 0.1),
       light: siteColors.light,
     },
   },

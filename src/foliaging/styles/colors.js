@@ -23,6 +23,8 @@ export const siteColors = {
   light: "#ECE5F0",
   // hookers green
   dark: "#3E6E58",
+  // dark slate grey
+  background: "#35524A",
   // linen (super light orange)
   primaryText: "#FEEFE5",
   // cultured (super light green)
