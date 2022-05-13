@@ -1,18 +1,48 @@
 import React, { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import {
+  alpha,
   Box,
   Card,
   CardContent,
   CardMedia,
+  Chip,
   Grid,
+  Icon,
+  IconButton,
+  Tooltip,
   Typography,
 } from "@mui/material";
-import { useSiteStateContext } from "../../states";
-import { ContentBox } from "../styled/components";
+import {
+  processCartAdd,
+  processLogout,
+  useSiteDispatchContext,
+  useSiteStateContext,
+} from "../../states";
+import { ContentBox, FlexBox } from "../styled/components";
 import LeafLoader from "../global/LeafLoader";
+import siteColors from "../../styles/colors";
+import { allowToProtectedRoute } from "../../utils";
 
 export default function Listing() {
   const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
+
+  const handleGuest = () => {
+    processLogout({ dispatch });
+  };
+
+  const handleAddToCart = (pid) => {
+    allowToProtectedRoute((token) =>
+      token
+        ? processCartAdd({
+            dispatch,
+            token,
+            cartItem: { pid, cid: state.user.id },
+          })
+        : handleGuest()
+    );
+  };
 
   return (
     <Fragment>
@@ -22,29 +52,60 @@ export default function Listing() {
         <ContentBox>
           <Grid container sx={{ px: 6, py: 2 }} spacing={2}>
             {state.products.map((item) => (
-              <Grid item key={item.id} xs={12} md={6} lg={4}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    alt={item.title}
-                    height="450"
-                    image={item.images[0]}
-                  />
-                  <CardContent>
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}>
-                      <Typography>{item.title}</Typography>
-                      <Typography>${item.price.toFixed(2)}</Typography>
-                    </Box>
-                    <Typography>
-                      {item.plant_id
-                        ? item.plant.description || ""
-                        : item.planter_id
-                        ? item.planter.description || ""
-                        : item.supplie.description || ""}
-                    </Typography>
-                  </CardContent>
-                </Card>
+              <Grid item key={item.id} xs={12} sm={6} md={4}>
+                <Box
+                  sx={{
+                    borderRadius: "48% 48% 0 0",
+                    boxShadow: `1px 1px 2px 0 ${siteColors.lavendar}`,
+                  }}>
+                  <Card sx={{ borderRadius: "48% 48% 0 0" }}>
+                    <CardMedia
+                      component="img"
+                      alt={item.title}
+                      sx={{ height: "25%" }}
+                      image={item.images[0]}
+                    />
+                  </Card>
+                  <FlexBox
+                    sx={{
+                      pt: 1,
+                      pb: 2,
+                      mt: -4.2,
+                      justifyContent: "space-around",
+                    }}>
+                    <Chip
+                      sx={{ backgroundColor: siteColors.charcoal }}
+                      label={
+                        <Typography
+                          variant="subtitle1"
+                          color={siteColors.lavendar}>
+                          {"$" + item.price.toFixed(2)}
+                        </Typography>
+                      }
+                    />
+                    <Tooltip title="Add to cart">
+                      <IconButton
+                        sx={{
+                          backgroundColor: siteColors.mustard,
+                          color: siteColors.champagne,
+                        }}
+                        aria-label="add to cart"
+                        onClick={(evt) => handleAddToCart(item.id)}>
+                        <Icon className="ri-shopping-cart-2-line" />
+                      </IconButton>
+                    </Tooltip>
+                  </FlexBox>
+                  <FlexBox sx={{ pb: 1 }}>
+                    <Typography variant="subtitle1">{item.title}</Typography>
+                  </FlexBox>
+                  <Typography>
+                    {item.plant_id
+                      ? item.plant.description || ""
+                      : item.planter_id
+                      ? item.planter.description || ""
+                      : item.supplie.description || ""}
+                  </Typography>
+                </Box>
               </Grid>
             ))}
           </Grid>
