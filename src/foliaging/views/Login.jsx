@@ -56,7 +56,11 @@ export default function Login() {
           <Typography
             variant="h3"
             component="h1"
-            sx={{ pl: 4, color: siteColors.charcoal }}>
+            sx={{
+              pl: 4,
+              color: siteColors.secondaryText,
+              textShadow: `-5px -2px 3px ${siteColors.charcoal}`,
+            }}>
             Sign In
           </Typography>
         </Box>
