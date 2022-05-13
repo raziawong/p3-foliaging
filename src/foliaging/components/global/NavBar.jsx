@@ -1,10 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  useSiteStateContext,
-  useSiteDispatchContext,
-  processLogout,
-} from "../../states";
+import { useSiteStateContext, processLogout } from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
   alpha,
@@ -28,7 +24,6 @@ import siteColors, { avatarColors } from "../../styles/colors";
 
 export default function NavBar() {
   const state = useSiteStateContext();
-  const dispatch = useSiteDispatchContext();
   const navigate = useNavigate();
 
   const trigger = useScrollTrigger({
