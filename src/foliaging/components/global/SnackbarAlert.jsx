@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Icon, Snackbar } from "@mui/material";
+import { Alert, alpha, Icon, Snackbar } from "@mui/material";
 import {
   setError,
   useSiteStateContext,
@@ -29,9 +29,8 @@ export default function SnackbarAlert() {
       <Alert
         sx={{
           alignItems: "center",
-          bgcolor: siteColors.charcoal,
+          bgcolor: alpha(siteColors.charcoal, 0.7),
           textTransform: "uppercase",
-          maxWidth: "70%",
         }}
         onClose={handleClose}
         icon={
