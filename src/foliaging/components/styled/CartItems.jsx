@@ -17,6 +17,7 @@ import {
 } from "../../states";
 import { FlexBox, FrostedContentBox } from "../index";
 import { allowToProtectedRoute } from "../../utils";
+import siteColors from "../../styles/colors";
 
 export default function CartItems() {
   const dispatch = useSiteDispatchContext();
@@ -51,18 +52,15 @@ export default function CartItems() {
     <Fragment>
       {state.cart.length ? (
         state.cart.map((item) => (
-          <FrostedContentBox key={item.id}>
+          <FrostedContentBox shadowColor={siteColors.champagne} key={item.id}>
             <FlexBox sx={{ p: 2 }}>
               <Card sx={{ maxWidth: "20%" }}>
                 <CardMedia component="img" image={item.images[0]} />
               </Card>
               <FlexBox
-                sx={{ ml: 4, flexDirection: { xs: "column", md: "row" } }}>
+                sx={{ ml: 3, flexDirection: { xs: "column", md: "row" } }}>
                 <FlexBox
-                  sx={{
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}>
+                  sx={{ flexDirection: "column", alignItems: "flex-start" }}>
                   <Typography variant="subtitle2">
                     {item.product.title}
                   </Typography>

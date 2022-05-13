@@ -20,11 +20,13 @@ export const stateConst = {
   ADD_CART_ITEM: "ADD_CART_ITEM",
   UPDATE_CART_ITEM: "UPDATE_CART_ITEM",
   DELETE_CART_ITEM: "DELETE_CART_ITEM",
+  CHECKING_OUT: "CHECKING_OUT",
 };
 
 export const initialState = {
   isAuthenticated: false,
   isLoading: false,
+  isCheckingOut: false,
   products: [],
   user: {},
   cart: [],
@@ -139,6 +141,13 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         cart: newCart,
+      };
+    }
+
+    case stateConst.CHECKING_OUT: {
+      return {
+        ...state,
+        isCheckingOut: payload,
       };
     }
 
@@ -292,9 +301,23 @@ export const processPasswordUpdate = async ({ dispatch, token, passwords }) => {
   }
 };
 
+export const processCheckout = async ({ dispatch, token, details }) => {
+  try {
+    dispatch(checkingOut(true));
+    const resp = await fetchData.checkout(details, token);
+    if (resp.data.url) {
+      window.location.replace(resp.data.url);
+    }
+  } catch (err) {
+    dispatch(checkingOut(false));
+    dispatch(setError(messages.checkoutError));
+  }
+};
+
 export const processLogout = async ({ dispatch }) => {
   removeLocalTokens();
   dispatch(resetUser());
+  dispatch(setError(messages.sessionExpired));
 
   // TODO blacklisted token
 };
@@ -337,6 +360,10 @@ export const updateCartItem = (payload) => {
 
 export const deleteCartItem = (payload) => {
   return { type: stateConst.DELETE_CART_ITEM, payload };
+};
+
+export const checkingOut = (payload) => {
+  return { type: stateConst.CHECKING_OUT, payload };
 };
 
 export default siteReducer;

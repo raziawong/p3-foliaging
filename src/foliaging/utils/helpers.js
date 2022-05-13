@@ -6,6 +6,7 @@ export const messages = {
   registerSuccess: (name) => `Registration of ${name} completed`,
   registerDenied: "Registration failed. Please try again",
   registerFailed: "Something went wrong with registration. Please try again",
+  sessionExpired: "Your session may have expired. Please login again",
   userFetchError:
     "Something went wrong retrieving customer details. Please try again",
   userUpdateSuccess: "Profile updated successfully",
@@ -15,6 +16,7 @@ export const messages = {
   cartFetchError: "Something went wrong retrieving cart. Please try again",
   cartUpdateError: "Something went wrong updating cart item. Please try again",
   cartDeleteError: "Something went wrong deleting cart item. Please try again",
+  checkoutError: "Something went wrong with checking out. Please try again",
 };
 
 export default messages;
