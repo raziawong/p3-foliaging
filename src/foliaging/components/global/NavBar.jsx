@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSiteStateContext, useSiteDispatchContext } from "../../states";
+import {
+  useSiteStateContext,
+  useSiteDispatchContext,
+  processLogout,
+} from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
   alpha,
@@ -21,8 +25,6 @@ import { default as BoringAvatar } from "boring-avatars";
 import NavDrawer from "./NavDrawer";
 import { FlexBox, NavBarLink, NavBarLogo } from "../styled/components";
 import siteColors, { avatarColors } from "../../styles/colors";
-import { resetUser } from "../../states/siteReducer";
-import { removeLocalTokens } from "../../utils";
 
 export default function NavBar() {
   const state = useSiteStateContext();
@@ -38,8 +40,7 @@ export default function NavBar() {
 
   const handleLogout = (evt) => {
     evt.preventDefault();
-    removeLocalTokens();
-    dispatch(resetUser());
+    processLogout();
     navigate("/login");
   };
 
@@ -72,16 +73,27 @@ export default function NavBar() {
               {state.isAuthenticated ? (
                 <Fragment>
                   <Tooltip title="Cart">
-                    <IconButton
-                      color="primary"
-                      aria-label="to cart"
-                      onClick={() => navigate("/cart")}>
-                      <Badge
-                        badgeContent={state.cart?.length}
-                        color="secondary">
-                        <Icon className="ri-shopping-cart-2-line" />
-                      </Badge>
-                    </IconButton>
+                    {state.cart?.length ? (
+                      <IconButton
+                        color="primary"
+                        aria-label="to cart"
+                        onClick={() => navigate("/cart")}>
+                        <Badge
+                          badgeContent={state.cart?.length}
+                          color="secondary">
+                          <Icon className="ri-shopping-cart-2-fill" />
+                        </Badge>
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        color="primary"
+                        aria-label="to cart"
+                        onClick={() => navigate("/cart")}>
+                        <Badge color="secondary">
+                          <Icon className="ri-shopping-cart-2-line" />
+                        </Badge>
+                      </IconButton>
+                    )}
                   </Tooltip>
                   <Tooltip title="Profile">
                     <IconButton
