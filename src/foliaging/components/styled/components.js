@@ -107,7 +107,7 @@ export const NavBarLogo = styled(Link)(({ theme }) => ({
 export const NavBarLink = styled(NavLink)(({ theme }) => ({
   color: theme.palette.tertiary.light,
   textDecoration: "none",
-  fontWeight: "semibold",
+  fontWeight: 500,
   textTransform: "uppercase",
   marginLeft: theme.spacing(1),
   "&:hover": {

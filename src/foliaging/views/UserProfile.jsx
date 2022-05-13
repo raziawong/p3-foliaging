@@ -57,7 +57,7 @@ export default function UserProfile() {
                 <Typography
                   component="h3"
                   variant="h6"
-                  sx={{ textTransform: "capitalize", fontWeight: "semibold" }}>
+                  sx={{ textTransform: "capitalize", fontWeight: 500 }}>
                   Settings
                 </Typography>
               }
@@ -67,7 +67,7 @@ export default function UserProfile() {
                 <Typography
                   component="h3"
                   variant="h6"
-                  sx={{ textTransform: "capitalize", fontWeight: "semibold" }}>
+                  sx={{ textTransform: "capitalize", fontWeight: 500 }}>
                   Contact
                 </Typography>
               }
@@ -77,7 +77,7 @@ export default function UserProfile() {
                 <Typography
                   component="h3"
                   variant="h6"
-                  sx={{ textTransform: "capitalize", fontWeight: "semibold" }}>
+                  sx={{ textTransform: "capitalize", fontWeight: 500 }}>
                   Addresses
                 </Typography>
               }

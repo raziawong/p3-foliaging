@@ -1,10 +1,7 @@
 import React, { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
 import {
-  alpha,
   Box,
   Card,
-  CardContent,
   CardMedia,
   Chip,
   Grid,
@@ -74,11 +71,12 @@ export default function Listing() {
                       justifyContent: "space-around",
                     }}>
                     <Chip
-                      sx={{ backgroundColor: siteColors.charcoal }}
+                      sx={{ backgroundColor: siteColors.lavendar }}
                       label={
                         <Typography
                           variant="subtitle1"
-                          color={siteColors.lavendar}>
+                          sx={{ fontWeight: 500 }}
+                          color={siteColors.charcoal}>
                           {"$" + item.price.toFixed(2)}
                         </Typography>
                       }
