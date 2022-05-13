@@ -28,6 +28,11 @@ export default function Settings() {
     confirm_password: "",
   });
 
+  const handleLogout = () => {
+    processLogout({ dispatch });
+    navigate("/login");
+  };
+
   const handleChange = ({ target }) => {
     setPasswordFields({ ...passwordFields, [target.name]: target.value });
   };
@@ -38,20 +43,15 @@ export default function Settings() {
     if (Object.keys(validations).length) {
       setValidationMsgs(validations);
     } else {
-      const authResults = allowToProtectedRoute((token) =>
+      allowToProtectedRoute((token) =>
         token
           ? processPasswordUpdate({
               dispatch,
               token,
               passwords: passwordFields,
             })
-          : false
+          : handleLogout()
       );
-
-      if (!authResults) {
-        processLogout();
-        navigate("/login");
-      }
     }
   };
 

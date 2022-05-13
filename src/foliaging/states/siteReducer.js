@@ -212,8 +212,7 @@ export const processExistTokens = async ({ dispatch, refreshToken }) => {
 
     fetchUserDetails({ dispatch, intervalId, token: newToken.accessToken });
   } else {
-    removeLocalTokens();
-    dispatch(resetUser());
+    processLogout({ dispatch });
   }
 };
 

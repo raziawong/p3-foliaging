@@ -23,34 +23,28 @@ export default function UserCart() {
   const state = useSiteStateContext();
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    processLogout({ dispatch });
+    navigate("/login");
+  };
+
   const handleChange = (cid, pid, quantity) => {
     quantity = Number(quantity);
-
-    const authResults = allowToProtectedRoute((token) =>
+    allowToProtectedRoute((token) =>
       token
         ? processCartUpdate({
             dispatch,
             token,
             cartItem: { cid, pid, quantity },
           })
-        : false
+        : handleLogout()
     );
-
-    if (!authResults) {
-      processLogout();
-      navigate("/login");
-    }
   };
 
   const handleRemove = (cid, pid) => {
-    const authResults = allowToProtectedRoute((token) =>
-      token ? processCartDelete({ dispatch, token, cid, pid }) : false
+    allowToProtectedRoute((token) =>
+      token ? processCartDelete({ dispatch, token, cid, pid }) : handleLogout()
     );
-
-    if (!authResults) {
-      processLogout();
-      navigate("/login");
-    }
   };
 
   return (
