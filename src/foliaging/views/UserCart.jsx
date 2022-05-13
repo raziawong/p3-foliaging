@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardMedia,
@@ -10,36 +11,46 @@ import {
 import {
   processCartDelete,
   processCartUpdate,
+  processLogout,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../states";
 import { FlexBox, FrostedContentBox, LeafLoader } from "../components";
-import { getLocalTokens } from "../utils";
+import { allowToProtectedRoute } from "../utils";
 
 export default function UserCart() {
   const dispatch = useSiteDispatchContext();
   const state = useSiteStateContext();
+  const navigate = useNavigate();
 
   const handleChange = (cid, pid, quantity) => {
-    const tokens = getLocalTokens();
     quantity = Number(quantity);
 
-    processCartUpdate({
-      dispatch,
-      token: tokens.accessToken,
-      cartItem: { cid, pid, quantity },
-    });
+    const authResults = allowToProtectedRoute((token) =>
+      token
+        ? processCartUpdate({
+            dispatch,
+            token,
+            cartItem: { cid, pid, quantity },
+          })
+        : false
+    );
+
+    if (!authResults) {
+      processLogout();
+      navigate("/login");
+    }
   };
 
   const handleRemove = (cid, pid) => {
-    const tokens = getLocalTokens();
+    const authResults = allowToProtectedRoute((token) =>
+      token ? processCartDelete({ dispatch, token, cid, pid }) : false
+    );
 
-    processCartDelete({
-      dispatch,
-      token: tokens.accessToken,
-      cid,
-      pid,
-    });
+    if (!authResults) {
+      processLogout();
+      navigate("/login");
+    }
   };
 
   return (

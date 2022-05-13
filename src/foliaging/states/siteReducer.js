@@ -16,7 +16,8 @@ export const stateConst = {
   SET_PRODUCTS: "SET_PRODUCTS",
   SET_USER: "SET_USER",
   RESET_USER: "RESET_USER",
-  SET_CART_ITEMS: "SET_CART_ITEMS",
+  SET_CART: "SET_CART",
+  ADD_CART_ITEM: "ADD_CART_ITEM",
   UPDATE_CART_ITEM: "UPDATE_CART_ITEM",
   DELETE_CART_ITEM: "DELETE_CART_ITEM",
 };
@@ -86,7 +87,7 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       };
     }
 
-    case stateConst.SET_CART_ITEMS: {
+    case stateConst.SET_CART: {
       return {
         ...state,
         cart: payload,
@@ -184,7 +185,7 @@ export const fetchCartItems = async ({ dispatch, userId, token }) => {
   try {
     const resp = await fetchData.cart({ cid: userId }, token);
     if (resp.data?.items) {
-      dispatch(setCartItems(resp.data.items));
+      dispatch(setCart(resp.data.items));
     }
   } catch (err) {
     dispatch(setError(messages.cartFetchError));
@@ -216,6 +217,20 @@ export const processExistTokens = async ({ dispatch, refreshToken }) => {
   }
 };
 
+export const processCartAdd = async ({ dispatch, token, cartItem }) => {
+  try {
+    if (token) {
+      const resp = await processData.cartAdd({ ...cartItem }, token);
+
+      if (resp.data?.item) {
+        dispatch(updateCartItem(resp.data.item));
+      }
+    }
+  } catch (err) {
+    dispatch(setError(messages.cartUpdateError));
+  }
+};
+
 export const processCartUpdate = async ({ dispatch, token, cartItem }) => {
   try {
     if (token) {
@@ -244,6 +259,24 @@ export const processCartDelete = async ({ dispatch, token, cid, pid }) => {
   }
 };
 
+export const processPasswordUpdate = async ({ dispatch, token, passwords }) => {
+  try {
+    const results = await processData.passwordUpdate(passwords, token);
+    if (results.data?.user) {
+      dispatch(setSuccess(messages.passswordUpdateSuccess));
+    }
+  } catch (err) {
+    dispatch(setError(messages.userUpdateError));
+  }
+};
+
+export const processLogout = async ({ dispatch }) => {
+  removeLocalTokens();
+  dispatch(resetUser());
+
+  // TODO blacklisted token
+};
+
 export const setSuccess = (payload) => {
   return { type: stateConst.SET_SUCCESS, payload };
 };
@@ -268,8 +301,12 @@ export const resetUser = () => {
   return { type: stateConst.RESET_USER };
 };
 
-export const setCartItems = (payload) => {
-  return { type: stateConst.SET_CART_ITEMS, payload };
+export const setCart = (payload) => {
+  return { type: stateConst.SET_CART, payload };
+};
+
+export const addCartItem = (payload) => {
+  return { type: stateConst.ADD_CART_ITEM, payload };
 };
 
 export const updateCartItem = (payload) => {

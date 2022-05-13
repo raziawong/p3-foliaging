@@ -1,23 +1,20 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import {
-  setError,
-  setSuccess,
+  processLogout,
+  processPasswordUpdate,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
 import { FlexBox } from "../styled/components";
-import {
-  messages,
-  getLocalTokens,
-  processData,
-  newPasswordValidator,
-} from "../../utils";
+import { newPasswordValidator, allowToProtectedRoute } from "../../utils";
 import LeafLoader from "../global/LeafLoader";
 
 export default function Settings() {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
+  const navigate = useNavigate();
 
   const { isLoading, user } = state;
 
@@ -41,17 +38,19 @@ export default function Settings() {
     if (Object.keys(validations).length) {
       setValidationMsgs(validations);
     } else {
-      try {
-        const tokens = getLocalTokens();
-        const results = await processData.passwordUpdate(
-          passwordFields,
-          tokens.accessToken
-        );
-        if (results.data?.user) {
-          dispatch(setSuccess(messages.passswordUpdateSuccess));
-        }
-      } catch (err) {
-        dispatch(setError(messages.userUpdateError));
+      const authResults = allowToProtectedRoute((token) =>
+        token
+          ? processPasswordUpdate({
+              dispatch,
+              token,
+              passwords: passwordFields,
+            })
+          : false
+      );
+
+      if (!authResults) {
+        processLogout();
+        navigate("/login");
       }
     }
   };

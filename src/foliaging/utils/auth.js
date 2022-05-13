@@ -22,6 +22,16 @@ export const removeLocalTokens = () => {
   return localStorage.removeItem("tokens");
 };
 
+export const allowToProtectedRoute = (callback) => {
+  const { accessToken } = getLocalTokens();
+
+  if (accessToken && isTokenValid(accessToken)) {
+    callback(accessToken);
+  } else {
+    callback(false);
+  }
+};
+
 export const isTokenValid = ({ exp }) => {
   const now = Date.now().valueOf() / 1000;
   if (typeof exp !== "undefined" && exp < now) {
