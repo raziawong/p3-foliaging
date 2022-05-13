@@ -87,7 +87,7 @@ export default function Settings() {
                 </Grid>
               </Grid>
             </FlexBox>
-            <FlexBox component="form" sx={{ flexDirection: "column", mt: 4 }}>
+            <FlexBox component="form" sx={{ flexDirection: "column", mt: 5 }}>
               <Typography variant="h6" component="h4">
                 Change Password
               </Typography>
@@ -119,10 +119,11 @@ export default function Settings() {
                 error={!!validationMsgs.confirm_password || false}
                 helperText={validationMsgs.confirm_password}
               />
-              <FlexBox sx={{ pt: 6, justifyContent: "flex-end" }}>
+              <FlexBox sx={{ pt: 4, justifyContent: "flex-end" }}>
                 <Button
-                  variant="outlined"
-                  color="primary"
+                  variant="contained"
+                  color="secondary"
+                  size="small"
                   onClick={handleSubmit}>
                   Update
                 </Button>

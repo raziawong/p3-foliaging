@@ -16,10 +16,13 @@ export * from "./global/SnackbarAlert";
 export { default as ProductsListing } from "./products/Listing";
 export * from "./products/Listing";
 
+export * from "./styled/components";
+
 export { default as HeaderBanner } from "./styled/HeaderBanner";
 export * from "./styled/HeaderBanner";
 
-export * from "./styled/components";
+export { default as TabPanel } from "./styled/TabPanel";
+export * from "./styled/TabPanel";
 
 export { default as Addresses } from "./userprofile/Addresses";
 export * from "./userprofile/Addresses";

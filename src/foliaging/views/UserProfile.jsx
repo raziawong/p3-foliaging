@@ -1,37 +1,17 @@
 import React, { useState } from "react";
 import fluidImage from "../../assets/images/fluid3.svg";
 import { useSiteStateContext } from "../states";
-import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
-import { Box, Tabs, Tab, useTheme } from "@mui/material";
+import { Tabs, Tab, useTheme, Typography } from "@mui/material";
 import {
   FlexBox,
   FrostedContentBox,
   Addresses,
   Contact,
   UserSettings,
+  TabPanel,
 } from "../components";
-
-const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}>
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-};
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
+import siteColors from "../styles/colors";
 
 export default function UserProfile() {
   const theme = useTheme();
@@ -51,11 +31,18 @@ export default function UserProfile() {
       sx={{
         my: 4,
         p: 1,
-        background: `url(${fluidImage}) no-repeat center`,
+        background: `${siteColors.charcoal} url(${fluidImage}) no-repeat center`,
         backgroundSize: "cover",
       }}>
       <FrostedContentBox
-        sx={{ py: 2, width: "90%", overflowWrap: "break-word" }}>
+        shadowAlpha={0.4}
+        shadowColor={siteColors.background}
+        sx={{
+          py: 2,
+          width: "97%",
+          minHeight: "80vh",
+          overflowWrap: "break-word",
+        }}>
         <FlexBox>
           <Tabs
             value={tabIndex}
@@ -65,9 +52,36 @@ export default function UserProfile() {
             allowScrollButtonsMobile
             textColor="secondary"
             indicatorColor="secondary">
-            <Tab label="Settings" />
-            <Tab label="Contact" />
-            <Tab label="Addresses" />
+            <Tab
+              label={
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  sx={{ textTransform: "capitalize", fontWeight: "semibold" }}>
+                  Settings
+                </Typography>
+              }
+            />
+            <Tab
+              label={
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  sx={{ textTransform: "capitalize", fontWeight: "semibold" }}>
+                  Contact
+                </Typography>
+              }
+            />
+            <Tab
+              label={
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  sx={{ textTransform: "capitalize", fontWeight: "semibold" }}>
+                  Addresses
+                </Typography>
+              }
+            />
           </Tabs>
         </FlexBox>
         <FlexBox sx={{ mt: 4 }}>
