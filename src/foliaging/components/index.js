@@ -21,6 +21,9 @@ export * from "./products/Listing";
 
 export * from "./styled/components";
 
+export { default as ContentFeature } from "./styled/ContentFeature";
+export * from "./styled/ContentFeature";
+
 export { default as HeaderBanner } from "./styled/HeaderBanner";
 export * from "./styled/HeaderBanner";
 

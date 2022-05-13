@@ -12,3 +12,9 @@ export * from "./Products";
 
 export { default as UserProfile } from "./UserProfile";
 export * from "./UserProfile";
+
+export { default as Checkout } from "./Checkout";
+export * from "./Checkout";
+
+export { default as NotFound } from "./NotFound";
+export * from "./NotFound";
