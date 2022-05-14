@@ -59,11 +59,15 @@ export default function NavBar() {
           <FlexBox sx={{ flexGrow: 1 }}></FlexBox>
           <FlexBox sx={{ justifyContent: "flex-end", ml: "1rem" }}>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
-              <CartDrawer
-                globalState={state}
-                drawOpen={cartOpen}
-                setDrawOpen={setCartOpen}
-              />
+              {state.isAuthenticated ? (
+                <CartDrawer
+                  globalState={state}
+                  drawOpen={cartOpen}
+                  setDrawOpen={setCartOpen}
+                />
+              ) : (
+                <Fragment />
+              )}
               <NavDrawer
                 globalState={state}
                 drawOpen={meunOpen}
