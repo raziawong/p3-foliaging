@@ -106,7 +106,9 @@ export default function Login() {
                 </Button>
               </FlexBox>
             </ContentBox>
-            <Typography variant="subtitle1" sx={{ zIndex: 4 }}>
+            <Typography
+              variant="subtitle1"
+              sx={{ textAlign: "center", zIndex: 4 }}>
               Don't have an account yet?
               <Button
                 href="/register"
