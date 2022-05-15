@@ -7,8 +7,16 @@ export const apiBase = axios.create({
 export const apiPaths = {
   products: "/products",
   productPlants: "/products/plants",
+  plantSpecies: "/products/plants/species",
+  plantCare: "/products/plants/care-levels",
+  plantLight: "/products/plants/light-requirements",
+  plantWater: "/products/plants/water-frequencies",
+  plantTraits: "/products/plants/traits",
   productPlanters: "/products/planters",
+  planterTypes: "/products/planters/types",
+  planterMaterials: "/products/planters/materials",
   productSupplies: "/products/supplies",
+  supplyTypes: "/products/supplies/types",
   register: "/accounts/register",
   login: "/accounts/login",
   logout: "/accounts/logout",
@@ -41,12 +49,44 @@ const getPlants = async (params) => {
   return await apiBase.get(apiPaths.productPlants, { params });
 };
 
+const getPlantSpecies = async () => {
+  return await apiBase.get(apiPaths.plantSpecies);
+};
+
+const getPlantCare = async () => {
+  return await apiBase.get(apiPaths.plantCare);
+};
+
+const getPlantLight = async () => {
+  return await apiBase.get(apiPaths.plantLight);
+};
+
+const getPlantWater = async () => {
+  return await apiBase.get(apiPaths.plantWater);
+};
+
+const getPlantTraits = async () => {
+  return await apiBase.get(apiPaths.plantTraits);
+};
+
 const getPlanters = async (params) => {
   return await apiBase.get(apiPaths.productPlanters, { params });
 };
 
+const getPlanterTypes = async () => {
+  return await apiBase.get(apiPaths.planterTypes);
+};
+
+const getPlanterMaterials = async () => {
+  return await apiBase.get(apiPaths.planterMaterials);
+};
+
 const getSupplies = async (params) => {
   return await apiBase.get(apiPaths.productSupplies, { params });
+};
+
+const getSupplyTypes = async () => {
+  return await apiBase.get(apiPaths.supplyTypes);
 };
 
 const getAccountAuth = async (body) => {
@@ -145,8 +185,16 @@ const processBlacklistToken = async (body) => {
 export const fetchData = {
   products: async (params) => await getProducts(params),
   plants: async (params) => await getPlants(params),
+  species: async () => await getPlantSpecies(),
+  care: async () => await getPlantCare(),
+  light: async () => await getPlantLight(),
+  water: async () => await getPlantWater(),
+  traits: async () => await getPlantTraits(),
   planters: async (params) => await getPlanters(params),
+  planterTypes: async () => await getPlanterTypes(),
+  materials: async () => await getPlanterMaterials(),
   supplies: async (params) => await getSupplies(params),
+  supplyTypes: async () => await getSupplyTypes(),
   authentication: async (body) => await getAccountAuth(body),
   profile: async (token) => await getUserProfile(token),
   addresses: async (params, token) => await getUserCart(params, token),
