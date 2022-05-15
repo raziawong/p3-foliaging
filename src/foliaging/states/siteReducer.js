@@ -11,10 +11,12 @@ import {
 import jwt from "jwt-decode";
 
 export const stateConst = {
+  SET_MULTI: "SET_MULTI",
   SET_SUCCESS: "SET_SUCCESS",
   SET_ERROR: "SET_ERROR",
   SET_LOADING: "SET_LOADING",
-  SET_PRODUCTS: "SET_PRODUCTS",
+  SET_OPTIONS: "SET_OPTIONS",
+  SET_SEARCH: "SET_SEARCH",
   SET_USER: "SET_USER",
   RESET_USER: "RESET_USER",
   SET_CART: "SET_CART",
@@ -51,6 +53,13 @@ export const initialState = {
 
 export const siteReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case stateConst.SET_MULTI: {
+      return {
+        ...state,
+        ...payload,
+      };
+    }
+
     case stateConst.SET_SUCCESS: {
       return {
         ...state,
@@ -72,10 +81,17 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       };
     }
 
-    case stateConst.SET_PRODUCTS: {
+    case stateConst.SET_OPTIONS: {
       return {
         ...state,
-        ...payload,
+        options: { ...state.options, ...payload },
+      };
+    }
+
+    case stateConst.SET_SEARCH: {
+      return {
+        ...state,
+        search: { ...state.search, ...payload },
       };
     }
 
@@ -198,7 +214,61 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
   }
 };
 
-export const fetchInitialProducts = async ({ dispatch }) => {
+export const fetchInitialData = async ({ dispatch }) => {
+  try {
+    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: true }));
+
+    const promises = [
+      await fetchData.products({}),
+      await fetchData.plants({}),
+      await fetchData.planters({}),
+      await fetchData.supplies({}),
+      await fetchData.species(),
+      await fetchData.care(),
+      await fetchData.light(),
+      await fetchData.water(),
+      await fetchData.traits(),
+      await fetchData.planterTypes(),
+      await fetchData.materials(),
+      await fetchData.supplyTypes(),
+    ];
+
+    Promise.allSettled(promises).then((resps) => {
+      if (resps.length === promises.length) {
+        const payload = {
+          products: resps[0].value.data.products,
+          plants: resps[1].value.data.plants,
+          planters: resps[2].value.data.planters,
+          supplies: resps[3].value.data.supplies,
+          options: {
+            plants: {
+              species: resps[4].value.data.species,
+              care: resps[5].value.data.care,
+              light: resps[6].value.data.light,
+              water: resps[7].value.data.water,
+              traits: resps[8].value.data.traits,
+            },
+            planters: {
+              types: resps[9].value.data.types,
+              materials: resps[10].value.data.materials,
+            },
+            supplies: {
+              types: resps[11].value.data.types,
+            },
+          },
+        };
+
+        dispatch(setMulti(payload));
+      }
+    });
+  } catch (err) {
+    dispatch(setError(messages.productsFetchError));
+  } finally {
+    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: false }));
+  }
+};
+
+export const fetchPlantOpts = async ({ dispatch }) => {
   try {
     const promises = [
       await fetchData.products({}),
@@ -209,19 +279,17 @@ export const fetchInitialProducts = async ({ dispatch }) => {
     Promise.allSettled(promises).then((resps) => {
       if (resps.length === promises.length) {
         const payload = {
-          products: resps[0].value.data,
-          plants: resps[1].value.data,
-          planters: resps[2].value.data,
-          supplies: resps[3].value.data,
+          products: resps[0].value.data.products,
+          plants: resps[1].value.data.plants,
+          planters: resps[2].value.data.planters,
+          supplies: resps[3].value.data.supplies,
         };
 
-        dispatch(setProducts(payload));
+        dispatch(setMulti(payload));
       }
     });
   } catch (err) {
     dispatch(setError(messages.productsFetchError));
-  } finally {
-    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: false }));
   }
 };
 
@@ -362,6 +430,10 @@ export const processLogout = ({ dispatch }) => {
   }
 };
 
+export const setMulti = (payload) => {
+  return { type: stateConst.SET_MULTI, payload };
+};
+
 export const setSuccess = (payload) => {
   return { type: stateConst.SET_SUCCESS, payload };
 };
@@ -374,8 +446,12 @@ export const setLoading = (payload) => {
   return { type: stateConst.SET_LOADING, payload };
 };
 
-export const setProducts = (payload) => {
-  return { type: stateConst.SET_PRODUCTS, payload };
+export const setOptions = (payload) => {
+  return { type: stateConst.SET_MULTI, payload };
+};
+
+export const setSearch = (payload) => {
+  return { type: stateConst.SET_SEARCH, payload };
 };
 
 export const setUser = (payload) => {
