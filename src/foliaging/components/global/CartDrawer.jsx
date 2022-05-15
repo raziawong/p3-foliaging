@@ -12,12 +12,14 @@ import {
 import {
   processCheckout,
   processLogout,
+  stateKey,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
 import CartItems from "../styled/CartItems";
 import { FlexBox, NavCartDrawer } from "../styled/components";
 import { allowToProtectedRoute } from "../../utils";
+import { LeafLoader } from "..";
 
 export default function CartDrawer({ drawOpen, setDrawOpen }) {
   const state = useSiteStateContext();
@@ -96,7 +98,7 @@ export default function CartDrawer({ drawOpen, setDrawOpen }) {
             ) : (
               <Fragment />
             )}
-            <CartItems />
+            {state[stateKey.CART_LOADING] ? <LeafLoader /> : <CartItems />}
           </FlexBox>
         </FlexBox>
       </NavCartDrawer>

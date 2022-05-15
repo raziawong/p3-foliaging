@@ -13,12 +13,10 @@ import {
 import {
   processCartAdd,
   processLogout,
-  stateKey,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
 import { ContentBox, FlexBox } from "../styled/components";
-import LeafLoader from "../global/LeafLoader";
 import siteColors from "../../styles/colors";
 import { allowToProtectedRoute } from "../../utils";
 
@@ -42,9 +40,7 @@ export default function Listing() {
     );
   };
 
-  return state[stateKey.DATA_LOADING] ? (
-    <LeafLoader />
-  ) : (
+  return (
     <ContentBox>
       <Grid container sx={{ px: 6, py: 2 }} spacing={2}>
         {state.products.map((item) => (
