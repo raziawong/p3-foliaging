@@ -36,7 +36,7 @@ export default function Login() {
     if (Object.keys(messages).length) {
       setValidationMsgs(messages);
     } else {
-      dispatch(fetchAuthTokens({ dispatch, body: { ...loginFields } }));
+      fetchAuthTokens({ dispatch, body: { ...loginFields } });
     }
   };
 

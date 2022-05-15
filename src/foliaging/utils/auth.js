@@ -40,7 +40,7 @@ export const isTokenValid = ({ exp }) => {
   return true;
 };
 
-export const getRefreshedToken = async (refreshToken, accessToken) => {
+export const getRefreshedToken = async ({ refreshToken, accessToken }) => {
   const decodedRefresh = jwt(refreshToken);
   let resp = false;
   if (isTokenValid(decodedRefresh)) {
@@ -61,12 +61,7 @@ export const triggerRefreshInterval = (dispatch) => {
     if (!isValid) {
       processLogout();
     } else {
-      const doRefresh = async () => {
-        const tokens = await getRefreshedToken(refreshToken, accessToken);
-        setLocalTokens(tokens);
-      };
-
-      doRefresh();
+      getRefreshedToken({ refreshToken, accessToken });
     }
   }, 720000);
 

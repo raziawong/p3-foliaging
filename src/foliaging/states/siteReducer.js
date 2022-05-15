@@ -248,14 +248,12 @@ export const processExistTokens = async ({
   accessToken,
   refreshToken,
 }) => {
-  const newToken = await getRefreshedToken(refreshToken, accessToken);
+  const newToken = await getRefreshedToken({ refreshToken, accessToken });
   if (newToken) {
     const decoded = jwt(newToken.accessToken);
     const intervalId = triggerRefreshInterval(dispatch);
 
     dispatch(setLoading(true));
-
-    setLocalTokens({ accessToken: newToken.accessToken });
 
     fetchCartItems({
       dispatch,
@@ -350,8 +348,6 @@ export const processLogout = ({ dispatch }) => {
   } catch (err) {
     console.log(err);
   }
-
-  // TODO blacklisted token
 };
 
 export const setSuccess = (payload) => {
