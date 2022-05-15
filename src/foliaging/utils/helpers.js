@@ -19,4 +19,13 @@ export const messages = {
   checkoutError: "Something went wrong with checking out. Please try again",
 };
 
+export const sortOptions = {
+  latest: { sortField: "created_date", sortOrder: "DESC" },
+  oldest: { sortField: "created_date", sortOrder: "ASC" },
+  pricest: { sortField: "price", sortOrder: "DESC" },
+  cheapest: { sortField: "price", sortOrder: "ASC" },
+  alphaReverse: { sortField: "title", sortOrder: "DESC" },
+  alphabetical: { sortField: "title", sortOrder: "ASC" },
+};
+
 export default messages;
