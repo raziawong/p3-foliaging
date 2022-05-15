@@ -29,6 +29,9 @@ export const initialState = {
   isLoading: false,
   isCheckingOut: false,
   products: [],
+  plants: [],
+  planters: [],
+  supplies: [],
   user: {},
   cart: [],
   tokenIntervalId: "",
@@ -62,7 +65,7 @@ export const siteReducer = (state = initialState, { type, payload }) => {
     case stateConst.SET_PRODUCTS: {
       return {
         ...state,
-        products: payload,
+        ...payload,
       };
     }
 
@@ -187,12 +190,26 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
   }
 };
 
-export const fetchProducts = async ({ dispatch }) => {
+export const fetchInitialProducts = async ({ dispatch }) => {
   try {
-    const resp = await fetchData.products({});
-    if (resp.data) {
-      dispatch(setProducts(resp.data));
-    }
+    const promises = [
+      await fetchData.products({}),
+      await fetchData.plants({}),
+      await fetchData.planters({}),
+      await fetchData.supplies({}),
+    ];
+    Promise.allSettled(promises).then((resps) => {
+      if (resps.length === promises.length) {
+        const payload = {
+          products: resps[0].value.data,
+          plants: resps[1].value.data,
+          planters: resps[2].value.data,
+          supplies: resps[3].value.data,
+        };
+
+        dispatch(setProducts(payload));
+      }
+    });
   } catch (err) {
     dispatch(setError(messages.productsFetchError));
   } finally {

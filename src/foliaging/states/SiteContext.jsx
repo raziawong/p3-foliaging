@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { getLocalTokens } from "../utils";
 import siteReducer, {
-  fetchProducts,
+  fetchInitialProducts,
   initialState,
   processExistTokens,
   setLoading,
@@ -32,7 +32,7 @@ export const SiteContextProvider = ({ children }) => {
     }
 
     dispatch(setLoading(true));
-    fetchProducts({ dispatch });
+    fetchInitialProducts({ dispatch });
   }, []);
 
   return (

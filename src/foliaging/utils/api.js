@@ -6,6 +6,9 @@ export const apiBase = axios.create({
 
 export const apiPaths = {
   products: "/products",
+  productPlants: "/products/plants",
+  productPlanters: "/products/planters",
+  productSupplies: "/products/supplies",
   register: "/accounts/register",
   login: "/accounts/login",
   logout: "/accounts/logout",
@@ -32,6 +35,18 @@ const getHeaderConfig = (token) => {
 
 const getProducts = async (params) => {
   return await apiBase.get(apiPaths.products, { params });
+};
+
+const getPlants = async (params) => {
+  return await apiBase.get(apiPaths.productPlants, { params });
+};
+
+const getPlanters = async (params) => {
+  return await apiBase.get(apiPaths.productPlanters, { params });
+};
+
+const getSupplies = async (params) => {
+  return await apiBase.get(apiPaths.productSupplies, { params });
 };
 
 const getAccountAuth = async (body) => {
@@ -129,6 +144,9 @@ const processBlacklistToken = async (body) => {
 
 export const fetchData = {
   products: async (params) => await getProducts(params),
+  plants: async (params) => await getPlants(params),
+  planters: async (params) => await getPlanters(params),
+  supplies: async (params) => await getSupplies(params),
   authentication: async (body) => await getAccountAuth(body),
   profile: async (token) => await getUserProfile(token),
   addresses: async (params, token) => await getUserCart(params, token),
