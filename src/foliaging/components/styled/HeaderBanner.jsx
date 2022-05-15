@@ -31,7 +31,7 @@ export default function HeaderBanner({ header, imgSrc }) {
             <CardMedia
               component="img"
               image={imgSrc}
-              sx={{ height: { xs: 100, sm: 120, md: 200 } }}
+              sx={{ height: { xs: 150, sm: 180, md: 200 } }}
             />
           </Card>
         </Box>

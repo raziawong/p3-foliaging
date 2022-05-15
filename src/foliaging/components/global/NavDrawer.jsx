@@ -35,7 +35,7 @@ export default function NavDrawer({ drawOpen, setDrawOpen, handleLogout }) {
             gap: 3,
           }}>
           <FlexBox
-            sx={{ mt: 2, justifyContent: "space-evenly", flexWrap: "wrap" }}>
+            sx={{ my: 2, justifyContent: "space-evenly", flexWrap: "wrap" }}>
             {state.isAuthenticated ? (
               <Fragment>
                 <Button
