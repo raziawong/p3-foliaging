@@ -16,7 +16,7 @@ export const stateConst = {
   SET_ERROR: "SET_ERROR",
   SET_LOADING: "SET_LOADING",
   SET_OPTIONS: "SET_OPTIONS",
-  SET_SEARCH: "SET_SEARCH",
+  SET_QUERY: "SET_QUERY",
   SET_USER: "SET_USER",
   RESET_USER: "RESET_USER",
   SET_CART: "SET_CART",
@@ -51,7 +51,7 @@ export const initialState = {
     [stateKey.PLANTERS]: null,
     [stateKey.SUPPLIES]: null,
   },
-  search: { text: "", filter: null },
+  query: { text: "", filter: null, sortOptions: null },
   user: {},
   cart: [],
   tokenIntervalId: "",
@@ -96,10 +96,10 @@ export const siteReducer = (state = initialState, { type, payload }) => {
       };
     }
 
-    case stateConst.SET_SEARCH: {
+    case stateConst.SET_QUERY: {
       return {
         ...state,
-        search: { ...state.search, ...payload },
+        query: { ...state.query, ...payload },
       };
     }
 
@@ -276,31 +276,6 @@ export const fetchInitialData = async ({ dispatch }) => {
   }
 };
 
-export const fetchPlantOpts = async ({ dispatch }) => {
-  try {
-    const promises = [
-      await fetchData.products({}),
-      await fetchData.plants({}),
-      await fetchData.planters({}),
-      await fetchData.supplies({}),
-    ];
-    Promise.allSettled(promises).then((resps) => {
-      if (resps.length === promises.length) {
-        const payload = {
-          products: resps[0].value.data.products,
-          plants: resps[1].value.data.plants,
-          planters: resps[2].value.data.planters,
-          supplies: resps[3].value.data.supplies,
-        };
-
-        dispatch(setMulti(payload));
-      }
-    });
-  } catch (err) {
-    dispatch(setError(messages.productsFetchError));
-  }
-};
-
 export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
   try {
     dispatch(setLoading({ type: stateKey.USER_LOADING, value: true }));
@@ -356,6 +331,39 @@ export const processExistTokens = async ({
     }
   } else if (refreshToken) {
     processLogout({ dispatch });
+  }
+};
+
+export const processProductQueries = async (
+  { type, query, dispatch },
+  callback
+) => {
+  try {
+    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: true }));
+
+    let { text, sortOptions, ...filterOptions } = query;
+    let params = {};
+
+    if (text) {
+      params = { text };
+    }
+
+    if (!sortOptions) {
+      sortOptions = sortOptions.latest;
+    }
+    console.log("processProductQueries");
+    const resp = await fetchData[type](params, sortOptions);
+
+    if (resp.data.hasOwnProperty(type)) {
+      dispatch(setMulti({ [type]: resp.data[type] }));
+      if (typeof callback === "function") {
+        callback();
+      }
+    }
+  } catch (err) {
+    dispatch(setError(messages.productsFetchError));
+  } finally {
+    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: false }));
   }
 };
 
@@ -462,8 +470,8 @@ export const setOptions = (payload) => {
   return { type: stateConst.SET_MULTI, payload };
 };
 
-export const setSearch = (payload) => {
-  return { type: stateConst.SET_SEARCH, payload };
+export const setQuery = (payload) => {
+  return { type: stateConst.SET_QUERY, payload };
 };
 
 export const setUser = (payload) => {

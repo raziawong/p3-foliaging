@@ -1,12 +1,26 @@
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { default as BoringAvatar } from "boring-avatars";
-import { Button, Icon, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Icon,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { FlexBox, NavBarDrawer, NavBarLink } from "../styled/components";
 import { avatarColors } from "../../styles/colors";
 import { useSiteStateContext } from "../../states";
 
-export default function NavDrawer({ drawOpen, setDrawOpen, handleLogout }) {
+export default function NavDrawer({
+  drawOpen,
+  setDrawOpen,
+  handleLogout,
+  handleChange,
+  handleSearch,
+}) {
   const state = useSiteStateContext();
   const navigate = useNavigate();
 
@@ -34,8 +48,37 @@ export default function NavDrawer({ drawOpen, setDrawOpen, handleLogout }) {
             width: { xs: "90vw", sm: "70vw" },
             gap: 3,
           }}>
+          <FlexBox sx={{ px: 3, mt: 3, display: { xs: "flex", sm: "none" } }}>
+            <TextField
+              fullWidth
+              color="secondary"
+              name="text"
+              label="Search for a product"
+              aria-label="search products"
+              variant="standard"
+              autoComplete="off"
+              value={state.query.text}
+              onChange={handleChange}
+              onKeyDown={handleSearch}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      aria-label="submit search"
+                      onClick={handleSearch}
+                      onMouseDown={handleSearch}
+                      onKeyDown={handleSearch}>
+                      <Icon className="ri-search-2-line" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </FlexBox>
           <FlexBox
-            sx={{ my: 2, justifyContent: "space-evenly", flexWrap: "wrap" }}>
+            sx={{ my: 1, justifyContent: "space-evenly", flexWrap: "wrap" }}>
             {state.isAuthenticated ? (
               <Fragment>
                 <Button

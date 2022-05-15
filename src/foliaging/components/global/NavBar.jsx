@@ -4,6 +4,9 @@ import {
   useSiteStateContext,
   processLogout,
   useSiteDispatchContext,
+  setQuery,
+  processProductQueries,
+  stateKey,
 } from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
@@ -13,8 +16,10 @@ import {
   Button,
   Icon,
   IconButton,
+  InputAdornment,
   List,
   ListItem,
+  TextField,
   Toolbar,
   Tooltip,
   Typography,
@@ -25,6 +30,7 @@ import NavDrawer from "./NavDrawer";
 import { FlexBox, NavBarLink, NavBarLogo } from "../styled/components";
 import siteColors, { avatarColors } from "../../styles/colors";
 import CartDrawer from "./CartDrawer";
+import { sortOptions } from "../../utils";
 
 export default function NavBar() {
   const state = useSiteStateContext();
@@ -52,6 +58,31 @@ export default function NavBar() {
     navigate("/login");
   };
 
+  const handleChange = (evt) => {
+    dispatch(
+      setQuery({
+        text: evt.target.value,
+        filter: null,
+        sortOptions: sortOptions.latest,
+      })
+    );
+  };
+
+  const handleSearch = (evt) => {
+    dispatch(
+      processProductQueries(
+        {
+          type: stateKey.PRODUCTS,
+          query: state.query,
+          dispatch,
+        },
+        () => {
+          navigate("/products");
+        }
+      )
+    );
+  };
+
   return (
     <Fragment>
       <AppBar position="static">
@@ -67,8 +98,42 @@ export default function NavBar() {
               <img src={logo} alt="foliaging" />
             </NavBarLogo>
           </Box>
-          <FlexBox sx={{ flexGrow: 1 }}></FlexBox>
-          <FlexBox sx={{ justifyContent: "flex-end", ml: "1rem" }}>
+          <FlexBox
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              mx: { xs: 4, md: 8 },
+              flexGrow: 1,
+            }}>
+            <TextField
+              fullWidth
+              sx={{ mt: "-15px" }}
+              color="secondary"
+              name="text"
+              label="Search for a product"
+              aria-label="search products"
+              variant="standard"
+              autoComplete="off"
+              value={state.query.text}
+              onChange={handleChange}
+              onKeyDown={handleSearch}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton
+                      size="small"
+                      color="primary"
+                      aria-label="submit search"
+                      onClick={handleSearch}
+                      onMouseDown={handleSearch}
+                      onKeyDown={handleSearch}>
+                      <Icon className="ri-search-2-line" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </FlexBox>
+          <FlexBox sx={{ width: "auto", justifyContent: "flex-end", ml: 1 }}>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               {state.isAuthenticated ? (
                 <CartDrawer
@@ -84,6 +149,8 @@ export default function NavBar() {
                 drawOpen={meunOpen}
                 setDrawOpen={setMenuOpen}
                 handleLogout={handleLogout}
+                handleChange={handleChange}
+                handleSearch={handleSearch}
               />
             </Box>
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
