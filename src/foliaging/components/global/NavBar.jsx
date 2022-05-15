@@ -133,12 +133,31 @@ export default function NavBar() {
           }}>
           <FlexBox>
             <List>
-              <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+              <ListItem
+                sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+                <NavBarLink
+                  to="/plants"
+                  color="secondary"
+                  aria-label="to plants">
+                  <Typography variant="subtitle1">Plants</Typography>
+                </NavBarLink>
+                <NavBarLink
+                  to="/planters"
+                  color="secondary"
+                  aria-label="to planters">
+                  <Typography variant="subtitle1">Planters</Typography>
+                </NavBarLink>
+                <NavBarLink
+                  to="/supplies"
+                  color="secondary"
+                  aria-label="to supplies">
+                  <Typography variant="subtitle1">Supplies</Typography>
+                </NavBarLink>
                 <NavBarLink
                   to="/products"
                   color="secondary"
-                  aria-label="to products">
-                  <Typography variant="subtitle1">Products</Typography>
+                  aria-label="to all products">
+                  <Typography variant="subtitle1">All Products</Typography>
                 </NavBarLink>
               </ListItem>
             </List>

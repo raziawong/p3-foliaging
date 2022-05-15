@@ -7,6 +7,7 @@ import {
   NavBar,
   SnackbarAlert,
 } from "./components";
+import { stateKey } from "./states";
 import {
   Home,
   Products,
@@ -26,7 +27,10 @@ export default function Site() {
         <ContentContainer>
           <Routes>
             <Route index exact path="/" element={<Home />} />
-            <Route exact path="/products" element={<Products />} />
+            <Route exact path="/products" element={<Products type={stateKey.PRODUCTS} />} />
+            <Route exact path="/plants" element={<Products type={stateKey.PLANTS} />} />
+            <Route exact path="/planters" element={<Products type={stateKey.PLANTERS} />} />
+            <Route exact path="/supplies" element={<Products type={stateKey.SUPPLIES} />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/profile" element={<UserProfile />} />

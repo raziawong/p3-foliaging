@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { default as BoringAvatar } from "boring-avatars";
-import { Button, Icon, IconButton } from "@mui/material";
+import { Button, Icon, IconButton, Typography } from "@mui/material";
 import { FlexBox, NavBarDrawer, NavBarLink } from "../styled/components";
 import { avatarColors } from "../../styles/colors";
 import { useSiteStateContext } from "../../states";
@@ -29,9 +29,13 @@ export default function NavDrawer({ drawOpen, setDrawOpen, handleLogout }) {
           <Icon className="ri-close-line" />
         </IconButton>
         <FlexBox
-          sx={{ flexDirection: "column", width: { xs: "90vw", md: "70vw" } }}>
+          sx={{
+            flexDirection: "column",
+            width: { xs: "90vw", sm: "70vw" },
+            gap: 3,
+          }}>
           <FlexBox
-            sx={{ my: 2, justifyContent: "space-evenly", flexWrap: "wrap" }}>
+            sx={{ mt: 2, justifyContent: "space-evenly", flexWrap: "wrap" }}>
             {state.isAuthenticated ? (
               <Fragment>
                 <Button
@@ -74,8 +78,20 @@ export default function NavDrawer({ drawOpen, setDrawOpen, handleLogout }) {
               </Fragment>
             )}
           </FlexBox>
-          <NavBarLink to="/products" aria-label="to products">
-            Products
+          <NavBarLink to="/plants" color="secondary" aria-label="to plants">
+            <Typography variant="subtitle1">Plants</Typography>
+          </NavBarLink>
+          <NavBarLink to="/planters" color="secondary" aria-label="to planters">
+            <Typography variant="subtitle1">Planters</Typography>
+          </NavBarLink>
+          <NavBarLink to="/supplies" color="secondary" aria-label="to supplies">
+            <Typography variant="subtitle1">Supplies</Typography>
+          </NavBarLink>
+          <NavBarLink
+            to="/products"
+            color="secondary"
+            aria-label="to all products">
+            <Typography variant="subtitle1">All Products</Typography>
           </NavBarLink>
         </FlexBox>
       </NavBarDrawer>

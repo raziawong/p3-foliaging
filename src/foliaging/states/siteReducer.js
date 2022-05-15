@@ -30,6 +30,10 @@ export const stateKey = {
   USER_LOADING: "isUserLoading",
   DATA_LOADING: "isDataLoading",
   CART_LOADING: "isCartLoading",
+  PRODUCTS: "products",
+  PLANTS: "plants",
+  PLANTERS: "planters",
+  SUPPLIES: "supplies",
 };
 
 export const initialState = {
@@ -38,11 +42,15 @@ export const initialState = {
   [stateKey.USER_LOADING]: false,
   [stateKey.DATA_LOADING]: false,
   [stateKey.CART_LOADING]: false,
-  products: [],
-  plants: [],
-  planters: [],
-  supplies: [],
-  options: { plants: null, planters: null, supplies: null },
+  [stateKey.PRODUCTS]: [],
+  [stateKey.PLANTS]: [],
+  [stateKey.PLANTERS]: [],
+  [stateKey.SUPPLIES]: [],
+  options: {
+    [stateKey.PLANTS]: null,
+    [stateKey.PLANTERS]: null,
+    [stateKey.SUPPLIES]: null,
+  },
   search: { text: "", filter: null },
   user: {},
   cart: [],
@@ -236,23 +244,23 @@ export const fetchInitialData = async ({ dispatch }) => {
     Promise.allSettled(promises).then((resps) => {
       if (resps.length === promises.length) {
         const payload = {
-          products: resps[0].value.data.products,
-          plants: resps[1].value.data.plants,
-          planters: resps[2].value.data.planters,
-          supplies: resps[3].value.data.supplies,
+          [stateKey.PRODUCTS]: resps[0].value.data.products,
+          [stateKey.PLANTS]: resps[1].value.data.plants,
+          [stateKey.PLANTERS]: resps[2].value.data.planters,
+          [stateKey.SUPPLIES]: resps[3].value.data.supplies,
           options: {
-            plants: {
+            [stateKey.PLANTS]: {
               species: resps[4].value.data.species,
               care: resps[5].value.data.care,
               light: resps[6].value.data.light,
               water: resps[7].value.data.water,
               traits: resps[8].value.data.traits,
             },
-            planters: {
+            [stateKey.PLANTERS]: {
               types: resps[9].value.data.types,
               materials: resps[10].value.data.materials,
             },
-            supplies: {
+            [stateKey.SUPPLIES]: {
               types: resps[11].value.data.types,
             },
           },
