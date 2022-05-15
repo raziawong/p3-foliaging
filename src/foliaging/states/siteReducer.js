@@ -338,19 +338,23 @@ export const processExistTokens = async ({
   accessToken,
   refreshToken,
 }) => {
-  const newToken = await getRefreshedToken({ refreshToken, accessToken });
-  if (newToken) {
-    const decoded = jwt(newToken.accessToken);
-    const intervalId = triggerRefreshInterval(dispatch);
+  if (accessToken && refreshToken) {
+    const newToken = await getRefreshedToken({ refreshToken, accessToken });
+    if (newToken) {
+      const decoded = jwt(newToken.accessToken);
+      const intervalId = triggerRefreshInterval(dispatch);
 
-    fetchCartItems({
-      dispatch,
-      userId: decoded.id,
-      token: newToken.accessToken,
-    });
+      fetchCartItems({
+        dispatch,
+        userId: decoded.id,
+        token: newToken.accessToken,
+      });
 
-    fetchUserDetails({ dispatch, intervalId, token: newToken.accessToken });
-  } else {
+      fetchUserDetails({ dispatch, intervalId, token: newToken.accessToken });
+    } else {
+      processLogout({ dispatch });
+    }
+  } else if (refreshToken) {
     processLogout({ dispatch });
   }
 };
@@ -424,10 +428,10 @@ export const processCheckout = async ({ dispatch, token, details }) => {
 
 export const processLogout = ({ dispatch }) => {
   try {
-    const { accessToken, refreshToken } = getLocalTokens();
+    const { refreshToken } = getLocalTokens();
 
-    if (accessToken && refreshToken) {
-      processData.blacklistToken({ refreshToken }, accessToken);
+    if (refreshToken) {
+      processData.blacklistToken({ refreshToken });
       removeLocalTokens();
     }
 

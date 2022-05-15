@@ -1,6 +1,10 @@
-import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSiteStateContext, processLogout } from "../../states";
+import React, { Fragment, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  useSiteStateContext,
+  processLogout,
+  useSiteDispatchContext,
+} from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
   alpha,
@@ -24,6 +28,8 @@ import CartDrawer from "./CartDrawer";
 
 export default function NavBar() {
   const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const trigger = useScrollTrigger({
@@ -35,9 +41,14 @@ export default function NavBar() {
 
   const [cartOpen, setCartOpen] = useState(false);
 
+  useEffect(() => {
+    setMenuOpen(false);
+    setCartOpen(false);
+  }, [location]);
+
   const handleLogout = (evt) => {
     evt.preventDefault();
-    processLogout();
+    processLogout({ dispatch });
     navigate("/login");
   };
 

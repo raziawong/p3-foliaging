@@ -59,7 +59,7 @@ export const triggerRefreshInterval = (dispatch) => {
     const isValid = isTokenValid(refreshToken);
 
     if (!isValid) {
-      processLogout();
+      processLogout({ dispatch });
     } else {
       getRefreshedToken({ refreshToken, accessToken });
     }

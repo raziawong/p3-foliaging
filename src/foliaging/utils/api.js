@@ -213,8 +213,7 @@ export const processData = {
   cartUpdate: async (body, token) => await processCartUpdate(body, token),
   cartRemove: async (params, token) => await processCartDelete(params, token),
   refreshToken: async (body, token) => await processRefresh(body, token),
-  blacklistToken: async (body, token) =>
-    await processBlacklistToken(body, token),
+  blacklistToken: async (body) => await processBlacklistToken(body),
 };
 
 export default fetchData;
