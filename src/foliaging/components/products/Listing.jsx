@@ -13,6 +13,7 @@ import {
 import {
   processCartAdd,
   processLogout,
+  stateKey,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
@@ -41,7 +42,7 @@ export default function Listing() {
     );
   };
 
-  return state.isLoading ? (
+  return state[stateKey.DATA_LOADING] ? (
     <LeafLoader />
   ) : (
     <ContentBox>

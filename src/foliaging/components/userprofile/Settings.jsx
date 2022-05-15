@@ -4,6 +4,7 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import {
   processLogout,
   processPasswordUpdate,
+  stateKey,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
@@ -16,7 +17,7 @@ export default function Settings() {
   const dispatch = useSiteDispatchContext();
   const navigate = useNavigate();
 
-  const { isLoading, user } = state;
+  const { user } = state;
 
   const [passwordFields, setPasswordFields] = useState({
     password: "",
@@ -55,7 +56,7 @@ export default function Settings() {
     }
   };
 
-  return isLoading ? (
+  return state[stateKey.USER_LOADING] ? (
     <LeafLoader />
   ) : (
     <Fragment>

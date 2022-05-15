@@ -6,10 +6,9 @@ import React, {
 } from "react";
 import { getLocalTokens } from "../utils";
 import siteReducer, {
-  fetchInitialProducts,
+  fetchInitialData,
   initialState,
   processExistTokens,
-  setLoading,
 } from "./siteReducer";
 
 export const SiteStateContext = createContext({});
@@ -31,8 +30,7 @@ export const SiteContextProvider = ({ children }) => {
       processExistTokens({ dispatch, accessToken, refreshToken });
     }
 
-    dispatch(setLoading(true));
-    fetchInitialProducts({ dispatch });
+    fetchInitialData({ dispatch });
   }, []);
 
   return (

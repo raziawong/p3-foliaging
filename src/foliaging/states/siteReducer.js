@@ -24,14 +24,24 @@ export const stateConst = {
   CHECKING_OUT: "CHECKING_OUT",
 };
 
+export const stateKey = {
+  USER_LOADING: "isUserLoading",
+  DATA_LOADING: "isDataLoading",
+  CART_LOADING: "isCartLoading",
+};
+
 export const initialState = {
   isAuthenticated: false,
-  isLoading: false,
   isCheckingOut: false,
+  [stateKey.USER_LOADING]: false,
+  [stateKey.DATA_LOADING]: false,
+  [stateKey.CART_LOADING]: false,
   products: [],
   plants: [],
   planters: [],
   supplies: [],
+  options: { plants: null, planters: null, supplies: null },
+  search: { text: "", filter: null },
   user: {},
   cart: [],
   tokenIntervalId: "",
@@ -58,7 +68,7 @@ export const siteReducer = (state = initialState, { type, payload }) => {
     case stateConst.SET_LOADING: {
       return {
         ...state,
-        isLoading: payload,
+        [payload.type]: payload.value,
       };
     }
 
@@ -169,8 +179,6 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
       const decoded = jwt(accessToken);
       const intervalId = triggerRefreshInterval();
 
-      dispatch(setLoading(true));
-
       setLocalTokens({ accessToken, refreshToken });
 
       fetchCartItems({
@@ -213,33 +221,39 @@ export const fetchInitialProducts = async ({ dispatch }) => {
   } catch (err) {
     dispatch(setError(messages.productsFetchError));
   } finally {
-    dispatch(setLoading(false));
+    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: false }));
   }
 };
 
 export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
   try {
+    dispatch(setLoading({ type: stateKey.USER_LOADING, value: true }));
+
     const resp = await fetchData.profile(token);
+
     if (resp.data?.user) {
       dispatch(setUser({ ...resp.data.user, intervalId }));
     }
   } catch (err) {
     dispatch(setError(messages.userId));
   } finally {
-    dispatch(setLoading(false));
+    dispatch(setLoading({ type: stateKey.USER_LOADING, value: false }));
   }
 };
 
 export const fetchCartItems = async ({ dispatch, userId, token }) => {
   try {
+    dispatch(setLoading({ type: stateKey.CART_LOADING, value: true }));
+
     const resp = await fetchData.cart({ cid: userId }, token);
+
     if (resp.data?.items) {
       dispatch(setCart(resp.data.items));
     }
   } catch (err) {
     dispatch(setError(messages.cartFetchError));
   } finally {
-    dispatch(setLoading(false));
+    dispatch(setLoading({ type: stateKey.CART_LOADING, value: false }));
   }
 };
 
@@ -252,8 +266,6 @@ export const processExistTokens = async ({
   if (newToken) {
     const decoded = jwt(newToken.accessToken);
     const intervalId = triggerRefreshInterval(dispatch);
-
-    dispatch(setLoading(true));
 
     fetchCartItems({
       dispatch,
