@@ -16,6 +16,12 @@ export * from "./global/CartDrawer";
 export { default as SnackbarAlert } from "./global/SnackbarAlert";
 export * from "./global/SnackbarAlert";
 
+export { default as LoginForm } from "./forms/LoginForm";
+export * from "./forms/LoginForm";
+
+export { default as RegisterForm } from "./forms/RegisterForm";
+export * from "./forms/RegisterForm";
+
 export { default as ProductsListing } from "./products/Listing";
 export * from "./products/Listing";
 
