@@ -1,3 +1,5 @@
+import { Checkbox, ListItemText, MenuItem } from "@mui/material";
+
 export const messages = {
   productsFetchError:
     "Something went wrong retrieving products. Please try again",
@@ -45,5 +47,25 @@ export const sortOptions = {
 };
 
 export const comparePriceAsc = (a, b) => a.price - b.price;
+
+export const optionDisplay = {
+  single: (values) =>
+    values && values.length
+      ? values.map(([id, name]) => (
+          <MenuItem key={id} value={id}>
+            {name}
+          </MenuItem>
+        ))
+      : [],
+  multiple: (values, selected) =>
+    values && values.length
+      ? values.map(([id, name]) => (
+          <MenuItem key={id} value={id}>
+            <Checkbox checked={selected?.indexOf(id) > -1} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ))
+      : [],
+};
 
 export default messages;

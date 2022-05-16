@@ -16,7 +16,7 @@ import { stateKey, useSiteStateContext } from "../states";
 function sticky(ele) {
   if (ele) {
     window.addEventListener("scroll", function () {
-      const translate = this.scrollY - ele.clientHeight;
+      const translate = this.scrollY - ele.clientHeight / 2;
       if (translate > -1) {
         ele.style.transform = "translateY(" + translate + "px)";
       } else {
@@ -61,7 +61,7 @@ export default function Products({ type }) {
                   left: 0,
                 }}>
                 <ProductsSort />
-                <ProductsFilter />
+                <ProductsFilter type={type} />
               </ContentBox>
             </ContentBox>
             <ContentBox sx={{ width: "70%" }}>

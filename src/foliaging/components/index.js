@@ -22,6 +22,15 @@ export * from "./forms/LoginForm";
 export { default as RegisterForm } from "./forms/RegisterForm";
 export * from "./forms/RegisterForm";
 
+export { default as PlantFilter } from "./products/PlantFilter";
+export * from "./products/PlantFilter";
+
+export { default as PlanterFilter } from "./products/PlanterFilter";
+export * from "./products/PlanterFilter";
+
+export { default as SupplyFilter } from "./products/SupplyFilter";
+export * from "./products/SupplyFilter";
+
 export { default as ProductsFilter } from "./products/Filter";
 export * from "./products/Filter";
 

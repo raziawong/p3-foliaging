@@ -49,13 +49,34 @@ export const initialState = {
   [stateKey.PLANTERS]: [],
   [stateKey.SUPPLIES]: [],
   options: {
-    [stateKey.PLANTS]: null,
-    [stateKey.PLANTERS]: null,
-    [stateKey.SUPPLIES]: null,
+    [stateKey.PLANTS]: {
+      species: [],
+      care: [],
+      light: [],
+      water: [],
+      traits: [],
+    },
+    [stateKey.PLANTERS]: {
+      types: [],
+      materials: [],
+    },
+    [stateKey.SUPPLIES]: {
+      types: [],
+    },
   },
   query: {
     text: "",
-    filter: { price: [] },
+    filter: {
+      species: "",
+      care: "",
+      light: "",
+      water: "",
+      traits: [],
+      planterType: "",
+      material: "",
+      supplyType: "",
+      price: [],
+    },
     sort: {
       index: 0,
       label: "What's New",
@@ -260,7 +281,7 @@ export const fetchInitialData = async ({ dispatch }) => {
         let range = [];
         if (products && products.length) {
           const minToMax = [...products].sort(comparePriceAsc);
-          range = [minToMax[0], minToMax[minToMax.length - 1]];
+          range = [minToMax[0].price, minToMax[minToMax.length - 1].price];
         }
 
         const payload = {
@@ -366,7 +387,7 @@ export const processProductQueries = async ({ query, dispatch }, callback) => {
       params = { text };
     }
 
-    if (!Object.keys(sort)) {
+    if (!sort || !Object.keys(sort)) {
       sort = sortOptions.latest;
     }
 

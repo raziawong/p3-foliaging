@@ -13,13 +13,21 @@ import {
 import {
   initialState,
   setQuery,
+  stateKey,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
+import { PlantFilter, PlanterFilter, SupplyFilter } from "../../components";
 
-export default function Filter() {
+export default function Filter({ type }) {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
+
+  const getPriceRangeValue = () => {
+    const selectedRange = state.query.filter.price;
+
+    return selectedRange.length ? selectedRange : state.priceRange;
+  };
 
   const handleReset = (evt) => {
     dispatch(setQuery(initialState.query));
@@ -80,138 +88,28 @@ export default function Filter() {
             onChange={handleSearchChange}
           />
         </Grid>
-        {/* <Grid item xs={12}>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel shrink id="country-label">
-              Country
-            </InputLabel>
-            <Select
-              fullWidth
-              displayEmpty
-              notched
-              label="Country"
-              arial-label="Country"
-              labelId="categories-label"
-              name="countryId"
-              value={filterOpts.countryId}
-              onChange={(evt) => setFilterOpts(evt.target)}>
-              <MenuItem disabled value="">
-                <em>Please select</em>
-              </MenuItem>
-              {helper.countryOptDisplay(countries)}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel shrink id="city-label">
-              City
-            </InputLabel>
-            <Select
-              fullWidth
-              displayEmpty
-              notched
-              label="City"
-              arial-label="City"
-              labelId="city-label"
-              name="cityId"
-              value={sitate.cityId}
-              onChange={(evt) => setFilterOpts(evt.target)}>
-              <MenuItem disabled value="">
-                <em>Please select</em>
-              </MenuItem>
-              {helper.cityOptDisplay(countries, filterOpts.countryId)}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel shrink id="categories-label">
-              Categories
-            </InputLabel>
-            <Select
-              multiple
-              fullWidth
-              displayEmpty
-              notched
-              label="Categories"
-              arial-label="Categories"
-              labelId="categories-label"
-              name="catIds"
-              value={filterOpts.catIds}
-              onChange={(evt) => setFilterOpts(evt.target)}
-              renderValue={(vals) =>
-                vals.length ? (
-                  categories
-                    .filter((c) => vals.includes(c._id))
-                    .map((f) => f.name)
-                    .join(", ")
-                ) : (
-                  <em>Please select</em>
-                )
-              }>
-              <MenuItem disabled value="">
-                <em>Please select</em>
-              </MenuItem>
-              {helper.categoriesOptDispay(
-                categories?.length > 0 ? categories : [],
-                filterOpts.catIds
-              )}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl sx={{ width: "100%" }}>
-            <InputLabel shrink id="subcats-label">
-              Sub-Categories
-            </InputLabel>
-            <Select
-              multiple
-              fullWidth
-              displayEmpty
-              notched
-              labelId="subcats-label"
-              label="Sub-Categories"
-              arial-label="Sub-Categories"
-              name="subcatIds"
-              value={filterOpts.subcatIds}
-              onChange={(evt) => setFilterOpts(evt.target)}
-              renderValue={(vals) =>
-                vals.length ? (
-                  categories
-                    .reduce((pv, cv) => {
-                      return pv.concat(
-                        cv.subcats.filter((sc) => vals.includes(sc._id))
-                      );
-                    }, [])
-                    .map((f) => f.name)
-                    .join(", ")
-                ) : (
-                  <em>Please select</em>
-                )
-              }>
-              <MenuItem disabled value="">
-                <em>Please select</em>
-              </MenuItem>
-              {helper.subcategoriesOptDispay(
-                categories?.length > 0 ? categories : [],
-                filterOpts.catIds,
-                filterOpts.subcatIds
-              )}
-            </Select>
-          </FormControl>
-        </Grid> */}
+        {type === stateKey.PLANTS ? (
+          <PlantFilter handleFilterChange={handleFilterChange} />
+        ) : type === stateKey.PLANTERS ? (
+          <PlanterFilter handleFilterChange={handleFilterChange} />
+        ) : type === stateKey.SUPPLIES ? (
+          <SupplyFilter handleFilterChange={handleFilterChange} />
+        ) : (
+          <Fragment />
+        )}
       </Grid>
       <Grid item xs={12}>
         <Box sx={{ p: 2 }}>
-          <InputLabel>Price</InputLabel>
+          <InputLabel>Price Range</InputLabel>
           <FormControl sx={{ width: "98%", pl: 1 }}>
             <Slider
               getAriaLabel={() => "Price range"}
+              min={state.priceRange[0]}
+              max={state.priceRange[1]}
               valueLabelDisplay="auto"
               name="price"
               size="small"
-              value={state.query.filter.price}
+              value={getPriceRangeValue()}
               onChange={handleFilterChange}
             />
           </FormControl>
