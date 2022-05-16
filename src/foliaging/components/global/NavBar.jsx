@@ -39,8 +39,7 @@ export default function NavBar() {
   const dispatch = useSiteDispatchContext();
   const location = useLocation();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isSmallDevice = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallDevice = useMediaQuery(useTheme().breakpoints.down("md"));
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,

@@ -42,7 +42,7 @@ export default function Listing({ type }) {
 
   return (
     <ContentBox>
-      <Grid container sx={{ px: 6, py: 2 }} spacing={2}>
+      <Grid container sx={{ ml: 2, px: 1, py: 2, width: "100%" }} spacing={2}>
         {state.hasOwnProperty(type) &&
           state[type].map((item) => (
             <Grid item key={item.id} xs={12} sm={6} md={4}>

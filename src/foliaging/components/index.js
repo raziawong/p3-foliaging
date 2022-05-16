@@ -40,6 +40,9 @@ export * from "./products/Listing";
 export { default as ProductsSort } from "./products/Sort";
 export * from "./products/Sort";
 
+export { default as QueryModal } from "./products/QueryModal";
+export * from "./products/QueryModal";
+
 export * from "./styled/components";
 
 export { default as ContentFeature } from "./styled/ContentFeature";
