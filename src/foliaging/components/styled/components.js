@@ -90,7 +90,7 @@ export const NavBarLogo = styled(Link)(({ theme }) => ({
   cursor: "pointer",
   padding: "0.2rem",
   "& img": {
-    maxHeight: "7vh",
+    maxHeight: "6vh",
     [theme.breakpoints.down("md")]: {
       maxHeight: "4vh",
     },

@@ -89,6 +89,57 @@ export default function NavBar() {
     }
   };
 
+  const BrandLogo = () => (
+    <NavBarLogo araia-label="to home" to="/">
+      <img src={logo} alt="foliaging" />
+    </NavBarLogo>
+  );
+
+  const SiteActions = () => (
+    <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
+      {state.isAuthenticated ? (
+        <Fragment>
+          <CartDrawer
+            globalState={state}
+            drawOpen={cartOpen}
+            setDrawOpen={setCartOpen}
+          />
+          <Tooltip title="Profile">
+            <IconButton
+              aria-label="to profile"
+              onClick={() => navigate("/profile")}>
+              <BoringAvatar
+                size={25}
+                square={true}
+                name={state.user?.email}
+                variant="marble"
+                colors={avatarColors}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Logout">
+            <IconButton
+              color="primary"
+              aria-label="to logout"
+              onClick={handleLogout}>
+              <Icon className="ri-logout-box-r-line" />
+            </IconButton>
+          </Tooltip>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <Button
+            variant="outlined"
+            color="primary"
+            aria-label="to login"
+            onClick={() => navigate("/login")}>
+            Login
+          </Button>
+        </Fragment>
+      )}
+    </Box>
+  );
+
   return (
     <Fragment>
       <AppBar position={isSmallDevice ? "sticky" : "static"}>
@@ -101,9 +152,7 @@ export default function NavBar() {
             backgroundColor: trigger ? alpha(siteColors.feldgrau, 0.95) : "",
           }}>
           <Box sx={{ position: "relative", flexGrow: { xs: 1, md: "unset" } }}>
-            <NavBarLogo araia-label="to home" to="/">
-              <img src={logo} alt="foliaging" />
-            </NavBarLogo>
+            {BrandLogo()}
           </Box>
           <FlexBox
             sx={{
@@ -160,48 +209,7 @@ export default function NavBar() {
                 handleSearch={handleSearch}
               />
             </Box>
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-              {state.isAuthenticated ? (
-                <Fragment>
-                  <CartDrawer
-                    globalState={state}
-                    drawOpen={cartOpen}
-                    setDrawOpen={setCartOpen}
-                  />
-                  <Tooltip title="Profile">
-                    <IconButton
-                      aria-label="to profile"
-                      onClick={() => navigate("/profile")}>
-                      <BoringAvatar
-                        size={25}
-                        square={true}
-                        name={state.user?.email}
-                        variant="marble"
-                        colors={avatarColors}
-                      />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Logout">
-                    <IconButton
-                      color="primary"
-                      aria-label="to logout"
-                      onClick={handleLogout}>
-                      <Icon className="ri-logout-box-r-line" />
-                    </IconButton>
-                  </Tooltip>
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    aria-label="to login"
-                    onClick={() => navigate("/login")}>
-                    Login
-                  </Button>
-                </Fragment>
-              )}
-            </Box>
+            {SiteActions()}
           </FlexBox>
         </Toolbar>
       </AppBar>
@@ -216,7 +224,9 @@ export default function NavBar() {
               : `1px solid ${alpha(siteColors.honeydew, 0.3)}`,
             backgroundColor: trigger ? alpha(siteColors.feldgrau, 0.95) : "",
           }}>
-          <FlexBox>
+          <FlexBox
+            sx={{ justifyContent: trigger ? "space-between" : "center" }}>
+            {trigger ? BrandLogo() : <Fragment />}
             <List>
               <ListItem
                 sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
@@ -246,6 +256,7 @@ export default function NavBar() {
                 </NavBarLink>
               </ListItem>
             </List>
+            {trigger ? SiteActions() : <Fragment />}
           </FlexBox>
         </Toolbar>
       </AppBar>
