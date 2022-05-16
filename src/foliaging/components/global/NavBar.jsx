@@ -24,7 +24,9 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  useMediaQuery,
   useScrollTrigger,
+  useTheme,
 } from "@mui/material";
 import { default as BoringAvatar } from "boring-avatars";
 import NavDrawer from "./NavDrawer";
@@ -37,6 +39,8 @@ export default function NavBar() {
   const dispatch = useSiteDispatchContext();
   const location = useLocation();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isSmallDevice = useMediaQuery(theme.breakpoints.down("md"));
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -87,13 +91,14 @@ export default function NavBar() {
 
   return (
     <Fragment>
-      <AppBar position="static">
+      <AppBar position={isSmallDevice ? "sticky" : "static"}>
         <Toolbar
           component="nav"
           sx={{
             pt: { xs: 1, md: 2 },
             width: "100%",
             maxWidth: "100%",
+            backgroundColor: trigger ? alpha(siteColors.feldgrau, 0.95) : "",
           }}>
           <Box sx={{ position: "relative", flexGrow: { xs: 1, md: "unset" } }}>
             <NavBarLogo araia-label="to home" to="/">
