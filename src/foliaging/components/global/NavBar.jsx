@@ -7,6 +7,7 @@ import {
   setQuery,
   processProductQueries,
   stateKey,
+  initialState,
 } from "../../states";
 import logo from "../../../assets/images/brand.svg";
 import {
@@ -30,7 +31,6 @@ import NavDrawer from "./NavDrawer";
 import { FlexBox, NavBarLink, NavBarLogo } from "../styled/components";
 import siteColors, { avatarColors } from "../../styles/colors";
 import CartDrawer from "./CartDrawer";
-import { sortOptions } from "../../utils";
 
 export default function NavBar() {
   const state = useSiteStateContext();
@@ -58,29 +58,31 @@ export default function NavBar() {
     navigate("/login");
   };
 
-  const handleChange = (evt) => {
+  const handleChange = ({ target }) => {
     dispatch(
       setQuery({
-        text: evt.target.value,
-        filter: null,
-        sortOptions: sortOptions.latest,
+        type: stateKey.PRODUCTS,
+        text: target.value,
+        filter: initialState.query.filter,
+        sort: initialState.query.sort,
       })
     );
   };
 
-  const handleSearch = (evt) => {
-    dispatch(
-      processProductQueries(
-        {
-          type: stateKey.PRODUCTS,
-          query: state.query,
-          dispatch,
-        },
-        () => {
-          navigate("/products");
-        }
-      )
-    );
+  const handleSearch = ({ type, key }) => {
+    if (type === "mousedown" || type === "click" || key === "Enter") {
+      dispatch(
+        processProductQueries(
+          {
+            query: state.query,
+            dispatch,
+          },
+          () => {
+            navigate("/products");
+          }
+        )
+      );
+    }
   };
 
   return (

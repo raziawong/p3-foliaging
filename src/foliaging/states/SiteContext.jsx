@@ -9,6 +9,7 @@ import siteReducer, {
   fetchInitialData,
   initialState,
   processExistTokens,
+  processProductQueries,
 } from "./siteReducer";
 
 export const SiteStateContext = createContext({});
@@ -32,6 +33,11 @@ export const SiteContextProvider = ({ children }) => {
 
     fetchInitialData({ dispatch });
   }, []);
+
+  // component did update
+  useLayoutEffect(() => {
+    processProductQueries({ dispatch, query: globalState.query });
+  }, [globalState.query]);
 
   return (
     <SiteStateContext.Provider value={globalState}>

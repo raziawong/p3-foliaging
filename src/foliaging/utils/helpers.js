@@ -20,12 +20,30 @@ export const messages = {
 };
 
 export const sortOptions = {
-  latest: { sortField: "created_date", sortOrder: "DESC" },
-  oldest: { sortField: "created_date", sortOrder: "ASC" },
-  pricest: { sortField: "price", sortOrder: "DESC" },
-  cheapest: { sortField: "price", sortOrder: "ASC" },
-  alphaReverse: { sortField: "title", sortOrder: "DESC" },
-  alphabetical: { sortField: "title", sortOrder: "ASC" },
+  latest: { label: "What's New", sortField: "created_date", sortOrder: "DESC" },
+  oldest: { label: "Oldest", sortField: "created_date", sortOrder: "ASC" },
+  cheapest: {
+    label: "Price: Low to High",
+    sortField: "price",
+    sortOrder: "ASC",
+  },
+  pricest: {
+    label: "Price: High to Low",
+    sortField: "price",
+    sortOrder: "DESC",
+  },
+  alphabetical: {
+    label: "Title: A to Z",
+    sortField: "title",
+    sortOrder: "ASC",
+  },
+  alphaReverse: {
+    label: "Title: Z to A ",
+    sortField: "title",
+    sortOrder: "DESC",
+  },
 };
+
+export const comparePriceAsc = (a, b) => a.price - b.price;
 
 export default messages;

@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { default as BoringAvatar } from "boring-avatars";
 import {
-  Box,
   Button,
   Icon,
   IconButton,

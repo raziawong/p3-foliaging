@@ -22,8 +22,14 @@ export * from "./forms/LoginForm";
 export { default as RegisterForm } from "./forms/RegisterForm";
 export * from "./forms/RegisterForm";
 
+export { default as ProductsFilter } from "./products/Filter";
+export * from "./products/Filter";
+
 export { default as ProductsListing } from "./products/Listing";
 export * from "./products/Listing";
+
+export { default as ProductsSort } from "./products/Sort";
+export * from "./products/Sort";
 
 export * from "./styled/components";
 

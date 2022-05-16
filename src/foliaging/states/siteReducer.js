@@ -7,6 +7,8 @@ import {
   triggerRefreshInterval,
   processData,
   getLocalTokens,
+  sortOptions,
+  comparePriceAsc,
 } from "../utils";
 import jwt from "jwt-decode";
 
@@ -51,7 +53,17 @@ export const initialState = {
     [stateKey.PLANTERS]: null,
     [stateKey.SUPPLIES]: null,
   },
-  query: { text: "", filter: null, sortOptions: null },
+  query: {
+    text: "",
+    filter: { price: [] },
+    sort: {
+      index: 0,
+      label: "What's New",
+      sortField: "created_date",
+      sortOrder: "DESC",
+    },
+  },
+  priceRange: [],
   user: {},
   cart: [],
   tokenIntervalId: "",
@@ -243,8 +255,16 @@ export const fetchInitialData = async ({ dispatch }) => {
 
     Promise.allSettled(promises).then((resps) => {
       if (resps.length === promises.length) {
+        const products = resps[0].value.data.products;
+
+        let range = [];
+        if (products && products.length) {
+          const minToMax = [...products].sort(comparePriceAsc);
+          range = [minToMax[0], minToMax[minToMax.length - 1]];
+        }
+
         const payload = {
-          [stateKey.PRODUCTS]: resps[0].value.data.products,
+          [stateKey.PRODUCTS]: products,
           [stateKey.PLANTS]: resps[1].value.data.plants,
           [stateKey.PLANTERS]: resps[2].value.data.planters,
           [stateKey.SUPPLIES]: resps[3].value.data.supplies,
@@ -264,6 +284,7 @@ export const fetchInitialData = async ({ dispatch }) => {
               types: resps[11].value.data.types,
             },
           },
+          priceRange: range,
         };
 
         dispatch(setMulti(payload));
@@ -334,32 +355,44 @@ export const processExistTokens = async ({
   }
 };
 
-export const processProductQueries = async (
-  { type, query, dispatch },
-  callback
-) => {
+export const processProductQueries = async ({ query, dispatch }, callback) => {
   try {
     dispatch(setLoading({ type: stateKey.DATA_LOADING, value: true }));
 
-    let { text, sortOptions, ...filterOptions } = query;
+    let { text, sort, ...filterData } = query;
     let params = {};
 
     if (text) {
       params = { text };
     }
 
-    if (!sortOptions) {
-      sortOptions = sortOptions.latest;
+    if (!Object.keys(sort)) {
+      sort = sortOptions.latest;
     }
-    console.log("processProductQueries");
-    const resp = await fetchData[type](params, sortOptions);
 
-    if (resp.data.hasOwnProperty(type)) {
-      dispatch(setMulti({ [type]: resp.data[type] }));
-      if (typeof callback === "function") {
-        callback();
+    const promises = [
+      await fetchData.products(params, sort),
+      await fetchData.plants(params, sort),
+      await fetchData.planters(params, sort),
+      await fetchData.supplies(params, sort),
+    ];
+
+    Promise.allSettled(promises).then((resps) => {
+      if (resps.length === promises.length) {
+        const payload = {
+          [stateKey.PRODUCTS]: resps[0].value.data.products,
+          [stateKey.PLANTS]: resps[1].value.data.plants,
+          [stateKey.PLANTERS]: resps[2].value.data.planters,
+          [stateKey.SUPPLIES]: resps[3].value.data.supplies,
+        };
+
+        dispatch(setMulti(payload));
+
+        if (typeof callback === "function") {
+          callback();
+        }
       }
-    }
+    });
   } catch (err) {
     dispatch(setError(messages.productsFetchError));
   } finally {
