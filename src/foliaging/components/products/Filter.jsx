@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import {
   initialState,
+  processProductQueries,
   setQuery,
   stateKey,
   useSiteDispatchContext,
@@ -30,7 +31,7 @@ export default function Filter({ type }) {
   };
 
   const handleReset = (evt) => {
-    dispatch(setQuery(initialState.query));
+    dispatch(setQuery({ ...initialState.query, sort: state.query.sort }));
   };
 
   const handleSearchChange = ({ target }) => {
@@ -45,7 +46,9 @@ export default function Filter({ type }) {
     );
   };
 
-  const handleSubmit = (evt) => {};
+  const handleSubmit = (evt) => {
+    dispatch(processProductQueries({ dispatch, query: state.query }));
+  };
 
   return (
     <Fragment>

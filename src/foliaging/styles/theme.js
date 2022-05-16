@@ -105,6 +105,13 @@ let siteTheme = createTheme({
         },
       },
     },
+    MuiPopover: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: siteColors.feldgrau,
+        },
+      },
+    },
   },
 });
 

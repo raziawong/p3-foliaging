@@ -306,15 +306,19 @@ export const fetchInitialData = async ({ dispatch }) => {
             },
           },
           priceRange: range,
+          [stateKey.DATA_LOADING]: false,
         };
 
         dispatch(setMulti(payload));
       }
     });
   } catch (err) {
-    dispatch(setError(messages.productsFetchError));
-  } finally {
-    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: false }));
+    dispatch(
+      setMulti({
+        error: messages.productsFetchError,
+        [stateKey.DATA_LOADING]: false,
+      })
+    );
   }
 };
 
@@ -327,10 +331,11 @@ export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
     if (resp.data?.user) {
       dispatch(setUser({ ...resp.data.user, intervalId }));
     }
-  } catch (err) {
-    dispatch(setError(messages.userId));
-  } finally {
     dispatch(setLoading({ type: stateKey.USER_LOADING, value: false }));
+  } catch (err) {
+    dispatch(
+      setMulti({ error: messages.userId, [stateKey.USER_LOADING]: false })
+    );
   }
 };
 
@@ -343,10 +348,14 @@ export const fetchCartItems = async ({ dispatch, userId, token }) => {
     if (resp.data?.items) {
       dispatch(setCart(resp.data.items));
     }
-  } catch (err) {
-    dispatch(setError(messages.cartFetchError));
-  } finally {
     dispatch(setLoading({ type: stateKey.CART_LOADING, value: false }));
+  } catch (err) {
+    dispatch(
+      setMulti({
+        error: messages.cartFetchError,
+        [stateKey.CART_LOADING]: false,
+      })
+    );
   }
 };
 
@@ -380,11 +389,27 @@ export const processProductQueries = async ({ query, dispatch }, callback) => {
   try {
     dispatch(setLoading({ type: stateKey.DATA_LOADING, value: true }));
 
-    let { text, sort, ...filterData } = query;
+    let { text, sort, filter } = query;
     let params = {};
 
     if (text) {
       params = { text };
+    }
+
+    if (filter && Object.keys(filter)) {
+      params = { ...params, ...filter };
+
+      if (filter.price.length && filter.price.length === 2) {
+        const min_price = filter.price[0];
+        const max_price = filter.price[1];
+        params = { ...params, min_price, max_price };
+      }
+
+      delete params["price"];
+
+      Object.entries(filter).map(([k, v]) =>
+        !v || !v.length ? delete params[k] : ""
+      );
     }
 
     if (!sort || !Object.keys(sort)) {
@@ -405,6 +430,7 @@ export const processProductQueries = async ({ query, dispatch }, callback) => {
           [stateKey.PLANTS]: resps[1].value.data.plants,
           [stateKey.PLANTERS]: resps[2].value.data.planters,
           [stateKey.SUPPLIES]: resps[3].value.data.supplies,
+          [stateKey.DATA_LOADING]: false,
         };
 
         dispatch(setMulti(payload));
@@ -415,9 +441,12 @@ export const processProductQueries = async ({ query, dispatch }, callback) => {
       }
     });
   } catch (err) {
-    dispatch(setError(messages.productsFetchError));
-  } finally {
-    dispatch(setLoading({ type: stateKey.DATA_LOADING, value: false }));
+    dispatch(
+      setMulti({
+        error: messages.productsFetchError,
+        [stateKey.DATA_LOADING]: false,
+      })
+    );
   }
 };
 

@@ -22,24 +22,38 @@ export const messages = {
 };
 
 export const sortOptions = {
-  latest: { label: "What's New", sortField: "created_date", sortOrder: "DESC" },
-  oldest: { label: "Oldest", sortField: "created_date", sortOrder: "ASC" },
+  latest: {
+    index: 0,
+    label: "What's New",
+    sortField: "created_date",
+    sortOrder: "DESC",
+  },
+  oldest: {
+    index: 1,
+    label: "Oldest",
+    sortField: "created_date",
+    sortOrder: "ASC",
+  },
   cheapest: {
+    index: 2,
     label: "Price: Low to High",
     sortField: "price",
     sortOrder: "ASC",
   },
   pricest: {
+    index: 3,
     label: "Price: High to Low",
     sortField: "price",
     sortOrder: "DESC",
   },
   alphabetical: {
+    index: 4,
     label: "Title: A to Z",
     sortField: "title",
     sortOrder: "ASC",
   },
   alphaReverse: {
+    index: 5,
     label: "Title: Z to A ",
     sortField: "title",
     sortOrder: "DESC",

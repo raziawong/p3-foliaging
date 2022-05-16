@@ -37,7 +37,8 @@ export const SiteContextProvider = ({ children }) => {
   // component did update
   useLayoutEffect(() => {
     processProductQueries({ dispatch, query: globalState.query });
-  }, [globalState.query]);
+    // eslint-disable-next-line
+  }, [globalState.query.sort]);
 
   return (
     <SiteStateContext.Provider value={globalState}>

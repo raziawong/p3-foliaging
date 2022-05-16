@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from "react";
 import {
-  alpha,
   Box,
   List,
   ListItem,
@@ -10,7 +9,6 @@ import {
 } from "@mui/material";
 import { ArrowDropUpSharp, ArrowDropDownSharp } from "@mui/icons-material";
 import { sortOptions } from "../../utils";
-import siteColors from "../../styles/colors";
 import {
   setQuery,
   useSiteDispatchContext,
@@ -61,7 +59,6 @@ export default function Sort() {
             role: "listbox",
             sx: {
               minWidth: { xs: "93vw", md: "29vw" },
-              bgcolor: alpha(siteColors.feldgrau, 0.9),
             },
           }}>
           {sortMenu.map((opt, i) => (

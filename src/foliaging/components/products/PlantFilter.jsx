@@ -17,7 +17,7 @@ export default function PlantFilter({ handleFilterChange }) {
             fullWidth
             displayEmpty
             notched
-            label="Species"
+            label="Species Type"
             arial-label="species"
             labelId="species-label"
             name="species"
@@ -114,7 +114,7 @@ export default function PlantFilter({ handleFilterChange }) {
             onChange={handleFilterChange}
             renderValue={(vals) =>
               vals.length ? (
-                state.options.traits
+                state.options.plants.traits
                   .filter(([id, name]) => vals.includes(id))
                   .map(([id, name]) => name)
                   .join(", ")
@@ -126,7 +126,9 @@ export default function PlantFilter({ handleFilterChange }) {
               <em>Please select</em>
             </MenuItem>
             {optionDisplay.multiple(
-              state.options.traits?.length > 0 ? state.options.traits : [],
+              state.options.plants.traits?.length
+                ? state.options.plants.traits
+                : [],
               state.query.filter.traits
             )}
           </Select>
