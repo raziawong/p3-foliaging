@@ -99,7 +99,7 @@ export default function NavBar() {
       {state.isAuthenticated ? (
         <Fragment>
           <CartDrawer
-            globalState={state}
+            toDisplay={!isSmallDevice}
             drawOpen={cartOpen}
             setDrawOpen={setCartOpen}
           />
@@ -192,7 +192,7 @@ export default function NavBar() {
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               {state.isAuthenticated ? (
                 <CartDrawer
-                  globalState={state}
+                  toDisplay={isSmallDevice}
                   drawOpen={cartOpen}
                   setDrawOpen={setCartOpen}
                 />
