@@ -82,7 +82,9 @@ export default function CartDrawer({ drawOpen, setDrawOpen }) {
             <Typography variant="h4" component="h4">
               Cart
             </Typography>
-            <Typography variant="subtitle1">{getTotal()}</Typography>
+            <Typography variant="h5" component="h5">
+              {getTotal()}
+            </Typography>
             <Button variant="outlined" onClick={handleCheckout}>
               Checkout
             </Button>

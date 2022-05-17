@@ -31,15 +31,18 @@ export default function CartItems() {
 
   const handleChange = (cid, pid, quantity) => {
     quantity = Number(quantity);
-    allowToProtectedRoute((token) =>
-      token
-        ? processCartUpdate({
-            dispatch,
-            token,
-            cartItem: { cid, pid, quantity },
-          })
-        : handleLogout()
-    );
+
+    if (quantity) {
+      allowToProtectedRoute((token) =>
+        token
+          ? processCartUpdate({
+              dispatch,
+              token,
+              cartItem: { cid, pid, quantity },
+            })
+          : handleLogout()
+      );
+    }
   };
 
   const handleRemove = (cid, pid) => {
@@ -57,8 +60,8 @@ export default function CartItems() {
           </Card>
           <FlexBox sx={{ ml: 3, flexDirection: { xs: "column", md: "row" } }}>
             <FlexBox sx={{ flexDirection: "column", alignItems: "flex-start" }}>
-              <Typography variant="subtitle2">{item.product.title}</Typography>
-              <Typography variant="caption">
+              <Typography variant="subtitle1">{item.product.title}</Typography>
+              <Typography variant="subtitle1">
                 ${item.product.price.toFixed(2)}
               </Typography>
             </FlexBox>
@@ -81,6 +84,8 @@ export default function CartItems() {
                     evt.target.value
                   )
                 }
+                error={!item.isEnough}
+                helperText={!item.isEnough ? "Max Quantity Reached" : ""}
               />
               <IconButton
                 color="secondary"

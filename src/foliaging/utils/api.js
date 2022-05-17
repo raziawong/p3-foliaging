@@ -29,6 +29,7 @@ export const apiPaths = {
   addressAdd: "/user/address/add",
   addressUpdate: "/user/address/update",
   userCart: "/user/cart",
+  cartItemCheck: "/user/cart/quantity/check",
   cartItemAdd: "/user/cart/add",
   cartItemRemove: "/user/cart/remove",
   cartItemQuantity: "/user/cart/quantity/update",
@@ -128,6 +129,13 @@ const getUserCheckout = async (params, token) => {
   });
 };
 
+const getCartItemQuantityCheck = async (params, token) => {
+  return await apiBase.get(apiPaths.cartItemCheck, {
+    params,
+    ...getHeaderConfig(token),
+  });
+};
+
 const processRegister = async (body) => {
   return await apiBase.post(apiPaths.register, { ...body });
 };
@@ -216,6 +224,8 @@ export const fetchData = {
   profile: async (token) => await getUserProfile(token),
   addresses: async (params, token) => await getUserCart(params, token),
   cart: async (params, token) => await getUserCart(params, token),
+  cartItemCheck: async (params, token) =>
+    await getCartItemQuantityCheck(params, token),
   checkout: async (params, token) => await getUserCheckout(params, token),
 };
 
