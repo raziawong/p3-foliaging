@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Alert, alpha, Icon, Snackbar } from "@mui/material";
 import {
-  setError,
   useSiteStateContext,
   useSiteDispatchContext,
+  setMulti,
 } from "../../states";
 import siteColors from "../../styles/colors";
 
@@ -15,7 +15,7 @@ export default function SnackbarAlert() {
 
   const handleClose = (evt) => {
     setIsOpen(false);
-    dispatch(setError(""));
+    dispatch(setMulti({ error: "", success: "" }));
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function SnackbarAlert() {
       <Alert
         sx={{
           alignItems: "center",
-          bgcolor: alpha(siteColors.charcoal, 0.7),
+          bgcolor: alpha(siteColors.charcoal, 0.9),
           textTransform: "uppercase",
         }}
         onClose={handleClose}
