@@ -17,11 +17,11 @@ import {
   useSiteStateContext,
 } from "../../states";
 import CartItems from "../styled/CartItems";
-import { FlexBox, NavCartDrawer } from "../styled/components";
+import { ContentBox, FlexBox, NavCartDrawer } from "../styled/components";
 import { allowToProtectedRoute } from "../../utils";
 import { LeafLoader } from "..";
 
-export default function CartDrawer({ drawOpen, setDrawOpen }) {
+export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
 
@@ -62,34 +62,43 @@ export default function CartDrawer({ drawOpen, setDrawOpen }) {
 
   return (
     <Fragment>
-      <NavCartDrawer anchor="right" open={drawOpen} onClose={handleClose}>
+      <NavCartDrawer
+        sx={{ display: toDisplay ? "initial" : "none" }}
+        anchor="right"
+        open={drawOpen}
+        onClose={handleClose}>
         <FlexBox
           sx={{ flexDirection: "column", width: { xs: "90vw", md: "70vw" } }}>
-          <IconButton
-            sx={{ alignSelf: "flex-start" }}
-            color="secondary"
-            aria-label="close cart"
-            onClick={handleClose}>
-            <Icon className="ri-close-line" />
-          </IconButton>
           <FlexBox
             sx={{
-              px: 2,
-              py: { xs: 2, md: 4 },
+              alignSelf: "flex-start",
               justifyContent: "space-between",
               borderBottom: "1px solid",
             }}>
-            <Typography variant="h4" component="h4">
+            <IconButton
+              sx={{ alignSelf: "flex-start" }}
+              color="secondary"
+              aria-label="close cart"
+              onClick={handleClose}>
+              <Icon className="ri-close-line" />
+            </IconButton>
+            <Typography sx={{ p: 2 }} variant="h4" component="h4">
               Cart
             </Typography>
-            <Typography variant="h5" component="h5">
-              {getTotal()}
-            </Typography>
-            <Button variant="outlined" onClick={handleCheckout}>
-              Checkout
-            </Button>
           </FlexBox>
           <FlexBox sx={{ flexDirection: "column", mt: 2, gap: 1 }}>
+            <FlexBox
+              sx={{
+                px: 2,
+                justifyContent: "space-between",
+              }}>
+              <Typography variant="h6" component="h6">
+                {getTotal()}
+              </Typography>
+              <Button variant="outlined" onClick={handleCheckout}>
+                Checkout
+              </Button>
+            </FlexBox>
             {state.isCheckingOut ? (
               <Box sx={{ py: 1, width: "90%" }}>
                 <LinearProgress color="secondary" />
