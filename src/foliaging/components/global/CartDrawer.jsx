@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Badge,
   Box,
@@ -35,21 +35,27 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
     return total ? `Total: $${total.toFixed(2)}` : "";
   };
 
-  const handleCheckout = () => {
-    // TODO validate user contact and address
+  const [canCheckout, setCanCheckout] = useState(true);
 
-    allowToProtectedRoute((token) =>
-      token
-        ? processCheckout({
-            dispatch,
-            token,
-            details: {
-              cid: state.user.id,
-              shipping_id: state.user.addresses[0].id,
-            },
-          })
-        : processLogout({ dispatch })
-    );
+  const handleCheckout = () => {
+    const { first_name, last_name, contact_number, addresses } = state.user;
+
+    if (!first_name || !last_name || !contact_number || !addresses.length) {
+      setCanCheckout(false);
+    } else {
+      allowToProtectedRoute((token) =>
+        token
+          ? processCheckout({
+              dispatch,
+              token,
+              details: {
+                cid: state.user.id,
+                shipping_id: state.user.addresses[0].id,
+              },
+            })
+          : processLogout({ dispatch })
+      );
+    }
   };
 
   const handleClick = () => {
@@ -90,6 +96,7 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
             <FlexBox
               sx={{
                 px: 2,
+                py: 1,
                 justifyContent: "space-between",
               }}>
               <Typography variant="h6" component="h6">
@@ -99,6 +106,16 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
                 Checkout
               </Button>
             </FlexBox>
+            {canCheckout ? (
+              <Box sx={{ py: 1, width: "90%" }}>
+                <Typography>
+                  Your profile is missing details needed for checking out.
+                  Kindly proceed to profile to update.
+                </Typography>
+              </Box>
+            ) : (
+              <Fragment />
+            )}
             {state.isCheckingOut ? (
               <Box sx={{ py: 1, width: "90%" }}>
                 <LinearProgress color="secondary" />

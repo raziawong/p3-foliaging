@@ -2,7 +2,7 @@ import axios from "axios";
 import { sortOptions } from "./helpers";
 
 export const apiBase = axios.create({
-  baseURL: "https://tgc16-foliaging-express.herokuapp.com/api",
+  baseURL: "http://localhost:3001/api",
 });
 
 export const apiPaths = {
