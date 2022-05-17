@@ -493,10 +493,24 @@ export const processCartDelete = async ({ dispatch, token, cid, pid }) => {
   }
 };
 
+export const processProfileUpdate = async ({ dispatch, token, profile }) => {
+  try {
+    const resp = await processData.profileUpdate(profile, token);
+
+    if (resp.data?.user) {
+      dispatch(setUser(resp.data.user));
+      dispatch(setSuccess(messages.userUpdateSuccess));
+    }
+  } catch (err) {
+    dispatch(setError(messages.userUpdateError));
+  }
+};
+
 export const processPasswordUpdate = async ({ dispatch, token, passwords }) => {
   try {
-    const results = await processData.passwordUpdate(passwords, token);
-    if (results.data?.user) {
+    const resp = await processData.passwordUpdate(passwords, token);
+
+    if (resp.data?.user) {
       dispatch(setSuccess(messages.passswordUpdateSuccess));
     }
   } catch (err) {
@@ -508,6 +522,7 @@ export const processCheckout = async ({ dispatch, token, details }) => {
   try {
     dispatch(checkingOut(true));
     const resp = await fetchData.checkout(details, token);
+
     if (resp.data.url) {
       window.location.replace(resp.data.url);
     }

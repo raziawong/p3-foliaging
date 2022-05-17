@@ -22,6 +22,12 @@ export * from "./forms/LoginForm";
 export { default as RegisterForm } from "./forms/RegisterForm";
 export * from "./forms/RegisterForm";
 
+export { default as PasswordForm } from "./forms/PasswordForm";
+export * from "./forms/PasswordForm";
+
+export { default as ProfileForm } from "./forms/ProfileForm";
+export * from "./forms/ProfileForm";
+
 export { default as PlantFilter } from "./products/PlantFilter";
 export * from "./products/PlantFilter";
 
@@ -57,11 +63,11 @@ export * from "./styled/TabPanel";
 export { default as CartItems } from "./styled/CartItems";
 export * from "./styled/CartItems";
 
-export { default as Addresses } from "./userprofile/Addresses";
-export * from "./userprofile/Addresses";
+export { default as Addresses } from "./account/Addresses";
+export * from "./account/Addresses";
 
-export { default as Contact } from "./userprofile/Contact";
-export * from "./userprofile/Contact";
+export { default as Profile } from "./account/Profile";
+export * from "./account/Profile";
 
-export { default as UserSettings } from "./userprofile/Settings";
-export * from "./userprofile/Settings";
+export { default as Orders } from "./account/Orders";
+export * from "./account/Orders";

@@ -2,6 +2,8 @@ export const templates = {
   required: `This is required`,
   spaces: `This cannot contain only space(s)`,
   alphaNumeric: `This can only be alphanumeric inclusive of '-' and/or '_'`,
+  alphaNumericSpace: `This can only be alphanumeric inclusive of spaces`,
+  contactNumber: `This is not a valid Singapore phone number`,
   maxLength: (length) => `This cannot exceed ${length} characters`,
   minLength: (length) => `This must be at least be ${length} characters`,
   email: `This is not a valid email address`,
@@ -12,6 +14,8 @@ export const templates = {
 export const regex = {
   spaces: /^[\s]*$/,
   alphaNumeric: /^[A-Za-zÀ-ȕ0-9\-_]*$/,
+  alphaNumericSpace: /^[A-Za-zÀ-ȕ0-9\s]*$/,
+  sgPhoneNumber: /^(\+65)?(6|8|9)\d{7}$/,
   email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
   password: new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/),
 };
@@ -31,6 +35,36 @@ export const newPasswordValidator = ({ password, confirm_password }) => {
 
   if (!confirm_password) {
     messages.confirm_password = templates.required;
+  }
+
+  return messages;
+};
+
+export const profileValidator = ({ first_name, last_name, contact_number }) => {
+  const messages = {};
+
+  if (!first_name) {
+    messages.first_name = templates.required;
+  } else if (regex.spaces.test(first_name)) {
+    messages.first_name = templates.spaces;
+  } else if (!regex.alphaNumericSpace.test(first_name)) {
+    messages.first_name = templates.alphaNumericSpace;
+  }
+
+  if (!last_name) {
+    messages.last_name = templates.required;
+  } else if (regex.spaces.test(last_name)) {
+    messages.last_name = templates.spaces;
+  } else if (!regex.alphaNumericSpace.test(last_name)) {
+    messages.last_name = templates.alphaNumericSpace;
+  }
+
+  if (!contact_number) {
+    messages.contact_number = templates.required;
+  } else if (regex.spaces.test(contact_number)) {
+    messages.contact_number = templates.spaces;
+  } else if (!regex.sgPhoneNumber.test(contact_number)) {
+    messages.contact_number = templates.contactNumber;
   }
 
   return messages;

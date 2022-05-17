@@ -10,8 +10,8 @@ export * from "./Register";
 export { default as Products } from "./Products";
 export * from "./Products";
 
-export { default as UserProfile } from "./UserProfile";
-export * from "./UserProfile";
+export { default as Account } from "./Account";
+export * from "./Account";
 
 export { default as Checkout } from "./Checkout";
 export * from "./Checkout";

@@ -145,3 +145,22 @@ export const NavCartDrawer = styled(Drawer)(({ theme }) => ({
     backgroundColor: alpha(siteColors.feldgrau, 0.9),
   },
 }));
+
+export const ProfileGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(40vw, 1fr))",
+  gridTemplateRows: "1fr",
+  gridColumnGap: "0px",
+  gridRowGap: "0px",
+  width: "80vw",
+}));
+
+export const ProfileItemFlexBox = styled(FlexBox)(({ theme }) => ({
+  minHeight: "38vh",
+  border: `1px solid ${siteColors.primaryText}`,
+  flexDirection: "column",
+  justifyContent: "space-between",
+  gap: theme.spacing(3),
+  paddingTop: theme.spacing(4),
+  paddingBottom: theme.spacing(4),
+}));

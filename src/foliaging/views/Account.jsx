@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import fluidImage from "../../assets/images/fluid3.svg";
-import { useSiteStateContext } from "../states";
 import SwipeableViews from "react-swipeable-views";
 import { Tabs, Tab, useTheme, Typography } from "@mui/material";
 import {
   FlexBox,
   FrostedContentBox,
+  Profile,
   Addresses,
-  Contact,
-  UserSettings,
+  Orders,
   TabPanel,
 } from "../components";
 import siteColors from "../styles/colors";
 
-export default function UserProfile() {
+export default function Account() {
   const theme = useTheme();
-  const state = useSiteStateContext();
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleChange = (evt, index) => {
@@ -31,15 +29,15 @@ export default function UserProfile() {
       sx={{
         my: 4,
         p: 1,
-        background: `${siteColors.charcoal} url(${fluidImage}) no-repeat center`,
+        background: `${siteColors.light} url(${fluidImage}) no-repeat center`,
         backgroundSize: "cover",
       }}>
       <FrostedContentBox
-        shadowAlpha={0.4}
-        shadowColor={siteColors.background}
+        shadowAlpha={0.85}
+        shadowColor={siteColors.charcoal}
         sx={{
           py: 2,
-          width: "97%",
+          width: "96%",
           minHeight: "80vh",
           overflowWrap: "break-word",
         }}>
@@ -58,17 +56,7 @@ export default function UserProfile() {
                   component="h3"
                   variant="h6"
                   sx={{ textTransform: "capitalize", fontWeight: 500 }}>
-                  Settings
-                </Typography>
-              }
-            />
-            <Tab
-              label={
-                <Typography
-                  component="h3"
-                  variant="h6"
-                  sx={{ textTransform: "capitalize", fontWeight: 500 }}>
-                  Contact
+                  Profile
                 </Typography>
               }
             />
@@ -82,6 +70,16 @@ export default function UserProfile() {
                 </Typography>
               }
             />
+            <Tab
+              label={
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  sx={{ textTransform: "capitalize", fontWeight: 500 }}>
+                  Orders
+                </Typography>
+              }
+            />
           </Tabs>
         </FlexBox>
         <FlexBox sx={{ mt: 4 }}>
@@ -90,13 +88,13 @@ export default function UserProfile() {
             index={tabIndex}
             onChangeIndex={handleChangeIndex}>
             <TabPanel value={tabIndex} index={0} dir={theme.direction}>
-              <UserSettings />
+              <Profile />
             </TabPanel>
             <TabPanel value={tabIndex} index={1} dir={theme.direction}>
-              <Contact globalState={state} />
+              <Addresses />
             </TabPanel>
             <TabPanel value={tabIndex} index={2} dir={theme.direction}>
-              <Addresses globalState={state} />
+              <Orders />
             </TabPanel>
           </SwipeableViews>
         </FlexBox>

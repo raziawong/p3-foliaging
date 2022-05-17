@@ -12,7 +12,7 @@ import { FlexBox } from "../styled/components";
 import { newPasswordValidator, allowToProtectedRoute } from "../../utils";
 import LeafLoader from "../global/LeafLoader";
 
-export default function Settings() {
+export default function Addresses() {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
   const navigate = useNavigate();

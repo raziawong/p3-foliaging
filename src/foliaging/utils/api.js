@@ -24,7 +24,7 @@ export const apiPaths = {
   refresh: "/accounts/refresh",
   userProfile: "/user/profile",
   profileUpdate: "/user/profile/update",
-  passwordUpdate: "/user/profile/password/update",
+  passwordUpdate: "/user/password/update",
   userAddresses: "/user/addresses",
   addressAdd: "/user/address/add",
   addressUpdate: "/user/address/update",
@@ -141,7 +141,7 @@ const processRegister = async (body) => {
 };
 
 const processPasswordUpdate = async (body, token) => {
-  return await apiBase.patch(
+  return await apiBase.post(
     apiPaths.passwordUpdate,
     { ...body },
     getHeaderConfig(token)

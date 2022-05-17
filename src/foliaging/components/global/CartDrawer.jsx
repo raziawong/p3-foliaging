@@ -17,7 +17,7 @@ import {
   useSiteStateContext,
 } from "../../states";
 import CartItems from "../styled/CartItems";
-import { ContentBox, FlexBox, NavCartDrawer } from "../styled/components";
+import { FlexBox, NavCartDrawer } from "../styled/components";
 import { allowToProtectedRoute } from "../../utils";
 import { LeafLoader } from "..";
 
