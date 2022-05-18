@@ -34,7 +34,7 @@ export default function Listing({ type }) {
         ? processCartAdd({
             dispatch,
             token,
-            cartItem: { pid, cid: state.user.id },
+            cartItem: { pid },
           })
         : handleGuest()
     );

@@ -29,7 +29,7 @@ export default function CartItems() {
     navigate("/login");
   };
 
-  const handleChange = (cid, pid, quantity) => {
+  const handleChange = (pid, quantity) => {
     quantity = Number(quantity);
 
     if (quantity) {
@@ -38,7 +38,7 @@ export default function CartItems() {
           ? processCartUpdate({
               dispatch,
               token,
-              cartItem: { cid, pid, quantity },
+              cartItem: { pid, quantity },
             })
           : handleLogout()
       );
@@ -47,7 +47,7 @@ export default function CartItems() {
 
   const handleRemove = (cid, pid) => {
     allowToProtectedRoute((token) =>
-      token ? processCartDelete({ dispatch, token, cid, pid }) : handleLogout()
+      token ? processCartDelete({ dispatch, token, pid }) : handleLogout()
     );
   };
 
@@ -72,26 +72,20 @@ export default function CartItems() {
                 maxWidth: { xs: "100%", md: "35%" },
               }}>
               <TextField
-                type="number"
                 size="small"
                 label="Quantity"
                 name="quantity"
                 value={item.quantity}
+                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 onChange={(evt) =>
-                  handleChange(
-                    item.customer_id,
-                    item.product_id,
-                    evt.target.value
-                  )
+                  handleChange(item.product_id, evt.target.value)
                 }
                 error={!item.isEnough}
                 helperText={!item.isEnough ? "Max Quantity Reached" : ""}
               />
               <IconButton
                 color="secondary"
-                onClick={(evt) =>
-                  handleRemove(item.customer_id, item.product_id)
-                }>
+                onClick={(evt) => handleRemove(item.product_id)}>
                 <Icon className="ri-delete-bin-2-line" />
               </IconButton>
             </FlexBox>

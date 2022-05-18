@@ -488,10 +488,10 @@ export const processCartUpdate = async ({ dispatch, token, cartItem }) => {
   }
 };
 
-export const processCartDelete = async ({ dispatch, token, cid, pid }) => {
+export const processCartDelete = async ({ dispatch, token, pid }) => {
   try {
     if (token) {
-      const resp = await processData.cartRemove({ cid, pid }, token);
+      const resp = await processData.cartRemove({ pid }, token);
 
       if (resp.data?.success) {
         dispatch(deleteCartItem({ pid }));
