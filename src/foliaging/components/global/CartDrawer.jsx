@@ -1,29 +1,19 @@
 import React, { Fragment, useState } from "react";
 import {
   Badge,
-  Box,
   Button,
   Icon,
   IconButton,
-  LinearProgress,
   Tooltip,
   Typography,
 } from "@mui/material";
-import {
-  processCheckout,
-  processLogout,
-  stateKey,
-  useSiteDispatchContext,
-  useSiteStateContext,
-} from "../../states";
+import { stateKey, useSiteStateContext } from "../../states";
 import CartItems from "../styled/CartItems";
 import { FlexBox, NavCartDrawer } from "../styled/components";
-import { allowToProtectedRoute } from "../../utils";
-import { LeafLoader } from "..";
+import { CheckoutModal, LeafLoader } from "..";
 
 export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
   const state = useSiteStateContext();
-  const dispatch = useSiteDispatchContext();
 
   const getTotal = () => {
     let total = 0;
@@ -35,27 +25,10 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
     return total ? `Total: $${total.toFixed(2)}` : "";
   };
 
-  const [canCheckout, setCanCheckout] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleCheckout = () => {
-    const { first_name, last_name, contact_number, addresses } = state.user;
-
-    if (!first_name || !last_name || !contact_number || !addresses.length) {
-      setCanCheckout(false);
-    } else {
-      allowToProtectedRoute((token) =>
-        token
-          ? processCheckout({
-              dispatch,
-              token,
-              details: {
-                cid: state.user.id,
-                shipping_id: state.user.addresses[0].id,
-              },
-            })
-          : processLogout({ dispatch })
-      );
-    }
+    setModalOpen(true);
   };
 
   const handleClick = () => {
@@ -64,6 +37,10 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
 
   const handleClose = () => {
     setDrawOpen(false);
+  };
+
+  const handleCheckoutClose = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -102,30 +79,13 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
               <Typography variant="h6" component="h6">
                 {getTotal()}
               </Typography>
-              <Button variant="outlined" onClick={handleCheckout}>
+              <Button
+                variant="outlined"
+                onClick={handleCheckout}
+                disabled={state.cart && !state.cart.length}>
                 Checkout
               </Button>
             </FlexBox>
-            {canCheckout ? (
-              <Box sx={{ py: 1, width: "90%" }}>
-                <Typography>
-                  Your profile is missing details needed for checking out.
-                  Kindly proceed to profile to update.
-                </Typography>
-              </Box>
-            ) : (
-              <Fragment />
-            )}
-            {state.isCheckingOut ? (
-              <Box sx={{ py: 1, width: "90%" }}>
-                <LinearProgress color="secondary" />
-                <Typography>
-                  Please hold on while we redirect you to our payment platform
-                </Typography>
-              </Box>
-            ) : (
-              <Fragment />
-            )}
             {state[stateKey.CART_LOADING] ? <LeafLoader /> : <CartItems />}
           </FlexBox>
         </FlexBox>
@@ -146,6 +106,12 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
           </Badge>
         </IconButton>
       </Tooltip>
+
+      <CheckoutModal
+        open={modalOpen}
+        close={handleCheckoutClose}
+        total={getTotal}
+      />
     </Fragment>
   );
 }

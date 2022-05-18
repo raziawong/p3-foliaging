@@ -83,6 +83,14 @@ export const optionDisplay = {
           </MenuItem>
         ))
       : [],
+  address: (values) =>
+    values && values.length
+      ? values.map(({ id, label }) => (
+          <MenuItem key={id} value={id}>
+            {label}
+          </MenuItem>
+        ))
+      : [],
 };
 
 export const formatAddress = ({

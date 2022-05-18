@@ -45,7 +45,7 @@ export default function CartItems() {
     }
   };
 
-  const handleRemove = (cid, pid) => {
+  const handleRemove = (pid) => {
     allowToProtectedRoute((token) =>
       token ? processCartDelete({ dispatch, token, pid }) : handleLogout()
     );

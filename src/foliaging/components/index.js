@@ -13,6 +13,9 @@ export * from "./global/NavDrawer";
 export { default as CartDrawer } from "./global/CartDrawer";
 export * from "./global/CartDrawer";
 
+export { default as CheckoutModal } from "./global/CheckoutModal";
+export * from "./global/CheckoutModal";
+
 export { default as SnackbarAlert } from "./global/SnackbarAlert";
 export * from "./global/SnackbarAlert";
 
@@ -30,6 +33,9 @@ export * from "./forms/ProfileForm";
 
 export { default as AddressForm } from "./forms/AddressForm";
 export * from "./forms/AddressForm";
+
+export { default as CheckoutForm } from "./forms/CheckoutForm";
+export * from "./forms/CheckoutForm";
 
 export { default as PlantFilter } from "./products/PlantFilter";
 export * from "./products/PlantFilter";

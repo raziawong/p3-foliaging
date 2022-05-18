@@ -152,6 +152,29 @@ export const addressValidator = ({
   return messages;
 };
 
+export const checkoutValidator = ({
+  first_name,
+  last_name,
+  contact_number,
+  billing_id,
+  shipping_id,
+}) => {
+  const messages = {};
+
+  if (!billing_id) {
+    messages.billing_id = templates.required;
+  }
+
+  if (!shipping_id) {
+    messages.shipping_id = templates.required;
+  }
+
+  return {
+    ...messages,
+    ...profileValidator({ first_name, last_name, contact_number }),
+  };
+};
+
 export const loginValidator = ({ login, password }) => {
   const messages = {};
 
