@@ -70,11 +70,7 @@ export default function AddressForm({ handleClose, fieldsState }) {
               })
           : handleLogout()
       );
-    }
-  };
 
-  const handleCancel = (evt) => {
-    if (handleClose) {
       handleClose();
     }
   };
@@ -187,7 +183,7 @@ export default function AddressForm({ handleClose, fieldsState }) {
           variant="outlined"
           color="tertiary"
           size="small"
-          onClick={handleCancel}>
+          onClick={handleClose}>
           Cancel
         </Button>
       </FlexBox>

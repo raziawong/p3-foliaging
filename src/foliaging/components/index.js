@@ -69,6 +69,9 @@ export * from "./styled/CartItems";
 export { default as Addresses } from "./account/Addresses";
 export * from "./account/Addresses";
 
+export { default as AddressModal } from "./account/AddressModal";
+export * from "./account/AddressModal";
+
 export { default as Profile } from "./account/Profile";
 export * from "./account/Profile";
 

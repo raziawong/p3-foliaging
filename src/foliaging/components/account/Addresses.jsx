@@ -1,22 +1,16 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Icon, IconButton, Modal, Typography } from "@mui/material";
+import { Button, Icon, Typography } from "@mui/material";
 import {
-  processAddressDelete,
   processLogout,
   stateKey,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
-import {
-  ProfileAddressFlexBox,
-  FlexBox,
-  ContentBox,
-} from "../styled/components";
+import { ProfileAddressFlexBox, FlexBox } from "../styled/components";
 import LeafLoader from "../global/LeafLoader";
-import { allowToProtectedRoute, formatAddress } from "../../utils";
-import AddressForm from "../forms/AddressForm";
-import siteColors from "../../styles/colors";
+import { formatAddress } from "../../utils";
+import { AddressModal } from "../../components";
 
 export default function Addresses() {
   const state = useSiteStateContext();
@@ -71,21 +65,6 @@ export default function Addresses() {
     setAddressState(initState);
   };
 
-  const handleDeleteSubmit = (evt) => {
-    evt.preventDefault();
-    allowToProtectedRoute((token) =>
-      token && addressState.id
-        ? processAddressDelete({
-            dispatch,
-            token,
-            aid: addressState.id,
-          })
-        : handleLogout()
-    );
-    setModalType("");
-    setAddressState(initState);
-  };
-
   return state[stateKey.USER_LOADING] && state[stateKey.DATA_LOADING] ? (
     <LeafLoader />
   ) : (
@@ -128,67 +107,12 @@ export default function Addresses() {
           </ProfileAddressFlexBox>
         ))}
       </FlexBox>
-      <Modal
-        open={!!modalType}
-        onClose={handleClose}
-        aria-labelledby="address book update"
-        aria-describedby="add or edit address in address book">
-        <FlexBox sx={{ height: "100vh", width: "100vw" }}>
-          <FlexBox
-            sx={{
-              p: 1,
-              m: 1,
-              width: { xs: "100%", md: "65%" },
-              backgroundColor: siteColors.charcoal,
-              flexDirection: "column",
-            }}>
-            <IconButton
-              sx={{ alignSelf: "flex-end" }}
-              color="tertiary"
-              aria-label="close address modal"
-              onClick={handleClose}>
-              <Icon className="ri-close-line" />
-            </IconButton>
-            <ContentBox sx={{ pl: 4, pb: 4 }}>
-              <Typography variant="h4" component="h4">
-                Manage Address
-              </Typography>
-            </ContentBox>
-            <ContentBox sx={{ p: 2 }}>
-              {modalType === "delete" ? (
-                <FlexBox sx={{ minHeight: "20vh", flexDirection: "column" }}>
-                  <Typography variant="subtitle1">
-                    This action is irreversible, do you still want to proceed
-                    with deleting <i>{addressState.label}</i>?
-                  </Typography>
-                  <FlexBox sx={{ py: 4, justifySelf: "flex-end" }}>
-                    <Button
-                      sx={{ mr: 1 }}
-                      variant="outlined"
-                      color="secondary"
-                      size="small"
-                      onClick={handleDeleteSubmit}>
-                      Confirm
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="tertiary"
-                      size="small"
-                      onClick={handleClose}>
-                      Cancel
-                    </Button>
-                  </FlexBox>
-                </FlexBox>
-              ) : (
-                <AddressForm
-                  handleClose={handleClose}
-                  fieldsState={addressState}
-                />
-              )}
-            </ContentBox>
-          </FlexBox>
-        </FlexBox>
-      </Modal>
+      <AddressModal
+        modalType={modalType}
+        handleLogout={handleLogout}
+        handleClose={handleClose}
+        fieldsState={addressState}
+      />
     </Fragment>
   );
 }
