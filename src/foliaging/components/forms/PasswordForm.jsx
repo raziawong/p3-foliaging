@@ -9,7 +9,7 @@ import {
 import { FlexBox } from "../styled/components";
 import { newPasswordValidator, allowToProtectedRoute } from "../../utils";
 
-export default function PasswordForm({ handleClose }) {
+export default function PasswordForm({ close }) {
   const dispatch = useSiteDispatchContext();
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ export default function PasswordForm({ handleClose }) {
             })
           : handleLogout()
       );
-      handleClose();
+      close();
     }
   };
 
@@ -94,7 +94,7 @@ export default function PasswordForm({ handleClose }) {
           variant="outlined"
           color="tertiary"
           size="small"
-          onClick={handleClose}>
+          onClick={close}>
           Cancel
         </Button>
       </FlexBox>
