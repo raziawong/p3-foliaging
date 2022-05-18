@@ -231,7 +231,7 @@ export const siteReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export const fetchAuthTokens = async ({ dispatch, body }) => {
+export const fetchAuthTokens = async ({ dispatch, body }, callback) => {
   try {
     const resp = await fetchData.authentication(body);
     if (resp?.data?.tokens) {
@@ -248,6 +248,10 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
       });
 
       fetchUserDetails({ dispatch, intervalId, token: accessToken });
+
+      if (typeof callback === "function") {
+        callback();
+      }
     }
   } catch (err) {
     if (err.response?.status === 401 || err.response?.status === 402) {
@@ -374,19 +378,23 @@ export const processExistTokens = async ({
   refreshToken,
 }) => {
   if (accessToken && refreshToken) {
-    const newToken = await getRefreshedToken({ refreshToken, accessToken });
-    if (newToken) {
-      const decoded = jwt(newToken.accessToken);
-      const intervalId = triggerRefreshInterval(dispatch);
+    try {
+      const newToken = await getRefreshedToken({ refreshToken, accessToken });
+      if (newToken) {
+        const decoded = jwt(newToken.accessToken);
+        const intervalId = triggerRefreshInterval(dispatch);
 
-      fetchCartItems({
-        dispatch,
-        userId: decoded.id,
-        token: newToken.accessToken,
-      });
+        fetchCartItems({
+          dispatch,
+          userId: decoded.id,
+          token: newToken.accessToken,
+        });
 
-      fetchUserDetails({ dispatch, intervalId, token: newToken.accessToken });
-    } else {
+        fetchUserDetails({ dispatch, intervalId, token: newToken.accessToken });
+      } else {
+        processLogout({ dispatch });
+      }
+    } catch (err) {
       processLogout({ dispatch });
     }
   } else if (refreshToken) {

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import {
   ViewContainer,
   ContentContainer,
@@ -7,7 +7,8 @@ import {
   NavBar,
   SnackbarAlert,
 } from "./components";
-import { stateKey } from "./states";
+import { stateKey, useSiteStateContext } from "./states";
+import { getLocalTokens } from "./utils";
 import {
   Home,
   Products,
@@ -17,6 +18,30 @@ import {
   Checkout,
   NotFound,
 } from "./views";
+
+const PrivateRoute = ({ children }) => {
+  const state = useSiteStateContext();
+  const tokens = getLocalTokens();
+  const location = useLocation();
+
+  if (!state.user || !tokens.accessToken) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  return children;
+};
+
+const NonPrivateRoute = ({ children }) => {
+  const state = useSiteStateContext();
+  const tokens = getLocalTokens();
+  const location = useLocation();
+
+  if (state.user && tokens.accessToken) {
+    return <Navigate to="/profile" replace state={{ from: location }} />;
+  }
+
+  return children;
+};
 
 export default function Site() {
   return (
@@ -47,18 +72,50 @@ export default function Site() {
               path="/supplies"
               element={<Products type={stateKey.SUPPLIES} />}
             />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/profile" element={<Account />} />
+            <Route
+              exact
+              path="/login"
+              element={
+                <NonPrivateRoute>
+                  <Login />
+                </NonPrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="/register"
+              element={
+                <NonPrivateRoute>
+                  <Register />
+                </NonPrivateRoute>
+              }
+            />
+            <Route
+              exact
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Account />
+                </PrivateRoute>
+              }
+            />
             <Route
               exact
               path="/checkout/success"
-              element={<Checkout results="success" />}
+              element={
+                <PrivateRoute>
+                  <Checkout results="success" />
+                </PrivateRoute>
+              }
             />
             <Route
               exact
               path="/checkout/cancel"
-              element={<Checkout results="cancel" />}
+              element={
+                <PrivateRoute>
+                  <Checkout results="cancel" />
+                </PrivateRoute>
+              }
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

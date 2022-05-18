@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchAuthTokens, useSiteDispatchContext } from "../../states";
 import { Button, TextField, Typography } from "@mui/material";
 import { ContentBox, FlexBox, FrostedFlexBox } from "../../components";
@@ -6,6 +7,7 @@ import { loginValidator } from "../../utils";
 
 export default function LoginForm() {
   const dispatch = useSiteDispatchContext();
+  const navigate = useNavigate();
 
   const [loginFields, setLoginFields] = useState({
     login: "",
@@ -27,7 +29,9 @@ export default function LoginForm() {
     if (Object.keys(messages).length) {
       setValidationMsgs(messages);
     } else {
-      fetchAuthTokens({ dispatch, body: { ...loginFields } });
+      fetchAuthTokens({ dispatch, body: { ...loginFields } }, () => {
+        navigate("/profile");
+      });
     }
   };
 
