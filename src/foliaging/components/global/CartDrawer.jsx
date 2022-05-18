@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react";
 import {
   Badge,
+  Box,
   Button,
   Icon,
   IconButton,
+  LinearProgress,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -86,6 +88,16 @@ export default function CartDrawer({ toDisplay, drawOpen, setDrawOpen }) {
                 Checkout
               </Button>
             </FlexBox>
+            {state.isCheckingOut ? (
+              <Box sx={{ py: 3, width: "90%" }}>
+                <LinearProgress color="secondary" />
+                <Typography>
+                  Please hold on while we redirect you to our payment platform
+                </Typography>
+              </Box>
+            ) : (
+              <Fragment />
+            )}
             {state[stateKey.CART_LOADING] ? <LeafLoader /> : <CartItems />}
           </FlexBox>
         </FlexBox>

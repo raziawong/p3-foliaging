@@ -6,14 +6,12 @@ import {
   FormHelperText,
   Icon,
   InputLabel,
-  LinearProgress,
   Select,
   TextField,
   Typography,
 } from "@mui/material";
 import {
   processCheckout,
-  processProfileUpdate,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
@@ -100,7 +98,6 @@ export default function CheckoutForm({ logout, close, total }) {
               dispatch,
               token,
               details: {
-                cid: state.user.id,
                 ...checkoutFields,
               },
             })
@@ -113,16 +110,6 @@ export default function CheckoutForm({ logout, close, total }) {
   return (
     <Fragment>
       <FlexBox component="form" sx={{ px: 4, flexDirection: "column" }}>
-        {state.isCheckingOut ? (
-          <Box sx={{ py: 2, width: "90%" }}>
-            <LinearProgress color="secondary" />
-            <Typography>
-              Please hold on while we redirect you to our payment platform
-            </Typography>
-          </Box>
-        ) : (
-          <Fragment />
-        )}
         <FlexBox sx={{ pb: 4, justifyContent: "space-between" }}>
           <Box>
             <Typography variant="h5" component="h5">
