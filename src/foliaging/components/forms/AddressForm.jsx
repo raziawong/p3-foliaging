@@ -94,7 +94,7 @@ export default function AddressForm({ handleClose, fieldsState }) {
             arial-label="type"
             labelId="address-type-label"
             name="address_type_id"
-            value={fieldsState.address_type_id || 0}
+            value={addressFields.address_type_id}
             onChange={handleChange}>
             {optionDisplay.single(state.options.address.types)}
           </Select>
@@ -181,7 +181,7 @@ export default function AddressForm({ handleClose, fieldsState }) {
           color="secondary"
           size="small"
           onClick={handleSubmit}>
-          Update
+          {fieldsState.id ? "Update" : "Add"}
         </Button>
         <Button
           variant="outlined"

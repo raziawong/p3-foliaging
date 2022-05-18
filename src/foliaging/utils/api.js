@@ -22,6 +22,7 @@ export const apiPaths = {
   login: "/accounts/login",
   logout: "/accounts/logout",
   refresh: "/accounts/refresh",
+  addressTypes: "/accounts/address/types",
   userProfile: "/user/profile",
   profileUpdate: "/user/profile/update",
   passwordUpdate: "/user/password/update",
@@ -29,7 +30,6 @@ export const apiPaths = {
   addressAdd: "/user/address/add",
   addressUpdate: "/user/address/update",
   addressDelete: "/user/address/remove",
-  addressTypes: "/user/address/types",
   userCart: "/user/cart",
   cartItemCheck: "/user/cart/quantity/check",
   cartItemAdd: "/user/cart/add",
@@ -124,8 +124,8 @@ const getUserCart = async (params, token) => {
   });
 };
 
-const getAddressTypes = async (token) => {
-  return await apiBase.get(apiPaths.addressTypes, getHeaderConfig(token));
+const getAddressTypes = async () => {
+  return await apiBase.get(apiPaths.addressTypes);
 };
 
 const getUserCheckout = async (params, token) => {
@@ -236,7 +236,7 @@ export const fetchData = {
   authentication: async (body) => await getAccountAuth(body),
   profile: async (token) => await getUserProfile(token),
   addresses: async (params, token) => await getUserCart(params, token),
-  addressTypes: async (token) => await getAddressTypes(token),
+  addressTypes: async () => await getAddressTypes(),
   cart: async (params, token) => await getUserCart(params, token),
   cartItemCheck: async (params, token) =>
     await getCartItemQuantityCheck(params, token),

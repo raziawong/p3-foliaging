@@ -1,18 +1,27 @@
 import React, { Fragment, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Icon, IconButton, Modal, Typography } from "@mui/material";
-import { stateKey, useSiteStateContext } from "../../states";
+import {
+  processAddressDelete,
+  processLogout,
+  stateKey,
+  useSiteDispatchContext,
+  useSiteStateContext,
+} from "../../states";
 import {
   ProfileAddressFlexBox,
   FlexBox,
   ContentBox,
 } from "../styled/components";
 import LeafLoader from "../global/LeafLoader";
-import { formatAddress } from "../../utils";
+import { allowToProtectedRoute, formatAddress } from "../../utils";
 import AddressForm from "../forms/AddressForm";
 import siteColors from "../../styles/colors";
 
 export default function Addresses() {
   const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
+  const navigate = useNavigate();
   const { user } = state;
 
   const initState = {
@@ -28,6 +37,11 @@ export default function Addresses() {
   const [modalType, setModalType] = useState("");
   const [addressState, setAddressState] = useState(initState);
 
+  const handleLogout = () => {
+    processLogout({ dispatch });
+    navigate("/login");
+  };
+
   const handleAddClick = () => {
     setModalType("add");
     setAddressState(initState);
@@ -38,7 +52,8 @@ export default function Addresses() {
 
     setModalType("edit");
     if (address.length) {
-      setAddressState(address[0]);
+      const { type, ...data } = address[0];
+      setAddressState(data);
     }
   };
 
@@ -56,11 +71,27 @@ export default function Addresses() {
     setAddressState(initState);
   };
 
-  return state[stateKey.USER_LOADING] ? (
+  const handleDeleteSubmit = (evt) => {
+    evt.preventDefault();
+    allowToProtectedRoute((token) =>
+      token && addressState.id
+        ? processAddressDelete({
+            dispatch,
+            token,
+            aid: addressState.id,
+          })
+        : handleLogout()
+    );
+    setModalType("");
+    setAddressState(initState);
+  };
+
+  return state[stateKey.USER_LOADING] && state[stateKey.DATA_LOADING] ? (
     <LeafLoader />
   ) : (
     <Fragment>
-      <FlexBox sx={{ minWidth: "80vw", flexDirection: "column" }}>
+      <FlexBox
+        sx={{ minWidth: { xs: "100%", md: "80vw" }, flexDirection: "column" }}>
         <Button
           onClick={handleAddClick}
           color="primary"
@@ -79,7 +110,7 @@ export default function Addresses() {
                 {address.type.type}
               </Typography>
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
               {formatAddress(address)}
             </Typography>
             <FlexBox sx={{ justifySelf: "flex-end", width: "max-content" }}>
@@ -125,10 +156,32 @@ export default function Addresses() {
             </ContentBox>
             <ContentBox sx={{ p: 2 }}>
               {modalType === "delete" ? (
-                <Button>Confirm</Button>
+                <FlexBox sx={{ minHeight: "20vh", flexDirection: "column" }}>
+                  <Typography variant="subtitle1">
+                    This action is irreversible, do you still want to proceed
+                    with deleting <i>{addressState.label}</i>?
+                  </Typography>
+                  <FlexBox sx={{ py: 4, justifySelf: "flex-end" }}>
+                    <Button
+                      sx={{ mr: 1 }}
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      onClick={handleDeleteSubmit}>
+                      Confirm
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="tertiary"
+                      size="small"
+                      onClick={handleClose}>
+                      Cancel
+                    </Button>
+                  </FlexBox>
+                </FlexBox>
               ) : (
                 <AddressForm
-                  handleCancel={handleClose}
+                  handleClose={handleClose}
                   fieldsState={addressState}
                 />
               )}

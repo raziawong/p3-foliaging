@@ -178,10 +178,11 @@ export const ProfileAddressFlexBox = styled(FlexBox)(({ theme }) => ({
   minHeight: "12vh",
   border: `1px solid ${siteColors.primaryText}`,
   flexDirection: "row",
-  justifyContent: "space-evenly",
+  justifyContent: "space-between",
   gap: theme.spacing(1),
-  padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+  padding: `${theme.spacing(3)} ${theme.spacing(8)}`,
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
+    padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
   },
 }));

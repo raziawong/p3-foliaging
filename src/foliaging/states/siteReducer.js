@@ -261,6 +261,7 @@ export const fetchAuthTokens = async ({ dispatch, body }) => {
 export const fetchInitialData = async ({ dispatch }) => {
   try {
     dispatch(setLoading({ type: stateKey.DATA_LOADING, value: true }));
+    dispatch(setLoading({ type: stateKey.USER_LOADING, value: true }));
 
     const promises = [
       await fetchData.products({}),
@@ -275,6 +276,7 @@ export const fetchInitialData = async ({ dispatch }) => {
       await fetchData.planterTypes(),
       await fetchData.materials(),
       await fetchData.supplyTypes(),
+      await fetchData.addressTypes(),
     ];
 
     Promise.allSettled(promises).then((resps) => {
@@ -307,10 +309,13 @@ export const fetchInitialData = async ({ dispatch }) => {
             [stateKey.SUPPLIES]: {
               types: resps[11].value.data.types,
             },
-            address: initialState.options.address,
+            address: {
+              types: resps[12].value.data.types,
+            },
           },
           priceRange: range,
           [stateKey.DATA_LOADING]: false,
+          [stateKey.USER_LOADING]: false,
         };
 
         dispatch(setMulti(payload));
@@ -321,6 +326,7 @@ export const fetchInitialData = async ({ dispatch }) => {
       setMulti({
         error: messages.productsFetchError,
         [stateKey.DATA_LOADING]: false,
+        [stateKey.USER_LOADING]: false,
       })
     );
   }
@@ -335,12 +341,6 @@ export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
       dispatch(setUser({ ...resp.data.user, intervalId }));
     }
     dispatch(setLoading({ type: stateKey.USER_LOADING, value: false }));
-
-    const resp2 = await fetchData.addressTypes(token);
-    if (resp2.data?.types) {
-      console.log(resp2.data);
-      dispatch(setOptions({ address: { types: resp2.data.types } }));
-    }
   } catch (err) {
     dispatch(
       setMulti({ error: messages.userId, [stateKey.USER_LOADING]: false })
