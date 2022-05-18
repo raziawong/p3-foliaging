@@ -28,6 +28,9 @@ export * from "./forms/PasswordForm";
 export { default as ProfileForm } from "./forms/ProfileForm";
 export * from "./forms/ProfileForm";
 
+export { default as AddressForm } from "./forms/AddressForm";
+export * from "./forms/AddressForm";
+
 export { default as PlantFilter } from "./products/PlantFilter";
 export * from "./products/PlantFilter";
 

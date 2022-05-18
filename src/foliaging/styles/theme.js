@@ -112,6 +112,13 @@ let siteTheme = createTheme({
         },
       },
     },
+    MuiModal: {
+      styleOverrides: {
+        backdrop: {
+          backgroundColor: alpha(siteColors.feldgrau, 0.6),
+        },
+      },
+    },
   },
 });
 

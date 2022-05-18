@@ -3,6 +3,7 @@ export const templates = {
   spaces: `This cannot contain only space(s)`,
   alphaNumeric: `This can only be alphanumeric inclusive of '-' and/or '_'`,
   alphaNumericSpace: `This can only be alphanumeric inclusive of spaces`,
+  numeric: `This can only consist of numbers`,
   contactNumber: `This is not a valid Singapore phone number`,
   maxLength: (length) => `This cannot exceed ${length} characters`,
   minLength: (length) => `This must be at least be ${length} characters`,
@@ -15,6 +16,7 @@ export const regex = {
   spaces: /^[\s]*$/,
   alphaNumeric: /^[A-Za-zÀ-ȕ0-9\-_]*$/,
   alphaNumericSpace: /^[A-Za-zÀ-ȕ0-9\s]*$/,
+  numeric: /^[\d]*$/,
   sgPhoneNumber: /^(\+65)?(6|8|9)\d{7}$/,
   email: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
   password: new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/),
@@ -65,6 +67,86 @@ export const profileValidator = ({ first_name, last_name, contact_number }) => {
     messages.contact_number = templates.spaces;
   } else if (!regex.sgPhoneNumber.test(contact_number)) {
     messages.contact_number = templates.contactNumber;
+  }
+
+  return messages;
+};
+
+export const addressValidator = ({
+  label,
+  address_type_id,
+  line_1,
+  line_2,
+  floor_number,
+  unit_number,
+  postal_code,
+}) => {
+  const messages = {};
+
+  if (!label) {
+    messages.label = templates.required;
+  } else if (regex.spaces.test(label)) {
+    messages.label = templates.spaces;
+  } else if (!regex.alphaNumericSpace.test(label)) {
+    messages.label = templates.alphaNumericSpace;
+  } else if (label.length > 20) {
+    messages.username = templates.maxLength(20);
+  }
+
+  if (!address_type_id) {
+    messages.address_type_id = templates.required;
+  }
+
+  if (!line_1) {
+    messages.line_1 = templates.required;
+  } else if (regex.spaces.test(line_1)) {
+    messages.line_1 = templates.spaces;
+  } else if (line_1.length > 100) {
+    messages.username = templates.maxLength(100);
+  }
+
+  if (line_2) {
+    if (regex.spaces.test(line_2)) {
+      messages.line_1 = templates.spaces;
+    } else if (line_2.length > 100) {
+      messages.line_2 = templates.maxLength(100);
+    }
+  }
+
+  if (floor_number) {
+    if (regex.spaces.test(floor_number)) {
+      messages.floor_number = templates.spaces;
+    } else if (!regex.numeric.test(floor_number)) {
+      messages.floor_number = templates.numeric;
+    } else if (floor_number.length > 2) {
+      messages.floor_number = templates.maxLength(2);
+    }
+
+    if (!unit_number) {
+      messages.unit_number = templates.required + " when Floor is not empty";
+    }
+  }
+
+  if (unit_number) {
+    if (regex.spaces.test(unit_number)) {
+      messages.unit_number = templates.spaces;
+    } else if (!regex.numeric.test(unit_number)) {
+      messages.unit_number = templates.numeric;
+    }
+
+    if (!floor_number) {
+      messages.floor_number = templates.required + " when Unit is not empty";
+    }
+  }
+
+  if (!postal_code) {
+    messages.postal_code = templates.required;
+  } else if (regex.spaces.test(postal_code)) {
+    messages.postal_code = templates.spaces;
+  } else if (!regex.numeric.test(postal_code)) {
+    messages.postal_code = templates.numeric;
+  } else if (postal_code.length > 6) {
+    messages.postal_code = templates.maxLength(6);
   }
 
   return messages;

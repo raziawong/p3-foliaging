@@ -35,7 +35,7 @@ export default function Profile() {
   ) : (
     <Fragment>
       <ProfileGrid>
-        <ProfileItemFlexBox sx={{ gridArea: "1 / 1 / 2 / 2" }}>
+        <ProfileItemFlexBox>
           {passwordView ? (
             <PasswordForm setPasswordView={setPasswordView} />
           ) : (
@@ -55,13 +55,13 @@ export default function Profile() {
               <ContentBox sx={{ textAlign: "right", px: 4 }}>
                 <Button color="tertiary" onClick={handleChangePasswordClick}>
                   Change Password
-                  <Icon className="ri-arrow-right-s-line"></Icon>
+                  <Icon className="ri-arrow-right-s-line" />
                 </Button>
               </ContentBox>
             </Fragment>
           )}
         </ProfileItemFlexBox>
-        <ProfileItemFlexBox sx={{ gridArea: "1 / 2 / 2 / 3" }}>
+        <ProfileItemFlexBox>
           {profileView ? (
             <ProfileForm setProfileView={setProfileView} />
           ) : (
@@ -87,7 +87,7 @@ export default function Profile() {
               <ContentBox
                 sx={{ alignSelf: "flex-end", textAlign: "right", px: 4 }}>
                 <Button color="tertiary" onClick={handleUpdateProfileClick}>
-                  Update Profile <Icon className="ri-arrow-right-s-line"></Icon>
+                  Update Profile <Icon className="ri-arrow-right-s-line" />
                 </Button>
               </ContentBox>
             </Fragment>

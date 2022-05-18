@@ -13,6 +13,9 @@ export const messages = {
     "Something went wrong retrieving customer details. Please try again",
   userUpdateSuccess: "Profile updated successfully",
   passswordUpdateSuccess: "Password updated successfully",
+  addressUpdateSuccess: "Address Book updated successfully",
+  addressUpdateError:
+    "Issue encountered during update of Address Book. Please try again",
   userUpdateError: "Issue encountered during update. Please try again",
   cartAddSuccess: "Item added to cart",
   cartFetchError: "Something went wrong retrieving cart. Please try again",
@@ -80,6 +83,30 @@ export const optionDisplay = {
           </MenuItem>
         ))
       : [],
+};
+
+export const formatAddress = ({
+  line_1,
+  line_2,
+  floor_number,
+  unit_number,
+  postal_code,
+}) => {
+  let address = line_1;
+
+  if (line_2) {
+    address += ", " + line_2;
+  }
+
+  if (floor_number && unit_number) {
+    address += ", #" + floor_number + "-" + unit_number;
+  }
+
+  if (postal_code) {
+    address += ", Singapore " + postal_code;
+  }
+
+  return address;
 };
 
 export default messages;

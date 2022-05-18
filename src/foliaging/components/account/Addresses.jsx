@@ -1,133 +1,141 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Icon, IconButton, Modal, Typography } from "@mui/material";
+import { stateKey, useSiteStateContext } from "../../states";
 import {
-  processLogout,
-  processPasswordUpdate,
-  stateKey,
-  useSiteDispatchContext,
-  useSiteStateContext,
-} from "../../states";
-import { FlexBox } from "../styled/components";
-import { newPasswordValidator, allowToProtectedRoute } from "../../utils";
+  ProfileAddressFlexBox,
+  FlexBox,
+  ContentBox,
+} from "../styled/components";
 import LeafLoader from "../global/LeafLoader";
+import { formatAddress } from "../../utils";
+import AddressForm from "../forms/AddressForm";
+import siteColors from "../../styles/colors";
 
 export default function Addresses() {
   const state = useSiteStateContext();
-  const dispatch = useSiteDispatchContext();
-  const navigate = useNavigate();
-
   const { user } = state;
 
-  const [passwordFields, setPasswordFields] = useState({
-    password: "",
-    confirm_password: "",
-  });
-
-  const [validationMsgs, setValidationMsgs] = useState({
-    password: "",
-    confirm_password: "",
-  });
-
-  const handleLogout = () => {
-    processLogout({ dispatch });
-    navigate("/login");
+  const initState = {
+    address_type_id: 1,
+    label: "",
+    line_1: "",
+    line_2: "",
+    floor_number: "",
+    unit_number: "",
+    postal_code: "",
   };
 
-  const handleChange = ({ target }) => {
-    setPasswordFields({ ...passwordFields, [target.name]: target.value });
+  const [modalType, setModalType] = useState("");
+  const [addressState, setAddressState] = useState(initState);
+
+  const handleAddClick = () => {
+    setModalType("add");
+    setAddressState(initState);
   };
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    const validations = newPasswordValidator(passwordFields);
-    if (Object.keys(validations).length) {
-      setValidationMsgs(validations);
-    } else {
-      allowToProtectedRoute((token) =>
-        token
-          ? processPasswordUpdate({
-              dispatch,
-              token,
-              passwords: passwordFields,
-            })
-          : handleLogout()
-      );
+  const handleEditClick = (id) => {
+    const address = user.addresses.filter((item) => item.id === id);
+
+    setModalType("edit");
+    if (address.length) {
+      setAddressState(address[0]);
     }
+  };
+
+  const handleDeleteClick = (id) => {
+    const address = user.addresses.filter((item) => item.id === id);
+
+    setModalType("delete");
+    if (address.length) {
+      setAddressState(address[0]);
+    }
+  };
+
+  const handleClose = () => {
+    setModalType("");
+    setAddressState(initState);
   };
 
   return state[stateKey.USER_LOADING] ? (
     <LeafLoader />
   ) : (
     <Fragment>
-      <FlexBox sx={{ flexDirection: "column" }}>
-        <FlexBox>
-          <Grid container spacing={{ xs: 1, md: 3 }}>
-            <Grid item xs={12} sm={4} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "right" } }}>
-                Username:
+      <FlexBox sx={{ minWidth: "80vw", flexDirection: "column" }}>
+        <Button
+          onClick={handleAddClick}
+          color="primary"
+          sx={{ alignSelf: "flex-end" }}>
+          Add New <Icon className="ri-arrow-right-s-line" />
+        </Button>
+        {user.addresses.map((address) => (
+          <ProfileAddressFlexBox key={address.id}>
+            <Typography
+              sx={{ display: "block", flexBasis: "20%" }}
+              variant="h6">
+              {address.label}
+              <Typography
+                sx={{ display: "block", flexBasis: "20%" }}
+                variant="caption">
+                {address.type.type}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={8} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "left" } }}>
-                {user.username}
+            </Typography>
+            <Typography variant="subtitle1">
+              {formatAddress(address)}
+            </Typography>
+            <FlexBox sx={{ justifySelf: "flex-end", width: "max-content" }}>
+              <Button
+                onClick={(evt) => handleEditClick(address.id)}
+                color="secondary">
+                Update <Icon className="ri-arrow-right-s-line" />
+              </Button>
+              <Button
+                onClick={(evt) => handleDeleteClick(address.id)}
+                color="tertiary">
+                Delete <Icon className="ri-arrow-right-s-line" />
+              </Button>
+            </FlexBox>
+          </ProfileAddressFlexBox>
+        ))}
+      </FlexBox>
+      <Modal
+        open={!!modalType}
+        onClose={handleClose}
+        aria-labelledby="address book update"
+        aria-describedby="add or edit address in address book">
+        <FlexBox sx={{ height: "100vh", width: "100vw" }}>
+          <FlexBox
+            sx={{
+              p: 1,
+              m: 1,
+              width: { xs: "100%", md: "65%" },
+              backgroundColor: siteColors.charcoal,
+              flexDirection: "column",
+            }}>
+            <IconButton
+              sx={{ alignSelf: "flex-end" }}
+              color="tertiary"
+              aria-label="close address modal"
+              onClick={handleClose}>
+              <Icon className="ri-close-line" />
+            </IconButton>
+            <ContentBox sx={{ pl: 4, pb: 4 }}>
+              <Typography variant="h4" component="h4">
+                Manage Address
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={4} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "right" } }}>
-                Email:
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={8} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "left" } }}>
-                {user.email}
-              </Typography>
-            </Grid>
-          </Grid>
-        </FlexBox>
-        <FlexBox component="form" sx={{ flexDirection: "column", mt: 5 }}>
-          <Typography variant="h6" component="h4">
-            Change Password
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            autoComplete="new-password"
-            color="primary"
-            value={passwordFields.password}
-            onChange={handleChange}
-            error={!!validationMsgs.password || false}
-            helperText={validationMsgs.password}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="confirm_password"
-            label="Confirm Password"
-            type="password"
-            color="primary"
-            autoComplete="new-password"
-            value={passwordFields.confirm_password}
-            onChange={handleChange}
-            error={!!validationMsgs.confirm_password || false}
-            helperText={validationMsgs.confirm_password}
-          />
-          <FlexBox sx={{ pt: 4, justifyContent: "flex-end" }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              onClick={handleSubmit}>
-              Update
-            </Button>
+            </ContentBox>
+            <ContentBox sx={{ p: 2 }}>
+              {modalType === "delete" ? (
+                <Button>Confirm</Button>
+              ) : (
+                <AddressForm
+                  handleCancel={handleClose}
+                  fieldsState={addressState}
+                />
+              )}
+            </ContentBox>
           </FlexBox>
         </FlexBox>
-      </FlexBox>
+      </Modal>
     </Fragment>
   );
 }

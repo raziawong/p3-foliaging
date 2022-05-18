@@ -148,11 +148,16 @@ export const NavCartDrawer = styled(Drawer)(({ theme }) => ({
 
 export const ProfileGrid = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(40vw, 1fr))",
+  gridTemplateColumns: "repeat(2, 1fr)",
   gridTemplateRows: "1fr",
   gridColumnGap: "0px",
   gridRowGap: "0px",
-  width: "80vw",
+  minWidth: "80vw",
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "1fr",
+    minWidth: "80%",
+  },
 }));
 
 export const ProfileItemFlexBox = styled(FlexBox)(({ theme }) => ({
@@ -163,4 +168,20 @@ export const ProfileItemFlexBox = styled(FlexBox)(({ theme }) => ({
   gap: theme.spacing(3),
   paddingTop: theme.spacing(4),
   paddingBottom: theme.spacing(4),
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "1fr",
+  },
+}));
+
+export const ProfileAddressFlexBox = styled(FlexBox)(({ theme }) => ({
+  minHeight: "12vh",
+  border: `1px solid ${siteColors.primaryText}`,
+  flexDirection: "row",
+  justifyContent: "space-evenly",
+  gap: theme.spacing(1),
+  padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+  },
 }));

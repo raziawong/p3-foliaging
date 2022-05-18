@@ -63,6 +63,9 @@ export const initialState = {
     [stateKey.SUPPLIES]: {
       types: [],
     },
+    address: {
+      types: [],
+    },
   },
   query: {
     text: "",
@@ -304,6 +307,7 @@ export const fetchInitialData = async ({ dispatch }) => {
             [stateKey.SUPPLIES]: {
               types: resps[11].value.data.types,
             },
+            address: initialState.options.address,
           },
           priceRange: range,
           [stateKey.DATA_LOADING]: false,
@@ -327,11 +331,16 @@ export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
     dispatch(setLoading({ type: stateKey.USER_LOADING, value: true }));
 
     const resp = await fetchData.profile(token);
-
     if (resp.data?.user) {
       dispatch(setUser({ ...resp.data.user, intervalId }));
     }
     dispatch(setLoading({ type: stateKey.USER_LOADING, value: false }));
+
+    const resp2 = await fetchData.addressTypes(token);
+    if (resp2.data?.types) {
+      console.log(resp2.data);
+      dispatch(setOptions({ address: { types: resp2.data.types } }));
+    }
   } catch (err) {
     dispatch(
       setMulti({ error: messages.userId, [stateKey.USER_LOADING]: false })
@@ -493,6 +502,18 @@ export const processCartDelete = async ({ dispatch, token, cid, pid }) => {
   }
 };
 
+export const processPasswordUpdate = async ({ dispatch, token, passwords }) => {
+  try {
+    const resp = await processData.passwordUpdate(passwords, token);
+
+    if (resp.data?.user) {
+      dispatch(setSuccess(messages.passswordUpdateSuccess));
+    }
+  } catch (err) {
+    dispatch(setError(messages.userUpdateError));
+  }
+};
+
 export const processProfileUpdate = async ({ dispatch, token, profile }) => {
   try {
     const resp = await processData.profileUpdate(profile, token);
@@ -506,15 +527,47 @@ export const processProfileUpdate = async ({ dispatch, token, profile }) => {
   }
 };
 
-export const processPasswordUpdate = async ({ dispatch, token, passwords }) => {
+export const processAddressAdd = async ({ dispatch, token, address }) => {
   try {
-    const resp = await processData.passwordUpdate(passwords, token);
+    const resp = await processData.addressAdd(address, token);
 
     if (resp.data?.user) {
-      dispatch(setSuccess(messages.passswordUpdateSuccess));
+      dispatch(setUser(resp.data.user));
+      dispatch(setSuccess(messages.addressUpdateSuccess));
     }
   } catch (err) {
-    dispatch(setError(messages.userUpdateError));
+    dispatch(setError(messages.addressUpdateError));
+  }
+};
+
+export const processAddressUpdate = async ({
+  dispatch,
+  token,
+  aid,
+  address,
+}) => {
+  try {
+    const resp = await processData.addressUpdate(aid, address, token);
+
+    if (resp.data?.user) {
+      dispatch(setUser(resp.data.user));
+      dispatch(setSuccess(messages.addressUpdateSuccess));
+    }
+  } catch (err) {
+    dispatch(setError(messages.addressUpdateError));
+  }
+};
+
+export const processAddressDelete = async ({ dispatch, token, aid }) => {
+  try {
+    const resp = await processData.addressRemove({ aid }, token);
+
+    if (resp.data?.user) {
+      dispatch(setUser(resp.data.user));
+      dispatch(setSuccess(messages.addressUpdateSuccess));
+    }
+  } catch (err) {
+    dispatch(setError(messages.addressUpdateError));
   }
 };
 
@@ -565,7 +618,7 @@ export const setLoading = (payload) => {
 };
 
 export const setOptions = (payload) => {
-  return { type: stateConst.SET_MULTI, payload };
+  return { type: stateConst.SET_OPTIONS, payload };
 };
 
 export const setQuery = (payload) => {

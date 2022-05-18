@@ -28,6 +28,8 @@ export const apiPaths = {
   userAddresses: "/user/addresses",
   addressAdd: "/user/address/add",
   addressUpdate: "/user/address/update",
+  addressDelete: "/user/address/remove",
+  addressTypes: "/user/address/types",
   userCart: "/user/cart",
   cartItemCheck: "/user/cart/quantity/check",
   cartItemAdd: "/user/cart/add",
@@ -122,6 +124,10 @@ const getUserCart = async (params, token) => {
   });
 };
 
+const getAddressTypes = async (token) => {
+  return await apiBase.get(apiPaths.addressTypes, getHeaderConfig(token));
+};
+
 const getUserCheckout = async (params, token) => {
   return await apiBase.get(apiPaths.userCheckout, {
     params,
@@ -164,12 +170,19 @@ const processAddressAdd = async (body, token) => {
   );
 };
 
-const processAddressUpdate = async (body, token) => {
-  return await apiBase.patch(
+const processAddressUpdate = async (aid, body, token) => {
+  return await apiBase.post(
     apiPaths.addressUpdate,
     { ...body },
-    getHeaderConfig(token)
+    { params: { aid }, ...getHeaderConfig(token) }
   );
+};
+
+const processAddressDelete = async (params, token) => {
+  return await apiBase.delete(apiPaths.addressDelete, {
+    params,
+    ...getHeaderConfig(token),
+  });
 };
 
 const processCartAdd = async (body, token) => {
@@ -223,6 +236,7 @@ export const fetchData = {
   authentication: async (body) => await getAccountAuth(body),
   profile: async (token) => await getUserProfile(token),
   addresses: async (params, token) => await getUserCart(params, token),
+  addressTypes: async (token) => await getAddressTypes(token),
   cart: async (params, token) => await getUserCart(params, token),
   cartItemCheck: async (params, token) =>
     await getCartItemQuantityCheck(params, token),
@@ -235,7 +249,10 @@ export const processData = {
   passwordUpdate: async (body, token) =>
     await processPasswordUpdate(body, token),
   addressAdd: async (body, token) => await processAddressAdd(body, token),
-  addressUpdate: async (body, token) => await processAddressUpdate(body, token),
+  addressUpdate: async (aid, body, token) =>
+    await processAddressUpdate(aid, body, token),
+  addressRemove: async (params, token) =>
+    await processAddressDelete(params, token),
   cartAdd: async (body, token) => await processCartAdd(body, token),
   cartUpdate: async (body, token) => await processCartUpdate(body, token),
   cartRemove: async (params, token) => await processCartDelete(params, token),

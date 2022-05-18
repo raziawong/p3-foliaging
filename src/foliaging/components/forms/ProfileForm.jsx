@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import {
   processLogout,
-  processPasswordUpdate,
   processProfileUpdate,
   useSiteDispatchContext,
   useSiteStateContext,
