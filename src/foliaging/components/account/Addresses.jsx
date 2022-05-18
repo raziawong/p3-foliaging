@@ -47,7 +47,15 @@ export default function Addresses() {
     setModalType("edit");
     if (address.length) {
       const { type, ...data } = address[0];
-      setAddressState(data);
+      setAddressState({
+        address_type_id: data.address_type_id,
+        label: data.label,
+        line_1: data.line_1,
+        line_2: data.line_2 || "",
+        floor_number: data.floor_number || "",
+        unit_number: data.unit_number || "",
+        postal_code: data.postal_code,
+      });
     }
   };
 
@@ -109,8 +117,8 @@ export default function Addresses() {
       </FlexBox>
       <AddressModal
         modalType={modalType}
-        handleLogout={handleLogout}
-        handleClose={handleClose}
+        logout={handleLogout}
+        close={handleClose}
         fieldsState={addressState}
       />
     </Fragment>

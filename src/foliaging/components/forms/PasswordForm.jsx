@@ -9,7 +9,7 @@ import {
 import { FlexBox } from "../styled/components";
 import { newPasswordValidator, allowToProtectedRoute } from "../../utils";
 
-export default function PasswordForm({ setPasswordView }) {
+export default function PasswordForm({ handleClose }) {
   const dispatch = useSiteDispatchContext();
   const navigate = useNavigate();
 
@@ -32,12 +32,6 @@ export default function PasswordForm({ setPasswordView }) {
     setPasswordFields({ ...passwordFields, [target.name]: target.value });
   };
 
-  const handleCancel = (evt) => {
-    if (setPasswordView) {
-      setPasswordView(false);
-    }
-  };
-
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const validations = newPasswordValidator(passwordFields);
@@ -53,9 +47,7 @@ export default function PasswordForm({ setPasswordView }) {
             })
           : handleLogout()
       );
-      if (setPasswordView) {
-        setPasswordView(false);
-      }
+      handleClose();
     }
   };
 
@@ -102,7 +94,7 @@ export default function PasswordForm({ setPasswordView }) {
           variant="outlined"
           color="tertiary"
           size="small"
-          onClick={handleCancel}>
+          onClick={handleClose}>
           Cancel
         </Button>
       </FlexBox>

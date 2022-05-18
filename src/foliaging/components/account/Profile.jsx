@@ -1,6 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Icon, Typography } from "@mui/material";
-import { stateKey, useSiteStateContext } from "../../states";
+import {
+  processLogout,
+  stateKey,
+  useSiteDispatchContext,
+  useSiteStateContext,
+} from "../../states";
 import {
   ContentBox,
   ProfileItemFlexBox,
@@ -12,10 +18,17 @@ import ProfileForm from "../forms/ProfileForm";
 
 export default function Profile() {
   const state = useSiteStateContext();
+  const dispatch = useSiteDispatchContext();
+  const navigate = useNavigate();
   const { user } = state;
 
   const [passwordView, setPasswordView] = useState(false);
   const [profileView, setProfileView] = useState(false);
+
+  const handleLogout = () => {
+    processLogout({ dispatch });
+    navigate("/login");
+  };
 
   const handleChangePasswordClick = (evt) => {
     setPasswordView(true);
@@ -25,9 +38,13 @@ export default function Profile() {
     setProfileView(true);
   };
 
-  useEffect(() => {
+  const handleCancel = (evt) => {
     setPasswordView(false);
     setProfileView(false);
+  };
+
+  useEffect(() => {
+    handleCancel();
   }, [state.user]);
 
   return state[stateKey.USER_LOADING] ? (
@@ -37,7 +54,7 @@ export default function Profile() {
       <ProfileGrid>
         <ProfileItemFlexBox>
           {passwordView ? (
-            <PasswordForm setPasswordView={setPasswordView} />
+            <PasswordForm handleClose={handleCancel} />
           ) : (
             <Fragment>
               <Typography sx={{ fontWeight: 600 }}>
@@ -63,7 +80,7 @@ export default function Profile() {
         </ProfileItemFlexBox>
         <ProfileItemFlexBox>
           {profileView ? (
-            <ProfileForm setProfileView={setProfileView} />
+            <ProfileForm logout={handleLogout} close={handleCancel} />
           ) : (
             <Fragment>
               <Typography sx={{ fontWeight: 600 }}>

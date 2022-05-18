@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Button,
   FormControl,
@@ -10,7 +9,6 @@ import {
 import {
   processAddressAdd,
   processAddressUpdate,
-  processLogout,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
@@ -21,10 +19,9 @@ import {
   optionDisplay,
 } from "../../utils";
 
-export default function AddressForm({ handleClose, fieldsState }) {
+export default function AddressForm({ logout, close, fieldsState }) {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
-  const navigate = useNavigate();
 
   const [addressFields, setAddressFields] = useState({ ...fieldsState });
 
@@ -37,11 +34,6 @@ export default function AddressForm({ handleClose, fieldsState }) {
     unit_number: "",
     postal_code: "",
   });
-
-  const handleLogout = () => {
-    processLogout({ dispatch });
-    navigate("/login");
-  };
 
   const handleChange = ({ target }) => {
     setAddressFields({ ...addressFields, [target.name]: target.value });
@@ -68,10 +60,10 @@ export default function AddressForm({ handleClose, fieldsState }) {
                 token,
                 address,
               })
-          : handleLogout()
+          : logout()
       );
 
-      handleClose();
+      close();
     }
   };
 
@@ -183,7 +175,7 @@ export default function AddressForm({ handleClose, fieldsState }) {
           variant="outlined"
           color="tertiary"
           size="small"
-          onClick={handleClose}>
+          onClick={close}>
           Cancel
         </Button>
       </FlexBox>

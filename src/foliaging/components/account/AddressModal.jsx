@@ -8,8 +8,8 @@ import siteColors from "../../styles/colors";
 
 export default function AddressModal({
   modalType,
-  handleLogout,
-  handleClose,
+  logout,
+  close,
   fieldsState,
 }) {
   const dispatch = useSiteDispatchContext();
@@ -23,15 +23,15 @@ export default function AddressModal({
             token,
             aid: fieldsState.id,
           })
-        : handleLogout()
+        : logout()
     );
-    handleClose();
+    close();
   };
 
   return (
     <Modal
       open={!!modalType}
-      onClose={handleClose}
+      onClose={close}
       aria-labelledby="address book update"
       aria-describedby="add or edit address in address book">
       <FlexBox sx={{ height: "100vh", width: "100vw" }}>
@@ -47,7 +47,7 @@ export default function AddressModal({
             sx={{ alignSelf: "flex-end" }}
             color="tertiary"
             aria-label="close address modal"
-            onClick={handleClose}>
+            onClick={close}>
             <Icon className="ri-close-line" />
           </IconButton>
           <ContentBox sx={{ pl: 4, pb: 4 }}>
@@ -75,14 +75,15 @@ export default function AddressModal({
                     variant="outlined"
                     color="tertiary"
                     size="small"
-                    onClick={handleClose}>
+                    onClick={close}>
                     Cancel
                   </Button>
                 </FlexBox>
               </FlexBox>
             ) : (
               <AddressForm
-                handleClose={handleClose}
+                logout={logout}
+                close={close}
                 fieldsState={fieldsState}
               />
             )}

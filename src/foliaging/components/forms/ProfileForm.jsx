@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import {
-  processLogout,
   processProfileUpdate,
   useSiteDispatchContext,
   useSiteStateContext,
@@ -10,10 +8,9 @@ import {
 import { FlexBox } from "../styled/components";
 import { allowToProtectedRoute, profileValidator } from "../../utils";
 
-export default function ProfileForm({ setProfileView }) {
+export default function ProfileForm({ logout, close }) {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
-  const navigate = useNavigate();
 
   const [profileFields, setProfileFields] = useState({
     first_name: state.user.first_name || "",
@@ -27,19 +24,8 @@ export default function ProfileForm({ setProfileView }) {
     contact_number: "",
   });
 
-  const handleLogout = () => {
-    processLogout({ dispatch });
-    navigate("/login");
-  };
-
   const handleChange = ({ target }) => {
     setProfileFields({ ...profileFields, [target.name]: target.value });
-  };
-
-  const handleCancel = (evt) => {
-    if (setProfileView) {
-      setProfileView(false);
-    }
   };
 
   const handleSubmit = async (evt) => {
@@ -55,11 +41,9 @@ export default function ProfileForm({ setProfileView }) {
               token,
               profile: profileFields,
             })
-          : handleLogout()
+          : logout()
       );
-      if (setProfileView) {
-        setProfileView(false);
-      }
+      close();
     }
   };
 
@@ -114,7 +98,7 @@ export default function ProfileForm({ setProfileView }) {
           variant="outlined"
           color="tertiary"
           size="small"
-          onClick={handleCancel}>
+          onClick={close}>
           Cancel
         </Button>
       </FlexBox>
