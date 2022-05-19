@@ -124,15 +124,6 @@ export default function Listing({ type }) {
                     {item.title}
                   </Typography>
                 </FlexBox>
-                <Typography>
-                  {item.plant_id && item.plant.description
-                    ? item.plant.description
-                    : item.planter_id && item.planter.description
-                    ? item.planter.description
-                    : item.supplies && item.supplies.description
-                    ? item.supplies.description
-                    : ""}
-                </Typography>
               </FrostedDomeBox>
             </Grid>
           ))}

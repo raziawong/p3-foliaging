@@ -68,6 +68,7 @@ export default function LatestGrid() {
         <FlexBox
           sx={{
             gridArea: { md: "5 / 5 / 10 / 8" },
+            minHeight: { xs: 230, lg: 350 },
             zIndex: 3,
             backgroundSize: "cover",
             background: `url(${latest[0].images[0]}) no-repeat center`,

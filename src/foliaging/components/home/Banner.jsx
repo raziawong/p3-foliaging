@@ -21,8 +21,20 @@ export default function Banner() {
             gridTemplateColumns: "repeat(4, 1fr)",
             gridTemplateRows: "repeat(4, 1fr)",
           }}>
-          <FrostedContentBox sx={{ m: 2, p: 5, gridArea: "2 / 1 / 4 / 3" }} />
-          <Box sx={{ m: 2, p: 5, zIndex: 1, gridArea: "2 / 1 / 4 / 2" }}>
+          <FrostedContentBox
+            sx={{
+              m: 2,
+              p: 5,
+              gridArea: { xs: "2 / 1 / 4 / 4", md: "2 / 1 / 4 / 2" },
+            }}
+          />
+          <Box
+            sx={{
+              m: 2,
+              p: 5,
+              zIndex: 1,
+              gridArea: { xs: "2 / 1 / 4 / 4", md: "2 / 1 / 4 / 2" },
+            }}>
             <Typography
               variant="h2"
               component="h1"
