@@ -38,7 +38,7 @@ export default function Account() {
         sx={{
           py: 2,
           width: "96%",
-          minHeight: "80vh",
+          minHeight: "70vh",
           overflowWrap: "break-word",
         }}>
         <FlexBox>
@@ -66,7 +66,7 @@ export default function Account() {
                   component="h3"
                   variant="h6"
                   sx={{ textTransform: "capitalize", fontWeight: 500 }}>
-                  Addresses
+                  Address Book
                 </Typography>
               }
             />

@@ -43,6 +43,7 @@ export const SiteContextProvider = ({ children }) => {
   return (
     <SiteStateContext.Provider value={globalState}>
       <SiteDispatchContext.Provider value={dispatch}>
+        {console.log(globalState)}
         {children}
       </SiteDispatchContext.Provider>
     </SiteStateContext.Provider>

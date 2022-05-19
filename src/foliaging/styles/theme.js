@@ -42,8 +42,8 @@ let siteTheme = createTheme({
     },
   },
   typography: {
-    htmlFontSize: 12,
-    fontSize: 11.5,
+    htmlFontSize: 10,
+    fontSize: 10,
     fontFamily: "Montserrat Alternates, sans-serif",
     h1: { fontSize: "4.5rem" },
     h2: { fontSize: "3.75rem" },

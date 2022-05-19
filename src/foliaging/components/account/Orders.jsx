@@ -1,133 +1,86 @@
 import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import DayJS from "react-dayjs";
+import { Box, Button, Typography } from "@mui/material";
+import { stateKey, useSiteStateContext } from "../../states";
 import {
-  processLogout,
-  processPasswordUpdate,
-  stateKey,
-  useSiteDispatchContext,
-  useSiteStateContext,
-} from "../../states";
-import { FlexBox } from "../styled/components";
-import { newPasswordValidator, allowToProtectedRoute } from "../../utils";
+  FlexBox,
+  OrderGrid,
+  OrderGridItem,
+  OrderItemFlexBox,
+} from "../styled/components";
 import LeafLoader from "../global/LeafLoader";
+import { formatAddress } from "../../utils";
+import siteColors from "../../styles/colors";
 
 export default function Orders() {
   const state = useSiteStateContext();
-  const dispatch = useSiteDispatchContext();
-  const navigate = useNavigate();
 
   const { user } = state;
 
-  const [passwordFields, setPasswordFields] = useState({
-    password: "",
-    confirm_password: "",
-  });
-
-  const [validationMsgs, setValidationMsgs] = useState({
-    password: "",
-    confirm_password: "",
-  });
-
-  const handleLogout = () => {
-    processLogout({ dispatch });
-    navigate("/login");
-  };
-
-  const handleChange = ({ target }) => {
-    setPasswordFields({ ...passwordFields, [target.name]: target.value });
-  };
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    const validations = newPasswordValidator(passwordFields);
-    if (Object.keys(validations).length) {
-      setValidationMsgs(validations);
-    } else {
-      allowToProtectedRoute((token) =>
-        token
-          ? processPasswordUpdate({
-              dispatch,
-              token,
-              passwords: passwordFields,
-            })
-          : handleLogout()
-      );
-    }
-  };
-
   return state[stateKey.USER_LOADING] ? (
     <LeafLoader />
+  ) : user.orders?.length ? (
+    user.orders.map((order) => (
+      <Fragment key={order.id}>
+        <FlexBox
+          sx={{
+            py: 1,
+            justifyContent: "flex-start",
+          }}>
+          <Typography>{order.status.status}</Typography>
+        </FlexBox>
+        <OrderGrid>
+          <OrderGridItem>
+            <Box sx={{ borderBottom: `1px solid ${siteColors.primaryText}` }}>
+              <Typography variant="h6">Order</Typography>
+            </Box>
+            <OrderItemFlexBox>
+              <Typography>
+                <DayJS format="DD MMM YYYY">{order.ordered_date}</DayJS>
+              </Typography>
+              {order.items.map((i) => (
+                <Typography key={i.id}>
+                  {i.product?.title} x {i.quantity}
+                </Typography>
+              ))}
+            </OrderItemFlexBox>
+          </OrderGridItem>
+          <OrderGridItem>
+            <Box sx={{ borderBottom: `1px solid ${siteColors.primaryText}` }}>
+              <Typography variant="h6">Payment</Typography>
+            </Box>
+            <OrderItemFlexBox>
+              <Typography>
+                {order.payments.map((p) => (
+                  <Button
+                    key={p.id}
+                    size="small"
+                    color="tertiary"
+                    target="_blank"
+                    href={p.receipt_url}>
+                    via Stripe
+                  </Button>
+                ))}
+              </Typography>
+            </OrderItemFlexBox>
+          </OrderGridItem>
+          <OrderGridItem>
+            <Box sx={{ borderBottom: `1px solid ${siteColors.primaryText}` }}>
+              <Typography variant="h6">Shipping</Typography>
+            </Box>
+            <OrderItemFlexBox>
+              <Typography>{formatAddress(order.shipping_address)}</Typography>
+              <Typography variant="caption">
+                {order.delivery_tracking}
+              </Typography>
+            </OrderItemFlexBox>
+          </OrderGridItem>
+        </OrderGrid>
+      </Fragment>
+    ))
   ) : (
-    <Fragment>
-      <FlexBox sx={{ flexDirection: "column" }}>
-        <FlexBox>
-          <Grid container spacing={{ xs: 1, md: 3 }}>
-            <Grid item xs={12} sm={4} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "right" } }}>
-                Username:
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={8} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "left" } }}>
-                {user.username}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={4} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "right" } }}>
-                Email:
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={8} md={6}>
-              <Typography sx={{ textAlign: { xs: "center", sm: "left" } }}>
-                {user.email}
-              </Typography>
-            </Grid>
-          </Grid>
-        </FlexBox>
-        <FlexBox component="form" sx={{ flexDirection: "column", mt: 5 }}>
-          <Typography variant="h6" component="h4">
-            Change Password
-          </Typography>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            autoComplete="new-password"
-            color="primary"
-            value={passwordFields.password}
-            onChange={handleChange}
-            error={!!validationMsgs.password || false}
-            helperText={validationMsgs.password}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="confirm_password"
-            label="Confirm Password"
-            type="password"
-            color="primary"
-            autoComplete="new-password"
-            value={passwordFields.confirm_password}
-            onChange={handleChange}
-            error={!!validationMsgs.confirm_password || false}
-            helperText={validationMsgs.confirm_password}
-          />
-          <FlexBox sx={{ pt: 4, justifyContent: "flex-end" }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              onClick={handleSubmit}>
-              Update
-            </Button>
-          </FlexBox>
-        </FlexBox>
-      </FlexBox>
-    </Fragment>
+    <Typography component="h6" variant="h6">
+      No orders
+    </Typography>
   );
 }

@@ -186,3 +186,36 @@ export const ProfileAddressFlexBox = styled(FlexBox)(({ theme }) => ({
     padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
   },
 }));
+
+export const OrderGrid = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
+  gridTemplateRows: "1fr",
+  gridColumnGap: "0px",
+  gridRowGap: "0px",
+  minWidth: "80vw",
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "1fr",
+    minWidth: "80%",
+  },
+}));
+
+export const OrderGridItem = styled(Box)(({ theme }) => ({
+  border: `1px solid ${siteColors.primaryText}`,
+  padding: `${theme.spacing(2)}}`,
+}));
+
+export const OrderItemFlexBox = styled(FlexBox)(({ theme }) => ({
+  minHeight: "20vh",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  justifyContent: "space-between",
+  gap: theme.spacing(3),
+  padding: `${theme.spacing(3)} ${theme.spacing(2)}`,
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "1fr",
+    gridTemplateRows: "1fr",
+    minHeight: "10vh",
+  },
+}));
