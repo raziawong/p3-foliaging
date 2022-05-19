@@ -158,17 +158,18 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 1. [Express](https://expressjs.com/) as the framework for routing to project's endpoints
 2. [db-migrate](https://db-migrate.readthedocs.io/en/latest/) as the database migration framework
 3. [Axios](https://axios-http.com/) as HTTP client to external endpoints
-4. [Bookshelf.js](https://www.mongodb.com/docs/drivers/node/current/) for accessing database on SQL databases 
-5. [caolan forms](https://www.npmjs.com/package/cors) to help create and validate forms in the backend and on admin panel
-6. [dayjs](https://www.npmjs.com/package/dotenv) to separate code from envrionment variables
+4. [Bookshelf.js](https://bookshelfjs.org/api.html) for accessing database on SQL databases 
+5. [caolan forms](https://github.com/caolan/forms) to help create and validate forms in the backend and on admin panel
+6. [dayjs](https://day.js.org/) is used to convert datetime to preferable format
 7. [cors](https://www.npmjs.com/package/cors) as middleware to enable CORS
 8. [dotenv](https://www.npmjs.com/package/dotenv) to separate code from envrionment variables
-9. [express-session](https://www.npmjs.com/package/dotenv) as the session management middleware
-10. [express-flash](https://www.npmjs.com/package/dotenv) as flash messages middleware
-11. [jsonwebtoken](https://www.npmjs.com/package/dotenv) as the authentication framework with Frontend
-12. [handlebars](https://www.npmjs.com/package/dotenv) as the templating language to generate HTML for admin panel
-13. [Tailwind](https://www.npmjs.com/package/dotenv) as the UI library for admin panel
-13. [Uploadcare](https://www.npmjs.com/package/dotenv) as the digital assets mangement for products' images
+9. [express-session](https://www.npmjs.com/package/express-session) as the session management middleware
+10. [express-flash](https://github.com/RGBboy/express-flash) as flash messages middleware
+11. [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) as the authentication framework with Frontend
+12. [handlebars](https://handlebarsjs.com/) as the templating language to generate HTML for admin panel
+13. [Tailwind](https://tailwindcss.com/) as the UI library for admin panel
+14. [Tailwind UI Kit](https://app.tailwinduikit.com/) as the basis of components used in admin panel
+15. [Uploadcare](https://uploadcare.com/docs/) as the digital assets mangement for products' images
 
 ### Frontend
 1. [React](https://reactjs.org/) as the frontend framework
@@ -176,11 +177,11 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 3. [Axios](https://axios-http.com/) as HTTP client to Express server endpoints
 4. [MUI](https://mui.com/material-ui/getting-started/installation/) as UI library for the React app
 5. [React MUI Carousel](https://github.com/Learus/react-material-ui-carousel) is used as carousel component
-6. [stripe](https://www.npmjs.com/package/dotenv) as payment gateway for Frontend
-7. [remixicon](https://www.npmjs.com/package/dotenv) as icons used for the site
-8. [boring-avatars](https://www.npmjs.com/package/dotenv) as the avatar for accessing customer profile
-9. [remixicon](https://www.npmjs.com/package/dotenv) as icons used for the site
-10. [dayjs](https://github.com/headzoo/react-moment) is used to convert datetime to preferable format
+6. [stripe](https://stripe.com/en-gb-sg) as payment gateway
+7. [remixicon](https://remixicon.com/) as icons used for the site
+8. [boring-avatars](https://boringavatars.com/) to dynamically generate user avatar based on email
+9. [react-dayjs](https://github.com/devshawn/react-dayjs) is used to convert datetime to preferable format
+10. [react-swipeable-views](https://github.com/oliviertassinari/react-swipeable-views) is used for swipeable tab panels in Profile
 
 ### Platforms and Software
 1. [Git](https://git-scm.com/) for version control
@@ -188,6 +189,15 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 3. [Visual Studio Code](https://code.visualstudio.com/) for code editing
 4. [Heroku](https://www.heroku.com/) for deployment of Express server
 5. [Netlify](https://www.netlify.com/) for deployment of React app
+
+### Images and Logos
+1. Logo used is a composition of a vector downloaded from [Freepik](https://www.freepik.com/vectors/logo-pack) and edited online to place border and font
+2. Background image used in Admin panel is downloaded from [Freepik](https://www.freepik.com/free-vector/hand-drawn-minimal-background_15364643.htm)
+3. Background image used in Login and Register in React is downloaded from [Freepik](https://www.freepik.com/free-vector/collection-social-media-templates-with-fluid-shapes-brown-orange-blue_17339743.htm)
+4. Banner background image used in React is downloaded from [Vecteezy](https://www.vecteezy.com/vector-art/6873801-abstract-modern-poster-tropical-leaves-with-shapes-printable)
+5. All plants and supplies images are from [Noah Garden Center](https://www.noahgardencentre.com.sg/)
+6. All planters images are from [fortytwo](https://www.fortytwo.sg/home-decor-lifestyle/vases.html)
+7. Header background image is generated using [Svg Wave](https://svgwave.in/)
    
 ### Other Attributions
 1. [Paul Chor](https://github.com/kunxin-chor) for all his guidance and using his tutorials as references for the codes 
@@ -196,7 +206,6 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 ---
 
 ## Deployment
-
 ### Build
 Backend is build using Node.js and Express. Frontend have been created with create-react-app which includes a webpack that builds the files for production environment.
 
