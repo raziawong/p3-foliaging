@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardMedia,
+  FormHelperText,
   Icon,
   IconButton,
   TextField,
@@ -12,12 +13,14 @@ import {
   processCartDelete,
   processCartUpdate,
   processLogout,
+  updateCartItem,
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
 import { FlexBox, FrostedContentBox } from "../index";
 import { allowToProtectedRoute } from "../../utils";
 import siteColors from "../../styles/colors";
+import { ContentBox } from "./components";
 
 export default function CartItems() {
   const dispatch = useSiteDispatchContext();
@@ -29,19 +32,32 @@ export default function CartItems() {
     navigate("/login");
   };
 
-  const handleChange = (pid, quantity) => {
+  const [deleteTrack, setDeleteTrack] = useState([]);
+
+  const handleChange = (item, quantity) => {
     quantity = Number(quantity);
 
-    if (quantity) {
+    dispatch(updateCartItem({ ...item, quantity }));
+
+    if (quantity !== 0) {
       allowToProtectedRoute((token) =>
         token
           ? processCartUpdate({
               dispatch,
               token,
-              cartItem: { pid, quantity },
+              cartItem: { pid: item.id, quantity },
             })
           : handleLogout()
       );
+
+      let copy = [...deleteTrack];
+      const index = copy.indexOf(item.id);
+      if (index > -1) {
+        copy.splice(index, 1);
+        setDeleteTrack(copy);
+      }
+    } else {
+      setDeleteTrack([...deleteTrack, item.id]);
     }
   };
 
@@ -74,12 +90,11 @@ export default function CartItems() {
               <TextField
                 size="small"
                 label="Quantity"
+                type="number"
                 name="quantity"
                 value={item.quantity}
                 inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                onChange={(evt) =>
-                  handleChange(item.product_id, evt.target.value)
-                }
+                onChange={(evt) => handleChange(item, evt.target.value)}
                 error={!item.isEnough}
                 helperText={!item.isEnough ? "Max Quantity Reached" : ""}
               />
@@ -91,6 +106,16 @@ export default function CartItems() {
             </FlexBox>
           </FlexBox>
         </FlexBox>
+        {deleteTrack.indexOf(item.id) > -1 ? (
+          <ContentBox sx={{ p: 1, textAlign: "right" }}>
+            <FormHelperText error>
+              Do you wish to remove cart item? You may click on the bin to
+              delete the item.
+            </FormHelperText>
+          </ContentBox>
+        ) : (
+          ""
+        )}
       </FrostedContentBox>
     ))
   ) : (
