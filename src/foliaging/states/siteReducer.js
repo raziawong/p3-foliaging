@@ -447,9 +447,6 @@ export const processProductQueries = async ({ query, dispatch }, callback) => {
       sort = sortOptions.latest;
     }
 
-    console.log(text, sort, filter);
-    console.log(params);
-
     const promises = [
       await fetchData.products(params, sort),
       await fetchData.plants(params, sort),
