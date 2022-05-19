@@ -2,7 +2,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  alpha,
   Box,
   Chip,
   Icon,
