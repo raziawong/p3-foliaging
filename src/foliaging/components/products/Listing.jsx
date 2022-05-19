@@ -1,7 +1,6 @@
 import React from "react";
 import {
-  Box,
-  Card,
+  alpha,
   CardMedia,
   Chip,
   Grid,
@@ -16,7 +15,7 @@ import {
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
-import { ContentBox, FlexBox } from "../styled/components";
+import { ContentBox, FlexBox, FrostedDomeBox } from "../styled/components";
 import siteColors from "../../styles/colors";
 import { allowToProtectedRoute } from "../../utils";
 
@@ -42,52 +41,81 @@ export default function Listing({ type }) {
 
   return (
     <ContentBox>
-      <Grid container sx={{ ml: 2, px: 1, py: 2, width: "100%" }} spacing={2}>
+      <Grid
+        container
+        sx={{ ml: { xs: 0, md: 2 }, px: 1, py: 2, width: "100%" }}
+        spacing={2}>
         {state.hasOwnProperty(type) &&
           state[type].map((item) => (
-            <Grid item key={item.id} xs={12} sm={6} md={4}>
-              <Box
-                sx={{
-                  borderRadius: "48% 48% 0 0",
-                  boxShadow: `1px 1px 2px 0 ${siteColors.lavendar}`,
-                }}>
-                <Card sx={{ borderRadius: "48% 48% 0 0" }}>
+            <Grid
+              item
+              key={item.id}
+              xs={12}
+              sm={6}
+              md={4}
+              sx={{ filter: item.stock ? "none" : "brightness(0.7)" }}>
+              <FrostedDomeBox>
+                <FlexBox>
                   <CardMedia
                     component="img"
                     alt={item.title}
-                    sx={{ height: "25%" }}
+                    sx={{ minHeight: "40vh", borderRadius: "48% 48% 0 0" }}
                     image={item.images[0]}
                   />
-                </Card>
+                </FlexBox>
                 <FlexBox
                   sx={{
-                    pt: 1,
-                    pb: 2,
+                    px: 1,
+                    py: 0,
+                    gap: 1,
                     mt: -4.2,
-                    justifyContent: "space-around",
+                    justifyContent: "flex-end",
+                    minHeight: "75px",
                   }}>
                   <Chip
-                    sx={{ backgroundColor: siteColors.lavendar }}
+                    sx={{
+                      backgroundColor: alpha(siteColors.charcoal, 0.9),
+                    }}
                     label={
                       <Typography
                         variant="subtitle1"
                         sx={{ fontWeight: 500 }}
-                        color={siteColors.charcoal}>
+                        color={siteColors.lavendar}>
                         {"$" + item.price.toFixed(2)}
                       </Typography>
                     }
                   />
-                  <Tooltip title="Add to cart">
-                    <IconButton
-                      sx={{
-                        backgroundColor: siteColors.mustard,
-                        color: siteColors.champagne,
-                      }}
-                      aria-label="add to cart"
-                      onClick={(evt) => handleAddToCart(item.id)}>
-                      <Icon className="ri-shopping-cart-2-line" />
-                    </IconButton>
-                  </Tooltip>
+                  {item.stock ? (
+                    <Tooltip title="Add to cart">
+                      <IconButton
+                        sx={{
+                          backgroundColor: alpha(siteColors.charcoal, 0.9),
+                          color: siteColors.champagne,
+                          fontSize: "1.4rem",
+                          padding: 0.5,
+                          "&:hover": {
+                            backgroundColor: alpha(siteColors.charcoal, 0.8),
+                          },
+                        }}
+                        aria-label="add to cart"
+                        size="small"
+                        onClick={(evt) => handleAddToCart(item.id)}>
+                        <Icon className="ri-shopping-cart-2-line" />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <Chip
+                      sx={{ backgroundColor: siteColors.charcoal }}
+                      label={
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontWeight: 500 }}
+                          color={siteColors.tertiary}>
+                          Out of Stock
+                        </Typography>
+                      }
+                    />
+                  )}
                 </FlexBox>
                 <FlexBox sx={{ pb: 1 }}>
                   <Typography variant="subtitle1">{item.title}</Typography>
@@ -101,7 +129,7 @@ export default function Listing({ type }) {
                     ? item.supplies.description
                     : ""}
                 </Typography>
-              </Box>
+              </FrostedDomeBox>
             </Grid>
           ))}
       </Grid>

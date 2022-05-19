@@ -54,6 +54,30 @@ export const FrostedContentBox = styled(ContentBox, {
   },
 }));
 
+export const FrostedDomeBox = styled(ContentBox, {
+  shouldForwardProp: (prop) => prop !== "shadowColor" || prop !== "shadowAlpha",
+})(({ shadowColor, shadowAlpha, theme }) => ({
+  width: "100%",
+  background: "inherit",
+  borderRadius: "48% 48% 0 0",
+  boxShadow: `1px 1px 2px 0 ${alpha(shadowColor || siteColors.lavendar, 0.9)}`,
+  "&:before": {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    content: `''`,
+    borderRadius: "48% 48% 0 0",
+    boxShadow: `inset 0 0 0 2000px ${alpha(
+      shadowColor || siteColors.lavendar,
+      shadowAlpha || 0.1
+    )}`,
+    backdropFilter: "blur(10px)",
+    background: "inherit",
+  },
+}));
+
 export const FlexBox = styled(ContentBox)(({ theme }) => ({
   display: "flex",
   alignItems: "center",

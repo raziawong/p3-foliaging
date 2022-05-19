@@ -57,15 +57,16 @@ export default function Products({ type }) {
   return (
     <ContentBox sx={{ mt: 2, mb: 4 }}>
       <HeaderBanner header={headerText || "Products"} imgSrc={randImg} />
-      <FlexBox sx={{ mt: 5, px: { xs: 2, md: 3 }, alignItems: "flex-start" }}>
+      <FlexBox sx={{ mt: 5, px: { xs: 1, md: 3 }, alignItems: "flex-start" }}>
         {isLoading ? (
           <LeafLoader />
         ) : (
           <Fragment>
-            <ContentBox sx={{ width: { xs: "5%", md: "30%" } }}>
+            <ContentBox sx={{ width: { xs: 0, md: "30%" } }}>
               <ContentBox
                 id="sticky-sidebar"
                 sx={{
+                  zIndex: 100,
                   position: "absolute",
                   top: 0,
                   left: 0,
@@ -96,7 +97,7 @@ export default function Products({ type }) {
                 )}
               </ContentBox>
             </ContentBox>
-            <ContentBox sx={{ width: { xs: "95%", md: "70%" } }}>
+            <ContentBox sx={{ zIndex: 99, width: { xs: "100%", md: "70%" } }}>
               <ProductsListing type={type} />
             </ContentBox>
           </Fragment>
