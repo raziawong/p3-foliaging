@@ -10,6 +10,9 @@ export * from "./Register";
 export { default as Products } from "./Products";
 export * from "./Products";
 
+export { default as ProductDetails } from "./ProductDetails";
+export * from "./ProductDetails";
+
 export { default as Account } from "./Account";
 export * from "./Account";
 

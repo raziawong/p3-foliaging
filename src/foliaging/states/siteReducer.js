@@ -336,6 +336,20 @@ export const fetchInitialData = async ({ dispatch }) => {
   }
 };
 
+export const fetchProductDetails = async ({ dispatch, pid }) => {
+  try {
+    const resp = await fetchData.details({ pid });
+    if (resp.data?.details) {
+      return resp.data.details;
+    } else {
+      return {};
+    }
+  } catch (err) {
+    dispatch(setError(messages.detailsFetchError));
+    return {};
+  }
+};
+
 export const fetchUserDetails = async ({ dispatch, intervalId, token }) => {
   try {
     dispatch(setLoading({ type: stateKey.USER_LOADING, value: true }));

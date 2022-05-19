@@ -2,11 +2,12 @@ import axios from "axios";
 import { sortOptions } from "./helpers";
 
 export const apiBase = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "https://tgc16-foliaging-express.herokuapp.com/api",
 });
 
 export const apiPaths = {
   products: "/products",
+  productDetails: "/products/details",
   productPlants: "/products/plants",
   plantSpecies: "/products/plants/species",
   plantCare: "/products/plants/care-levels",
@@ -51,6 +52,10 @@ const getProducts = async (
 ) => {
   const apiPath = `${apiPaths.products}/${sortField}/${sortOrder}`;
   return await apiBase.get(apiPath, { params });
+};
+
+const getProductDetails = async (params) => {
+  return await apiBase.get(apiPaths.productDetails, { params });
 };
 
 const getPlants = async (
@@ -222,6 +227,7 @@ const processBlacklistToken = async (body) => {
 
 export const fetchData = {
   products: async (params, sortOpts) => await getProducts(params, sortOpts),
+  details: async (params) => await getProductDetails(params),
   plants: async (params, sortOpts) => await getPlants(params, sortOpts),
   species: async () => await getPlantSpecies(),
   care: async () => await getPlantCare(),

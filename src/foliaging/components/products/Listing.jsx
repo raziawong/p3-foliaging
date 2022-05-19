@@ -9,6 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import {
   processCartAdd,
   processLogout,
@@ -22,9 +23,11 @@ import { allowToProtectedRoute } from "../../utils";
 export default function Listing({ type }) {
   const state = useSiteStateContext();
   const dispatch = useSiteDispatchContext();
+  const navigate = useNavigate();
 
   const handleGuest = () => {
     processLogout({ dispatch });
+    navigate("/login");
   };
 
   const handleAddToCart = (pid) => {
@@ -37,6 +40,10 @@ export default function Listing({ type }) {
           })
         : handleGuest()
     );
+  };
+
+  const handleProductClick = ({ id }) => {
+    navigate(`/product/${id}`);
   };
 
   return (
@@ -53,7 +60,8 @@ export default function Listing({ type }) {
               xs={12}
               sm={6}
               md={4}
-              sx={{ filter: item.stock ? "none" : "brightness(0.7)" }}>
+              sx={{ filter: item.stock ? "none" : "brightness(0.7)" }}
+              onClick={() => handleProductClick(item)}>
               <FrostedDomeBox>
                 <FlexBox>
                   <CardMedia

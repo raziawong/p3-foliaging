@@ -60,6 +60,9 @@ export * from "./products/QueryModal";
 
 export * from "./styled/components";
 
+export { default as ImageCarousel } from "./styled/ImageCarousel";
+export * from "./styled/ImageCarousel";
+
 export { default as ContentFeature } from "./styled/ContentFeature";
 export * from "./styled/ContentFeature";
 

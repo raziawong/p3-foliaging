@@ -17,6 +17,7 @@ import {
   Account,
   Checkout,
   NotFound,
+  ProductDetails,
 } from "./views";
 
 const PrivateRoute = ({ children }) => {
@@ -72,6 +73,7 @@ export default function Site() {
               path="/supplies"
               element={<Products type={stateKey.SUPPLIES} />}
             />
+            <Route path="product/:id" element={<ProductDetails />} />
             <Route
               exact
               path="/login"

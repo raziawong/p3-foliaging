@@ -76,6 +76,13 @@ export const FrostedDomeBox = styled(ContentBox, {
     backdropFilter: "blur(10px)",
     background: "inherit",
   },
+  "&:hover": {
+    cursor: "pointer",
+    boxShadow: `2px 2px 4px 0 ${alpha(
+      shadowColor || siteColors.lavendar,
+      0.9
+    )}`,
+  },
 }));
 
 export const FlexBox = styled(ContentBox)(({ theme }) => ({

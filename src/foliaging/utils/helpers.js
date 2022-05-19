@@ -3,6 +3,8 @@ import { Checkbox, ListItemText, MenuItem } from "@mui/material";
 export const messages = {
   productsFetchError:
     "Something went wrong retrieving products. Please try again",
+  detailsFetchError:
+    "Something went wrong retrieving details. Please try again",
   verificationError:
     "Something went wrong with user verification. Please try again",
   registerSuccess: (name) => `Registration of ${name} completed`,
