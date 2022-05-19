@@ -336,6 +336,41 @@ export const fetchInitialData = async ({ dispatch }) => {
   }
 };
 
+export const fetchProducts = async ({ type, query }) => {
+  try {
+    let { text, sort, filter } = query;
+    let params = {};
+
+    if (text) {
+      params = { text };
+    }
+
+    if (filter && Object.keys(filter)) {
+      params = { ...params, ...filter };
+
+      if (filter.price.length && filter.price.length === 2) {
+        const min_price = filter.price[0];
+        const max_price = filter.price[1];
+        params = { ...params, min_price, max_price };
+      }
+
+      delete params["price"];
+
+      Object.entries(filter).map(([k, v]) =>
+        !v || (Array.isArray(v) && !v.length) ? delete params[k] : ""
+      );
+    }
+
+    if (!sort || !Object.keys(sort)) {
+      sort = sortOptions.latest;
+    }
+
+    return await fetchData[type](params, sort);
+  } catch (err) {
+    return false;
+  }
+};
+
 export const fetchProductDetails = async ({ dispatch, pid }) => {
   try {
     const resp = await fetchData.details({ pid });

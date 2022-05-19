@@ -19,6 +19,12 @@ export * from "./global/CheckoutModal";
 export { default as SnackbarAlert } from "./global/SnackbarAlert";
 export * from "./global/SnackbarAlert";
 
+export { default as LandingBanner } from "./home/Banner";
+export * from "./home/Banner";
+
+export { default as LatestGrid } from "./home/LatestGrid";
+export * from "./home/LatestGrid";
+
 export { default as LoginForm } from "./forms/LoginForm";
 export * from "./forms/LoginForm";
 

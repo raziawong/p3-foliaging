@@ -113,6 +113,39 @@ export const FrostedFlexBox = styled(FlexBox, {
   },
 }));
 
+export const HeroBanner = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "bgImg",
+})(({ theme, bgImg }) => ({
+  minHeight: 560,
+  background: `url(${bgImg}) no-repeat space right`,
+  backgroundAttachment: "fixed",
+  backgroundSize: "cover",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative",
+  margin: "0 0",
+  boxShadow:
+    "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+  [theme.breakpoints.down("md")]: {
+    minHeight: 450,
+    backgroundPosition: "center",
+  },
+}));
+
+export const SplashOverlay = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "bgColor",
+})(({ theme, bgColor }) => ({
+  width: "100%",
+  height: "100%",
+  backgroundColor: alpha(bgColor || siteColors.light, 0.5),
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "absolute",
+  flexDirection: "column",
+}));
+
 export const NavBarLogo = styled(Link)(({ theme }) => ({
   ...theme.typography.button,
   display: "inline-flex",

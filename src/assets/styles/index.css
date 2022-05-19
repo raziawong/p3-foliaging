@@ -10,6 +10,18 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+@keyframes bounce {
+    0% {
+        transform: translateY(3px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(3px);
+    }
+}
+
 
 /* https://svgwave.in/ */
 
