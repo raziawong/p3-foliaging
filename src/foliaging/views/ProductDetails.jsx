@@ -223,7 +223,9 @@ export default function ProductDetails() {
           ) : (
             <Fragment />
           )}
-          {detail.plant_id && detail.spec?.traits ? (
+          {detail.plant_id &&
+          detail.spec?.traits &&
+          detail.spec?.traits?.length ? (
             <Accordion sx={{ width: "100%" }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>Other Characteristics</Typography>

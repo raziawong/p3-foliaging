@@ -1,6 +1,6 @@
 import { alpha, styled } from "@mui/material/styles";
 import { Link, NavLink } from "react-router-dom";
-import { Box, Drawer } from "@mui/material";
+import { Box, Drawer, IconButton } from "@mui/material";
 import siteColors from "../../styles/colors";
 
 export const SiteContainer = styled(Box)(({ theme }) => ({
@@ -174,6 +174,26 @@ export const NavCartDrawer = styled(Drawer)(({ theme }) => ({
   display: "flex",
   "& .MuiDrawer-paper": {
     backgroundColor: alpha(siteColors.feldgrau, 0.9),
+  },
+}));
+
+export const ProductFlexBox = styled(FlexBox)(({ theme }) => ({
+  flexGrow: 1,
+  display: "flex",
+  padding: `0 ${theme.spacing(1)}`,
+  gap: theme.spacing(1),
+  marginTop: theme.spacing(-4.2),
+  justifyContent: "flex-end",
+  minHeight: "75px",
+}));
+
+export const ProductIconButton = styled(IconButton)(({ theme }) => ({
+  backgroundColor: alpha(siteColors.charcoal, 0.9),
+  color: siteColors.champagne,
+  fontSize: "1.4rem",
+  padding: theme.spacing(0.5),
+  "&:hover": {
+    backgroundColor: alpha(siteColors.charcoal, 0.8),
   },
 }));
 

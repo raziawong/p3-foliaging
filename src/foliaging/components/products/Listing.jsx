@@ -5,7 +5,6 @@ import {
   Chip,
   Grid,
   Icon,
-  IconButton,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -16,7 +15,13 @@ import {
   useSiteDispatchContext,
   useSiteStateContext,
 } from "../../states";
-import { ContentBox, FlexBox, FrostedDomeBox } from "../styled/components";
+import {
+  ContentBox,
+  FlexBox,
+  FrostedDomeBox,
+  ProductFlexBox,
+  ProductIconButton,
+} from "../styled/components";
 import siteColors from "../../styles/colors";
 import { allowToProtectedRoute } from "../../utils";
 
@@ -60,10 +65,14 @@ export default function Listing({ type }) {
               xs={12}
               sm={6}
               lg={4}
-              sx={{ py: 3, filter: item.stock ? "none" : "brightness(0.7)" }}
-              onClick={() => handleProductClick(item)}>
+              sx={{
+                py: 3,
+                px: 1,
+                zIndex: 1,
+                filter: item.stock ? "none" : "brightness(0.7)",
+              }}>
               <FrostedDomeBox>
-                <FlexBox>
+                <FlexBox onClick={() => handleProductClick(item)}>
                   <CardMedia
                     component="img"
                     alt={item.title}
@@ -71,15 +80,7 @@ export default function Listing({ type }) {
                     image={item.images[0]}
                   />
                 </FlexBox>
-                <FlexBox
-                  sx={{
-                    px: 1,
-                    py: 0,
-                    gap: 1,
-                    mt: -4.2,
-                    justifyContent: "flex-end",
-                    minHeight: "75px",
-                  }}>
+                <ProductFlexBox>
                   <Chip
                     sx={{
                       backgroundColor: alpha(siteColors.charcoal, 0.9),
@@ -95,21 +96,12 @@ export default function Listing({ type }) {
                   />
                   {item.stock ? (
                     <Tooltip title="Add to cart">
-                      <IconButton
-                        sx={{
-                          backgroundColor: alpha(siteColors.charcoal, 0.9),
-                          color: siteColors.champagne,
-                          fontSize: "1.4rem",
-                          padding: 0.5,
-                          "&:hover": {
-                            backgroundColor: alpha(siteColors.charcoal, 0.8),
-                          },
-                        }}
+                      <ProductIconButton
                         aria-label="add to cart"
                         size="small"
                         onClick={(evt) => handleAddToCart(item.id)}>
                         <Icon className="ri-shopping-cart-2-line" />
-                      </IconButton>
+                      </ProductIconButton>
                     </Tooltip>
                   ) : (
                     <Chip
@@ -124,9 +116,13 @@ export default function Listing({ type }) {
                       }
                     />
                   )}
-                </FlexBox>
-                <FlexBox sx={{ pb: 1 }}>
-                  <Typography variant="subtitle1">{item.title}</Typography>
+                </ProductFlexBox>
+                <FlexBox
+                  sx={{ pb: 1 }}
+                  onClick={() => handleProductClick(item)}>
+                  <Typography sx={{ textAlign: "center" }} variant="subtitle1">
+                    {item.title}
+                  </Typography>
                 </FlexBox>
                 <Typography>
                   {item.plant_id && item.plant.description
