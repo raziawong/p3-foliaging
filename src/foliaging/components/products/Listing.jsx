@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   alpha,
   CardMedia,
@@ -140,6 +140,15 @@ export default function Listing({ type }) {
               </FrostedDomeBox>
             </Grid>
           ))}
+        {!state[type].length ? (
+          <FlexBox>
+            <Typography component="h6" variant="h6">
+              No results found
+            </Typography>
+          </FlexBox>
+        ) : (
+          <Fragment />
+        )}
       </Grid>
     </ContentBox>
   );

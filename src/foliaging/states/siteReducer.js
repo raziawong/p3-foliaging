@@ -439,13 +439,16 @@ export const processProductQueries = async ({ query, dispatch }, callback) => {
       delete params["price"];
 
       Object.entries(filter).map(([k, v]) =>
-        !v || !v.length ? delete params[k] : ""
+        !v || (Array.isArray(v) && !v.length) ? delete params[k] : ""
       );
     }
 
     if (!sort || !Object.keys(sort)) {
       sort = sortOptions.latest;
     }
+
+    console.log(text, sort, filter);
+    console.log(params);
 
     const promises = [
       await fetchData.products(params, sort),
@@ -614,10 +617,10 @@ export const processLogout = ({ dispatch }) => {
     if (refreshToken) {
       processData.blacklistToken({ refreshToken });
       removeLocalTokens();
+      dispatch(setError(messages.sessionExpired));
     }
 
     dispatch(resetUser());
-    dispatch(setError(messages.sessionExpired));
   } catch (err) {
     console.log(err);
   }
