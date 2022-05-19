@@ -51,7 +51,7 @@ export default function Listing({ type }) {
       <Grid
         container
         sx={{ ml: { xs: 0, md: 2 }, px: 1, py: 2, width: "100%" }}
-        spacing={2}>
+        spacing={{ xs: 0, md: 2 }}>
         {state.hasOwnProperty(type) &&
           state[type].map((item) => (
             <Grid
@@ -59,8 +59,8 @@ export default function Listing({ type }) {
               key={item.id}
               xs={12}
               sm={6}
-              md={4}
-              sx={{ filter: item.stock ? "none" : "brightness(0.7)" }}
+              lg={4}
+              sx={{ py: 3, filter: item.stock ? "none" : "brightness(0.7)" }}
               onClick={() => handleProductClick(item)}>
               <FrostedDomeBox>
                 <FlexBox>
