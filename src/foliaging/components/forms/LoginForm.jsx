@@ -30,7 +30,7 @@ export default function LoginForm() {
       setValidationMsgs(messages);
     } else {
       fetchAuthTokens({ dispatch, body: { ...loginFields } }, () => {
-        navigate("/profile");
+        navigate("/plants");
       });
     }
   };
