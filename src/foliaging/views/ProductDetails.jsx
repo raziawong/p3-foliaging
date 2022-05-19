@@ -109,7 +109,7 @@ export default function ProductDetails() {
             p: 5,
             gap: 3,
           }}>
-          <Box>
+          <Box sx={{ alignSelf: "flex-start" }}>
             <Typography component="h1" variant="h4">
               {detail.title}
             </Typography>
