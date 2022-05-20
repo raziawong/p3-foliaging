@@ -53,6 +53,24 @@ export default function Listing({ type }) {
 
   return (
     <ContentBox>
+      <FlexBox
+        sx={{
+          justifyContent: "flex-start",
+          ml: { xs: 0, md: 2 },
+          px: 1,
+          py: 2,
+          width: "100%",
+        }}>
+        {!state[type].length ? (
+          <Typography component="h6" variant="h6">
+            No results found
+          </Typography>
+        ) : (
+          <Typography component="h6" variant="subtitle1">
+            Displaying {state[type].length} results
+          </Typography>
+        )}
+      </FlexBox>
       <Grid
         container
         sx={{ ml: { xs: 0, md: 2 }, px: 1, py: 2, width: "100%" }}
@@ -127,15 +145,6 @@ export default function Listing({ type }) {
               </FrostedDomeBox>
             </Grid>
           ))}
-        {!state[type].length ? (
-          <FlexBox>
-            <Typography component="h6" variant="h6">
-              No results found
-            </Typography>
-          </FlexBox>
-        ) : (
-          <Fragment />
-        )}
       </Grid>
     </ContentBox>
   );
