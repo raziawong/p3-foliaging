@@ -198,17 +198,68 @@ Test Cases can be found [here](/readme/test_cases.xlsx)
 5. All plants and supplies images are from [Noah Garden Center](https://www.noahgardencentre.com.sg/)
 6. All planters images are from [fortytwo](https://www.fortytwo.sg/home-decor-lifestyle/vases.html)
 7. Header background image is generated using [Svg Wave](https://svgwave.in/)
+8. Homepage banner is a photo by [Joel Henry](https://unsplash.com/photos/4Ue1u2iwj-c) downloaded from [Unsplash](https://unsplash.com)
+8. Homepage Latest header background image is a photo by [Ripley Elisabeth Brown](https://unsplash.com/photos/DmaYXFqGLPw) downloaded from [Unsplash](https://unsplash.com)
    
 ### Other Attributions
 1. [Paul Chor](https://github.com/kunxin-chor) for all his guidance and using his tutorials as references for the codes 
 2. [Coolors](https://coolors.co/) for matching the green and mecca gold selected
 
 ---
-
-## Deployment
-### Build
+## Build
 Backend is build using Node.js and Express. Frontend have been created with create-react-app which includes a webpack that builds the files for production environment.
 
+### Express environment variables
+Some .env variables are set in the backend and it includes:
+
+1. Timezone for the server
+    ```
+    TZ
+    ```
+2. Database driver and access 
+    ```
+    DB_DRIVER
+    DB_HOST
+    DB_NAME
+    DB_USER
+    DB_PASSWORD
+    ```
+3. The like keyword syntax for SQL database 
+    ```
+    LIKE_SYNTAX
+    ```
+4. Uploadcare keys to access its API
+    ```
+    UPLOADCARE_PUBLIC_KEY
+    UPLOADCARE_SECRET_KEY
+    ```
+5. Keys for session management on admin and eCommerce
+    ```
+    COOKIE_SECRET_KEY
+    SESSION_SECRET_KEY
+    TOKEN_SECRET
+    TOKEN_EXPIRY
+    REFRESH_TOKEN_SECRET
+    REFRESH_TOKEN_EXPIRY
+    ```
+6. Stripe keys to access API and use webhooks
+    ```
+    STRIPE_PUBLISHABLE_KEY
+    STRIPE_SECRET_KEY
+    STRIPE_ENDPOINT_SECRET
+    STRIPE_SUCCESS_URL
+    STRIPE_CANCEL_URL
+    ```
+
+### Database migrations
+The database and data can be migrated to any SQL running the following command at the root of the Express project folder:
+```
+node database/db-migrate-up.js
+```
+
+The command will recreate tables and sample data except on any user dependant information such as system accounts, customer accounts, cart items, orders, payments and products.
+
+## Deployment
 ### Backend Deployment
 Express server is deployed using [Heroku](https://www.heroku.com/).
 
