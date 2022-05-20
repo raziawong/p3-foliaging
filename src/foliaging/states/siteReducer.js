@@ -48,6 +48,7 @@ export const initialState = {
   [stateKey.PLANTS]: [],
   [stateKey.PLANTERS]: [],
   [stateKey.SUPPLIES]: [],
+  latestPlants: [],
   options: {
     [stateKey.PLANTS]: {
       species: [],
@@ -318,6 +319,7 @@ export const fetchInitialData = async ({ dispatch }) => {
             },
           },
           priceRange: range,
+          latestPlants: resps[1].value.data.plants,
           [stateKey.DATA_LOADING]: false,
           [stateKey.USER_LOADING]: false,
         };
