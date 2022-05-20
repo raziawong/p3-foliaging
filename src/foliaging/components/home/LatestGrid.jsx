@@ -19,17 +19,17 @@ export default function LatestGrid() {
       sx={{
         my: { xs: 5, md: 8 },
         px: { xs: 1, md: 5 },
-        display: { md: "grid" },
+        display: "grid",
         gridTemplateColumns: { md: "repeat(7, 1fr)" },
         gridTemplateRows: { md: "repeat(9, 1fr)" },
         gridColumnGap: { md: "5px" },
-        gridRowGap: { md: "5px" },
+        gridRowGap: "5px",
       }}>
       <FlexBox
         sx={{
           p: 2,
           minHeight: { xs: 100, lg: 150 },
-          gridArea: { md: "2 / 1 / 4 / 4" },
+          gridArea: { md: "1 / 1 / 5 / 4" },
           zIndex: 5,
           backgroundSize: "cover",
           background: `url(${headImg}) no-repeat center`,
