@@ -55,7 +55,7 @@ export default function Listing({ type }) {
     <ContentBox>
       <FlexBox
         sx={{
-          justifyContent: "flex-start",
+          justifyContent: { xs: "center", md: "flex-start" },
           ml: { xs: 0, md: 2 },
           px: 1,
           py: 2,
@@ -90,14 +90,15 @@ export default function Listing({ type }) {
                 filter: item.stock ? "none" : "brightness(0.7)",
               }}>
               <FrostedDomeBox>
-                <FlexBox onClick={() => handleProductClick(item)}>
-                  <CardMedia
-                    component="img"
-                    alt={item.title}
-                    sx={{ minHeight: "40vh", borderRadius: "48% 48% 0 0" }}
-                    image={item.images[0]}
-                  />
-                </FlexBox>
+                <FlexBox
+                  onClick={() => handleProductClick(item)}
+                  sx={{
+                    minHeight: "40vh",
+                    borderRadius: "48% 48% 0 0",
+                    background: `url(${item.images[0]}) no-repeat center`,
+                    backgroundSize: "cover",
+                  }}
+                />
                 <ProductFlexBox>
                   <Chip
                     sx={{
@@ -138,7 +139,7 @@ export default function Listing({ type }) {
                 <FlexBox
                   sx={{ pb: 1 }}
                   onClick={() => handleProductClick(item)}>
-                  <Typography sx={{ textAlign: "center" }} variant="subtitle1">
+                  <Typography sx={{ textAlign: "center" }} variant="subtitle2">
                     {item.title}
                   </Typography>
                 </FlexBox>
