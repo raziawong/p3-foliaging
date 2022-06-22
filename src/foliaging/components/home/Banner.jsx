@@ -18,6 +18,7 @@ export default function Banner() {
         <ContentBox
           sx={{
             display: "grid",
+            height: "100%",
             gridTemplateColumns: "repeat(4, 1fr)",
             gridTemplateRows: "repeat(4, 1fr)",
           }}>
@@ -25,7 +26,7 @@ export default function Banner() {
             sx={{
               m: 2,
               p: 5,
-              gridArea: { xs: "2 / 1 / 4 / 4", md: "2 / 1 / 4 / 2" },
+              gridArea: { xs: "1 / 1 / 5 / 4", md: "2 / 1 / 4 / 4" },
             }}
           />
           <Box
@@ -33,7 +34,7 @@ export default function Banner() {
               m: 2,
               p: 5,
               zIndex: 1,
-              gridArea: { xs: "2 / 1 / 4 / 4", md: "2 / 1 / 4 / 2" },
+              gridArea: { xs: "1 / 1 / 5 / 4", md: "2 / 1 / 4 / 4" },
             }}>
             <Typography
               variant="h2"
