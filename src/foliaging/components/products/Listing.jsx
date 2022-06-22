@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  alpha,
-  CardMedia,
-  Chip,
-  Grid,
-  Icon,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { alpha, Chip, Grid, Icon, Tooltip, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
   processCartAdd,
